@@ -1,13 +1,11 @@
-import { requireAdmin } from "../../../shared/auth/require-admin";
+import { guardAdmin } from "../../../shared/auth/admin-guard";
 import { jsonResponse, notFound } from "../../../shared/http/json";
 import { getPageByIdForAdmin, updatePage, upsertPageLocale, replaceSections } from "../../../shared/repositories/pages-repository";
 import { writeAuditLog } from "../../../shared/services/audit-service";
 
 export async function onRequestGet(context: any): Promise<Response> {
-  const guard = requireAdmin(context.request);
-  if (guard) {
-    return guard;
-  }
+  const auth = await guardAdmin(context.request, context.env);
+  if (auth instanceof Response) return auth;
 
   const page = await getPageByIdForAdmin(context.env, context.params.id);
   if (!page) {
@@ -18,10 +16,8 @@ export async function onRequestGet(context: any): Promise<Response> {
 }
 
 export async function onRequestPut(context: any): Promise<Response> {
-  const guard = requireAdmin(context.request);
-  if (guard) {
-    return guard;
-  }
+  const auth = await guardAdmin(context.request, context.env);
+  if (auth instanceof Response) return auth;
 
   const pageId = context.params.id;
   const existing = await getPageByIdForAdmin(context.env, pageId);
@@ -69,9 +65,8 @@ export async function onRequestPut(context: any): Promise<Response> {
     }
   }
 
-  const actorEmail = context.request.headers.get("x-actor-email") ?? "unknown";
   await writeAuditLog(context.env, {
-    actorEmail,
+    actorEmail: auth.email,
     action: "update_page",
     targetType: "page",
     targetId: pageId,
@@ -83,10 +78,8 @@ export async function onRequestPut(context: any): Promise<Response> {
 }
 
 export async function onRequestDelete(context: any): Promise<Response> {
-  const guard = requireAdmin(context.request);
-  if (guard) {
-    return guard;
-  }
+  const auth = await guardAdmin(context.request, context.env);
+  if (auth instanceof Response) return auth;
 
   const pageId = context.params.id;
   const existing = await getPageByIdForAdmin(context.env, pageId);
@@ -96,9 +89,8 @@ export async function onRequestDelete(context: any): Promise<Response> {
 
   await updatePage(context.env, pageId, { status: "archived" });
 
-  const actorEmail = context.request.headers.get("x-actor-email") ?? "unknown";
   await writeAuditLog(context.env, {
-    actorEmail,
+    actorEmail: auth.email,
     action: "archive_page",
     targetType: "page",
     targetId: pageId

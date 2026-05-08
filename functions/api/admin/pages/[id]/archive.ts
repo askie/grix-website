@@ -1,17 +1,13 @@
-import { requireAdmin } from "../../../../shared/auth/require-admin";
+import { guardAdmin } from "../../../../shared/auth/admin-guard";
 import { jsonResponse, notFound } from "../../../../shared/http/json";
 import { archivePage } from "../../../../shared/services/publish-service";
 
 export async function onRequestPost(context: any): Promise<Response> {
-  const guard = requireAdmin(context.request);
-  if (guard) {
-    return guard;
-  }
-
-  const actorEmail = context.request.headers.get("x-actor-email") ?? "unknown";
+  const auth = await guardAdmin(context.request, context.env);
+  if (auth instanceof Response) return auth;
 
   try {
-    const result = await archivePage(context.env, context.params.id, actorEmail);
+    const result = await archivePage(context.env, context.params.id, auth.email);
     return jsonResponse(result);
   } catch (err: any) {
     if (err.message === "Page not found.") {

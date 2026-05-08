@@ -1,10 +1,29 @@
 import { describe, expect, it } from "vitest";
-import { onRequestGet as getPage, onRequestPut as updatePage, onRequestDelete as deletePage } from "../../functions/api/admin/pages/[id]";
+import { onRequestGet as getPage, onRequestDelete as deletePage } from "../../functions/api/admin/pages/[id]";
 import { onRequestPost as archivePage } from "../../functions/api/admin/pages/[id]/archive";
 
 async function readJson(response: Response): Promise<any> {
   return JSON.parse(await response.text());
 }
+
+function base64UrlEncode(str: string): string {
+  return btoa(str).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function makeJwt(payload: Record<string, unknown>): string {
+  const header = base64UrlEncode(JSON.stringify({ alg: "RS256", typ: "JWT" }));
+  const body = base64UrlEncode(JSON.stringify(payload));
+  const signature = base64UrlEncode("fake-signature");
+  return `${header}.${body}.${signature}`;
+}
+
+const validToken = makeJwt({
+  iss: "https://test-team.cloudflareaccess.com",
+  aud: "cloudflare-web-admin",
+  exp: Math.floor(Date.now() / 1000) + 3600,
+  email: "admin@test.com",
+  sub: "user-123"
+});
 
 function makeFullMockD1(config: {
   page?: any;
@@ -59,8 +78,7 @@ function makeFullMockD1(config: {
 }
 
 const adminHeaders = {
-  "Cf-Access-Jwt-Assertion": "token",
-  "x-actor-email": "admin@test.com"
+  "Cf-Access-Jwt-Assertion": validToken
 };
 
 const samplePage = {
