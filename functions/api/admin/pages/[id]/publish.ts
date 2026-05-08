@@ -15,6 +15,15 @@ export async function onRequestPost(context: any): Promise<Response> {
     return notFound("Unsupported locale.");
   }
 
-  const result = await publishPage(context.env, context.params.id, locale);
-  return jsonResponse(result);
+  const actorEmail = context.request.headers.get("x-actor-email") ?? "unknown";
+
+  try {
+    const result = await publishPage(context.env, context.params.id, locale, actorEmail);
+    return jsonResponse(result);
+  } catch (err: any) {
+    if (err.message === "Page not found.") {
+      return notFound(err.message);
+    }
+    return jsonResponse({ error: err.message }, { status: 400 });
+  }
 }

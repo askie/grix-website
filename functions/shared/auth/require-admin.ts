@@ -11,3 +11,11 @@ export function requireAdmin(request: Request): Response | null {
 
   return null;
 }
+
+export function extractActorEmail(request: Request): string {
+  const email = request.headers.get("x-actor-email");
+  if (email) return email;
+
+  // Phase C will decode JWT claims here
+  return "admin@unknown";
+}
