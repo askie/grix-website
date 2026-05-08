@@ -1,10 +1,28 @@
 import { describe, expect, it } from "vitest";
-import { onRequestGet as getAdminPages, onRequestPost as createAdminPage } from "../../functions/api/admin/pages/index";
-import { requireAdmin, extractActorEmail } from "../../functions/shared/auth/require-admin";
+import { requireAdmin } from "../../functions/shared/auth/require-admin";
 
 async function readJson(response: Response): Promise<any> {
   return JSON.parse(await response.text());
 }
+
+function base64UrlEncode(str: string): string {
+  return btoa(str).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function makeJwt(payload: Record<string, unknown>): string {
+  const header = base64UrlEncode(JSON.stringify({ alg: "RS256", typ: "JWT" }));
+  const body = base64UrlEncode(JSON.stringify(payload));
+  const signature = base64UrlEncode("fake-signature");
+  return `${header}.${body}.${signature}`;
+}
+
+const validPayload = {
+  iss: "https://test-team.cloudflareaccess.com",
+  aud: "cloudflare-web-admin",
+  exp: Math.floor(Date.now() / 1000) + 3600,
+  email: "admin@test.com",
+  sub: "user-123"
+};
 
 function makeMockD1(config: { pages?: any[]; locales?: any[] }) {
   return {
@@ -49,26 +67,35 @@ describe("guard/admin-auth", () => {
     expect(await readJson(response as Response)).toEqual({ error: "Missing Access token." });
   });
 
-  it("passes request when Access header exists", () => {
+  it("passes request when valid JWT exists", () => {
+    const token = makeJwt(validPayload);
     const response = requireAdmin(
       new Request("http://localhost/api/admin/pages", {
-        headers: {
-          "Cf-Access-Jwt-Assertion": "token"
-        }
+        headers: { "Cf-Access-Jwt-Assertion": token }
       })
     );
 
     expect(response).toBeNull();
   });
 
-  it("extracts actor email from x-actor-email header", () => {
-    const email = extractActorEmail(
-      new Request("http://localhost", { headers: { "x-actor-email": "admin@test.com" } })
+  it("rejects expired JWT", () => {
+    const token = makeJwt({
+      ...validPayload,
+      exp: Math.floor(Date.now() / 1000) - 3600
+    });
+
+    const response = requireAdmin(
+      new Request("http://localhost/api/admin/pages", {
+        headers: { "Cf-Access-Jwt-Assertion": token }
+      })
     );
-    expect(email).toBe("admin@test.com");
+
+    expect(response).not.toBeNull();
+    expect(response?.status).toBe(403);
   });
 
   it("admin pages API returns 403 without Access token", async () => {
+    const { onRequestGet: getAdminPages } = await import("../../functions/api/admin/pages/index");
     const response = await getAdminPages({
       request: new Request("http://localhost/api/admin/pages"),
       env: {}
@@ -77,10 +104,13 @@ describe("guard/admin-auth", () => {
     expect(response.status).toBe(403);
   });
 
-  it("admin pages API returns list with Access token", async () => {
+  it("admin pages API returns list with valid JWT", async () => {
+    const { onRequestGet: getAdminPages } = await import("../../functions/api/admin/pages/index");
+    const token = makeJwt(validPayload);
+
     const response = await getAdminPages({
       request: new Request("http://localhost/api/admin/pages", {
-        headers: { "Cf-Access-Jwt-Assertion": "token" }
+        headers: { "Cf-Access-Jwt-Assertion": token }
       }),
       env: { DB: makeMockD1({ pages: [], locales: [] }) }
     });
@@ -91,6 +121,7 @@ describe("guard/admin-auth", () => {
   });
 
   it("admin create page returns 403 without Access token", async () => {
+    const { onRequestPost: createAdminPage } = await import("../../functions/api/admin/pages/index");
     const response = await createAdminPage({
       request: new Request("http://localhost/api/admin/pages", {
         method: "POST",

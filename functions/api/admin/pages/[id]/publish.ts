@@ -1,13 +1,11 @@
-import { requireAdmin } from "../../../../shared/auth/require-admin";
+import { guardAdmin } from "../../../../shared/auth/admin-guard";
 import { jsonResponse, notFound } from "../../../../shared/http/json";
 import { publishPage } from "../../../../shared/services/publish-service";
 import { assertLocale } from "../../../../shared/validators/locale";
 
 export async function onRequestPost(context: any): Promise<Response> {
-  const guard = requireAdmin(context.request);
-  if (guard) {
-    return guard;
-  }
+  const auth = await guardAdmin(context.request, context.env);
+  if (auth instanceof Response) return auth;
 
   const locale = context.request.headers.get("x-locale") ?? "zh-CN";
 
@@ -15,10 +13,8 @@ export async function onRequestPost(context: any): Promise<Response> {
     return notFound("Unsupported locale.");
   }
 
-  const actorEmail = context.request.headers.get("x-actor-email") ?? "unknown";
-
   try {
-    const result = await publishPage(context.env, context.params.id, locale, actorEmail);
+    const result = await publishPage(context.env, context.params.id, locale, auth.email);
     return jsonResponse(result);
   } catch (err: any) {
     if (err.message === "Page not found.") {

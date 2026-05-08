@@ -5,6 +5,25 @@ async function readJson(response: Response): Promise<any> {
   return JSON.parse(await response.text());
 }
 
+function base64UrlEncode(str: string): string {
+  return btoa(str).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function makeJwt(payload: Record<string, unknown>): string {
+  const header = base64UrlEncode(JSON.stringify({ alg: "RS256", typ: "JWT" }));
+  const body = base64UrlEncode(JSON.stringify(payload));
+  const signature = base64UrlEncode("fake-signature");
+  return `${header}.${body}.${signature}`;
+}
+
+const validJwtPayload = {
+  iss: "https://test-team.cloudflareaccess.com",
+  aud: "cloudflare-web-admin",
+  exp: Math.floor(Date.now() / 1000) + 3600,
+  email: "admin@test.com",
+  sub: "user-123"
+};
+
 function makeMockD1(config: { page?: any; revisionMax?: number | null }) {
   return {
     prepare(sql: string) {
@@ -47,6 +66,8 @@ function makeMockD1(config: { page?: any; revisionMax?: number | null }) {
 }
 
 describe("guard/publish-api", () => {
+  const validToken = makeJwt(validJwtPayload);
+
   it("returns 403 when Access token is missing", async () => {
     const response = await publishPage({
       params: { id: "home" },
@@ -63,11 +84,11 @@ describe("guard/publish-api", () => {
   it("returns 404 when locale is unsupported", async () => {
     const response = await publishPage({
       params: { id: "home" },
-      env: {},
+      env: { DB: makeMockD1({}) },
       request: new Request("http://localhost/api/admin/pages/home/publish", {
         method: "POST",
         headers: {
-          "Cf-Access-Jwt-Assertion": "token",
+          "Cf-Access-Jwt-Assertion": validToken,
           "x-locale": "fr"
         }
       })
@@ -84,7 +105,7 @@ describe("guard/publish-api", () => {
       request: new Request("http://localhost/api/admin/pages/nonexistent/publish", {
         method: "POST",
         headers: {
-          "Cf-Access-Jwt-Assertion": "token",
+          "Cf-Access-Jwt-Assertion": validToken,
           "x-locale": "en"
         }
       })
@@ -100,7 +121,7 @@ describe("guard/publish-api", () => {
       request: new Request("http://localhost/api/admin/pages/home/publish", {
         method: "POST",
         headers: {
-          "Cf-Access-Jwt-Assertion": "token",
+          "Cf-Access-Jwt-Assertion": validToken,
           "x-locale": "en"
         }
       })

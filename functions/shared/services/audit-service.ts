@@ -1,5 +1,22 @@
 import { getD1 } from "../db/client";
 
+export async function writeAuthRejection(
+  env: Record<string, unknown>,
+  reason: string,
+  request: Request
+): Promise<void> {
+  const actorEmail = request.headers.get("Cf-Access-Jwt-Assertion")
+    ? "token-present-but-invalid"
+    : "no-token";
+
+  await writeAuditLog(env, {
+    actorEmail,
+    action: "auth_rejected",
+    targetType: "access",
+    payload: { reason, url: request.url }
+  });
+}
+
 export async function writeAuditLog(
   env: Record<string, unknown>,
   data: {
