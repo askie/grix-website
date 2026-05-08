@@ -1,0 +1,47 @@
+---
+import CTASection from "@/components/public/CTASection.astro";
+import FAQSection from "@/components/public/FAQSection.astro";
+import FeatureGrid from "@/components/public/FeatureGrid.astro";
+import Hero from "@/components/public/Hero.astro";
+import type { LocaleCode } from "@/i18n/config";
+import { resolveProductEntryUrl } from "@/lib/cta/product-url";
+import type { PageLocaleContent } from "@/lib/content-mapper/types";
+
+interface Props {
+  locale: LocaleCode;
+  page: PageLocaleContent;
+}
+
+const { locale, page } = Astro.props;
+const hero = page.sections.find((item) => item.type === "hero");
+const features = page.sections.find((item) => item.type === "features");
+const productUrl = resolveProductEntryUrl();
+---
+
+<Hero
+  heading={hero?.title ?? page.title}
+  description={hero?.content ?? page.description}
+  primaryCtaLabel={page.ctaPrimaryText}
+  secondaryCtaLabel={page.ctaSecondaryText}
+  primaryHref={productUrl}
+  secondaryHref={productUrl}
+/>
+
+{
+  features?.items && (
+    <FeatureGrid title={features.title} description={features.content} items={features.items} />
+  )
+}
+
+<FAQSection locale={locale} />
+
+<CTASection
+  title={locale === "zh-CN" ? "准备开始了吗？" : "Ready to start?"}
+  description={
+    locale === "zh-CN"
+      ? "官网负责介绍，正式注册与使用在产品站完成。"
+      : "The website introduces the product. Sign-up and usage happen in the product app."
+  }
+  buttonText={page.ctaPrimaryText}
+  href={productUrl}
+/>

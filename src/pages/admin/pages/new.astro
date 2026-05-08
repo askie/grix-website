@@ -1,0 +1,15 @@
+---
+import AdminShell from "@/components/admin/AdminShell";
+import PageEditor from "@/components/admin/PageEditor";
+import SectionEditor from "@/components/admin/SectionEditor";
+import AdminLayout from "@/layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="New Page">
+  <AdminShell title="Create Page" client:load>
+    <PageEditor locale="zh-CN" />
+    <div class="mt-6">
+      <SectionEditor />
+    </div>
+  </AdminShell>
+</AdminLayout>

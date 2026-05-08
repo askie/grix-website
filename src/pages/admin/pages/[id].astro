@@ -1,0 +1,21 @@
+---
+import AdminShell from "@/components/admin/AdminShell";
+import PageEditor from "@/components/admin/PageEditor";
+import PublishActions from "@/components/admin/PublishActions";
+import SectionEditor from "@/components/admin/SectionEditor";
+import AdminLayout from "@/layouts/AdminLayout.astro";
+
+const id = Astro.params.id ?? "unknown";
+---
+
+<AdminLayout title="Edit Page">
+  <AdminShell title={`Edit Page: ${id}`} client:load>
+    <PageEditor locale="zh-CN" />
+    <div class="mt-6">
+      <SectionEditor />
+    </div>
+    <div class="mt-6">
+      <PublishActions />
+    </div>
+  </AdminShell>
+</AdminLayout>

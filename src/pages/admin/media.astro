@@ -1,0 +1,11 @@
+---
+import AdminShell from "@/components/admin/AdminShell";
+import MediaLibrary from "@/components/admin/MediaLibrary";
+import AdminLayout from "@/layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="Media">
+  <AdminShell title="Media Library" client:load>
+    <MediaLibrary />
+  </AdminShell>
+</AdminLayout>

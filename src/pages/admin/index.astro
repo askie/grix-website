@@ -1,0 +1,10 @@
+---
+import AdminShell from "@/components/admin/AdminShell";
+import AdminLayout from "@/layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="Admin Dashboard">
+  <AdminShell title="Dashboard" client:load>
+    <p class="text-sm text-slate-600">This dashboard is reserved for Cloudflare Access users.</p>
+  </AdminShell>
+</AdminLayout>

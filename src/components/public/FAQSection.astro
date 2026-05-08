@@ -1,0 +1,34 @@
+---
+import type { LocaleCode } from "@/i18n/config";
+
+interface Props {
+  locale: LocaleCode;
+}
+
+const { locale } = Astro.props;
+
+const faqs =
+  locale === "zh-CN"
+    ? [
+        { q: "官网可以直接注册吗？", a: "官网只负责介绍产品，注册和使用请前往正式产品入口。" },
+        { q: "人可以参与 Agent 执行吗？", a: "可以，关键节点可以人工审批和接管。" }
+      ]
+    : [
+        { q: "Can I sign up directly on the website?", a: "The website introduces the product. Sign-up happens in the product app." },
+        { q: "Can humans join agent execution?", a: "Yes. Human approval and takeover are part of the workflow." }
+      ];
+---
+
+<section id="faq" class="rounded-panel border border-slate-200 bg-white p-6 md:p-8">
+  <h2 class="text-2xl font-semibold text-slate-900">{locale === "zh-CN" ? "常见问题" : "FAQ"}</h2>
+  <div class="mt-4 space-y-3">
+    {
+      faqs.map((item) => (
+        <details class="rounded-lg bg-slate-50 p-4">
+          <summary class="cursor-pointer font-medium text-slate-900">{item.q}</summary>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{item.a}</p>
+        </details>
+      ))
+    }
+  </div>
+</section>

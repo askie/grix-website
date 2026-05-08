@@ -1,0 +1,41 @@
+---
+import SiteHeader from "@/components/public/SiteHeader.astro";
+import SiteFooter from "@/components/public/SiteFooter.astro";
+import { buildAlternates } from "@/lib/seo/meta";
+import { defaultLocale, type LocaleCode } from "@/i18n/config";
+import "@/styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  locale: LocaleCode;
+  slug?: string;
+  noindex?: boolean;
+}
+
+const { title, description, locale = defaultLocale, slug = "", noindex = false } = Astro.props;
+const alternates = buildAlternates(slug);
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
+    {
+      alternates.map((alternate) => (
+        <link rel="alternate" hreflang={alternate.locale} href={alternate.href} />
+      ))
+    }
+  </head>
+  <body class="main-shell font-sans text-slate-900">
+    <SiteHeader currentLocale={locale} currentSlug={slug} />
+    <main class="mx-auto max-w-6xl space-y-8 px-4 py-8 md:px-6 md:py-12">
+      <slot />
+    </main>
+    <SiteFooter locale={locale} />
+  </body>
+</html>

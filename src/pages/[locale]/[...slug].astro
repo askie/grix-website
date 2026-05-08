@@ -1,0 +1,35 @@
+---
+import PublicLayout from "@/layouts/PublicLayout.astro";
+import { defaultLocale, isSupportedLocale } from "@/i18n/config";
+import { getPublishedPageBySlug } from "@/lib/content-mapper/repository";
+import LandingPage from "@/templates/LandingPage.astro";
+
+const rawLocale = Astro.params.locale;
+const slug = Astro.params.slug ?? "";
+const invalidLocale = !rawLocale || !isSupportedLocale(rawLocale);
+const locale = invalidLocale ? defaultLocale : rawLocale;
+const page = invalidLocale ? null : getPublishedPageBySlug(locale, slug);
+
+if (invalidLocale || !page) {
+  Astro.response.status = 404;
+}
+---
+
+{
+  page ? (
+    <PublicLayout title={page.seoTitle} description={page.seoDescription} locale={locale} slug={slug}>
+      <LandingPage page={page} />
+    </PublicLayout>
+  ) : (
+    <PublicLayout
+      title={locale === "zh-CN" ? "页面不存在" : "Page not found"}
+      description={locale === "zh-CN" ? "请求页面不存在。" : "Requested page was not found."}
+      locale={locale}
+      noindex
+    >
+      <section class="rounded-panel border border-slate-200 bg-white p-8">
+        <h1 class="text-2xl font-semibold">{locale === "zh-CN" ? "页面不存在" : "Page not found"}</h1>
+      </section>
+    </PublicLayout>
+  )
+}

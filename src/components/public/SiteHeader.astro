@@ -1,0 +1,33 @@
+---
+import LanguageSwitcher from "@/components/public/LanguageSwitcher.astro";
+import type { LocaleCode } from "@/i18n/config";
+import { toLocalizedPath } from "@/i18n/routes";
+
+interface Props {
+  currentLocale: LocaleCode;
+  currentSlug?: string;
+}
+
+const { currentLocale, currentSlug = "" } = Astro.props;
+const navItems = [
+  { label: currentLocale === "zh-CN" ? "能力" : "Features", href: "#features" },
+  { label: currentLocale === "zh-CN" ? "场景" : "Use Cases", href: "#use-cases" },
+  { label: currentLocale === "zh-CN" ? "常见问题" : "FAQ", href: "#faq" }
+];
+---
+
+<header class="sticky top-0 z-10 border-b border-slate-200/70 bg-white/90 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
+    <a href={toLocalizedPath(currentLocale)} class="text-lg font-semibold text-brand-700">Grix</a>
+    <nav class="hidden gap-5 text-sm text-slate-700 md:flex">
+      {
+        navItems.map((item) => (
+          <a href={item.href} class="hover:text-brand-600">
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+    <LanguageSwitcher currentLocale={currentLocale} currentSlug={currentSlug} />
+  </div>
+</header>
