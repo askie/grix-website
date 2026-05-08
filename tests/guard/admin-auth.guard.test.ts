@@ -6,6 +6,22 @@ async function readJson(response: Response): Promise<any> {
   return JSON.parse(await response.text());
 }
 
+function makeMockD1(results: any[] = []) {
+  return {
+    prepare() {
+      return {
+        bind() {
+          return {
+            first: async () => null,
+            all: async () => ({ results }),
+            run: async () => ({ success: true })
+          };
+        }
+      };
+    }
+  };
+}
+
 describe("guard/admin-auth", () => {
   it("rejects request when Access header is missing", async () => {
     const response = requireAdmin(new Request("http://localhost/api/admin/pages"));
@@ -29,7 +45,8 @@ describe("guard/admin-auth", () => {
 
   it("admin pages API returns 403 without Access token", async () => {
     const response = await getAdminPages({
-      request: new Request("http://localhost/api/admin/pages")
+      request: new Request("http://localhost/api/admin/pages"),
+      env: {}
     });
 
     expect(response.status).toBe(403);
@@ -41,10 +58,12 @@ describe("guard/admin-auth", () => {
         headers: {
           "Cf-Access-Jwt-Assertion": "token"
         }
-      })
+      }),
+      env: { DB: makeMockD1([]) }
     });
 
     expect(response.status).toBe(200);
-    expect(await readJson(response)).toEqual({ items: [] });
+    const payload = await readJson(response);
+    expect(payload.items).toEqual([]);
   });
 });

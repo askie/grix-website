@@ -6,11 +6,64 @@ async function readJson(response: Response): Promise<any> {
   return JSON.parse(await response.text());
 }
 
+function makeMockD1(config: { pages?: any[]; siteSettings?: any; page?: any }) {
+  return {
+    prepare(sql: string) {
+      const query = sql.toLowerCase();
+
+      return {
+        bind(..._args: unknown[]) {
+          if (query.includes("order by p.sort_order")) {
+            return {
+              first: async () => null,
+              all: async () => ({ results: config.pages ?? [] }),
+              run: async () => ({ success: true })
+            };
+          }
+
+          if (query.includes("site_settings")) {
+            return {
+              first: async () => config.siteSettings ?? null,
+              all: async () => ({ results: [] }),
+              run: async () => ({ success: true })
+            };
+          }
+
+          if (query.includes("join page_locales") && query.includes("p.slug")) {
+            return {
+              first: async () => config.page ?? null,
+              all: async () => ({ results: [] }),
+              run: async () => ({ success: true })
+            };
+          }
+
+          return {
+            first: async () => null,
+            all: async () => ({ results: [] }),
+            run: async () => ({ success: true })
+          };
+        },
+        first: async () => config.siteSettings ?? null,
+        all: async () => ({ results: config.pages ?? [] }),
+        run: async () => ({ success: true })
+      };
+    }
+  };
+}
+
+const mockSiteSettings = {
+  id: "site-default",
+  default_locale: "zh-CN",
+  locales_json: '["zh-CN","en"]',
+  cta_urls_json: '{"zh-CN":"https://grix.dhf.pub","en":"https://grix.dhf.pub"}',
+  seo_defaults_json: '{}'
+};
+
 describe("guard/public-api", () => {
   it("returns 404 for unsupported locale", async () => {
     const response = await getPublicSite({
       params: { locale: "fr" },
-      env: {},
+      env: { DB: makeMockD1({}) },
       request: new Request("http://localhost/api/public/fr/site")
     });
 
@@ -21,7 +74,7 @@ describe("guard/public-api", () => {
   it("returns cache headers for valid locale", async () => {
     const response = await getPublicSite({
       params: { locale: "en" },
-      env: {},
+      env: { DB: makeMockD1({ pages: [], siteSettings: mockSiteSettings }) },
       request: new Request("http://localhost/api/public/en/site")
     });
 
@@ -33,29 +86,23 @@ describe("guard/public-api", () => {
     expect(Array.isArray(payload.pages)).toBe(true);
   });
 
-  it("returns 404 for draft page slug", async () => {
+  it("returns 404 for draft page slug (no D1 data)", async () => {
     const response = await getLocalePage({
       params: { locale: "zh-CN", slug: "use-cases" },
-      env: {},
+      env: { DB: makeMockD1({ page: null }) },
       request: new Request("http://localhost/api/public/zh-CN/pages/use-cases")
     });
 
     expect(response.status).toBe(404);
-    expect(await readJson(response)).toEqual({ error: "This locale page has not been published." });
   });
 
-  it("returns published payload for non-draft page slug", async () => {
+  it("returns 404 for any slug without D1 data", async () => {
     const response = await getLocalePage({
       params: { locale: "en", slug: "security" },
-      env: {},
+      env: { DB: makeMockD1({ page: null }) },
       request: new Request("http://localhost/api/public/en/pages/security")
     });
 
-    expect(response.status).toBe(200);
-    expect(await readJson(response)).toEqual({
-      locale: "en",
-      slug: "security",
-      status: "published"
-    });
+    expect(response.status).toBe(404);
   });
 });

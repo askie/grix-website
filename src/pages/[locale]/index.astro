@@ -3,11 +3,32 @@ import PublicLayout from "@/layouts/PublicLayout.astro";
 import HomePage from "@/templates/HomePage.astro";
 import { defaultLocale, isSupportedLocale } from "@/i18n/config";
 import { getPublishedPageBySlug } from "@/lib/content-mapper/repository";
+import { loadServerPublishedPage } from "@/lib/server/content-loader";
+import type { PageLocaleContent } from "@/lib/content-mapper/types";
 
 const rawLocale = Astro.params.locale;
 const invalidLocale = !rawLocale || !isSupportedLocale(rawLocale);
 const locale = invalidLocale ? defaultLocale : rawLocale;
-const page = invalidLocale ? null : getPublishedPageBySlug(locale, "");
+
+let page: PageLocaleContent | null = null;
+
+if (!invalidLocale) {
+  const serverPage = await loadServerPublishedPage(locale, "");
+  if (serverPage) {
+    page = {
+      locale,
+      title: serverPage.title,
+      description: serverPage.description,
+      seoTitle: serverPage.seoTitle,
+      seoDescription: serverPage.seoDescription,
+      ctaPrimaryText: serverPage.ctaPrimaryText,
+      ctaSecondaryText: serverPage.ctaSecondaryText,
+      sections: serverPage.sections
+    };
+  } else {
+    page = getPublishedPageBySlug(locale, "");
+  }
+}
 
 if (invalidLocale || !page) {
   Astro.response.status = 404;
