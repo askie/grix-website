@@ -245,8 +245,8 @@ audit_logs
 
 ```text
 site_settings       站点名、默认语言、支持语言、全站 CTA、默认 SEO
-pages               页面基本信息：slug、模板、状态、排序
-page_locales        页面多语言标题、摘要、SEO、发布状态
+pages               页面基本信息：slug、模板、生命周期状态、排序
+page_locales        页面多语言标题、摘要、SEO、语言发布状态
 page_sections       页面区块内容，使用结构化 JSON
 navigation_items    顶部导航、页脚导航
 assets              R2 文件元数据、alt、尺寸、类型
@@ -255,12 +255,18 @@ publish_revisions   发布版本记录
 audit_logs          后台关键操作记录
 ```
 
-页面状态：
+页面生命周期状态（`pages.status`）：
 
 ```text
-draft       草稿
-published   已发布
+draft       编辑中
 archived    已下线
+```
+
+语言发布状态（`page_locales.status`）：
+
+```text
+draft       语言草稿
+published   语言已发布
 ```
 
 页面模板：
@@ -294,7 +300,11 @@ media
 - 页面结构由模板控制。
 - 页面内容由区块配置。
 - 区块内容用结构化 JSON，不把整页 HTML 直接存数据库。
-- 公开站点只读取 `published` 内容。
+- `published` 的真相源是 `page_locales.status`。
+- `pages.status` 只控制页面生命周期，不单独决定公开可见性。
+- 发布动作用 D1 事务写入 `page_locales`、`publish_revisions` 和 `audit_logs`；如果同时写入发布内容快照，也必须同事务写 `page_sections`。
+- 任一写入失败必须回滚，不允许半发布。
+- 公开站点只读取 `pages.status != archived` 且 `page_locales.status = published` 的内容。
 - 草稿和预览只在后台可见。
 
 ## 9. i18n 前端架构
@@ -434,9 +444,9 @@ wrangler.toml
 公开 API：
 
 ```text
-GET /api/public/site
-GET /api/public/pages/:slug
-GET /api/public/navigation
+GET /api/public/:locale/site
+GET /api/public/:locale/pages/:slug
+GET /api/public/:locale/navigation
 GET /api/public/assets/:id
 ```
 
@@ -468,7 +478,9 @@ DELETE /api/admin/redirects/:id
 
 API 规则：
 
-- `/api/public/*` 只返回已发布内容。
+- `/api/public/:locale/*` 必须显式带 locale，且 locale 必须在 `site_settings.locales` 中。
+- `/api/public/:locale/*` 只返回已发布内容。
+- 页面已下线或该语言未发布时返回 `404`。
 - `/api/admin/*` 必须校验 Cloudflare Access 身份。
 - 所有后台写操作必须写 `audit_logs`。
 - 发布动作必须生成 `publish_revisions`。
@@ -485,6 +497,13 @@ API 规则：
 - `/api/admin/*` 和 `/admin/*` 使用同一组 Access 策略。
 - 只允许指定邮箱、邮箱域名或身份提供商用户访问。
 - 后台应用仍然要读取 Access 用户身份，并记录操作人。
+
+服务端校验要求：
+
+- 从请求头 `Cf-Access-Jwt-Assertion` 读取 Access JWT，不依赖前端传参判断身份。
+- 服务端必须校验 JWT 签名、`iss`（团队域名）和 `aud`（应用 Audience）。
+- 校验通过后再读取 `email`、`sub` 等身份字段，并按 allowlist / 角色规则授权。
+- 校验失败返回 `403`，并记录拒绝事件日志。
 
 不建议第一版自研密码登录。
 
@@ -511,9 +530,15 @@ viewer      只读查看
 - 后台编辑草稿。
 - 后台预览草稿。
 - 管理员点击发布。
-- 发布内容写入 D1 的 published 状态。
-- 公开官网只读取 published 内容。
+- 发布时把目标语言写为 `page_locales.status = published`。
+- 公开官网只读取已发布语言内容。
 - 公开页面通过 Cloudflare CDN 缓存。
+
+发布动作事务边界：
+
+- 一次发布必须在一个事务内完成：更新 `page_locales`、写入 `publish_revisions`、写入 `audit_logs`。
+- 任一写入失败即整次发布失败，不允许保留部分成功状态。
+- `publish_revisions` 要记录页面 id、locale、版本号、发布时间和发布人。
 
 渲染方式：
 
@@ -534,8 +559,9 @@ viewer      只读查看
 
 - 后台 API 不缓存。
 - 草稿预览不缓存。
-- 公开页面可以短缓存。
-- 发布后需要清理或自然过期公开页面缓存。
+- 公开页面默认短缓存（建议 `Cache-Control: public, max-age=60, s-maxage=300, stale-while-revalidate=120`）。
+- 缓存键必须包含 `locale + slug`，避免多语言内容串缓存。
+- 发布后优先主动清理对应页面缓存；若无法主动清理，依赖短 TTL 自然过期。
 
 ## 14. Tailwind CSS 规范
 
@@ -623,6 +649,18 @@ R2 bucket
 KV namespace，可选
 ```
 
+环境隔离要求：
+
+```text
+local       本地开发环境，使用本地变量和本地/测试资源
+preview     预发环境，使用独立 D1、R2、Access 策略
+production  生产环境，使用独立 D1、R2、Access 策略
+```
+
+- 生产和预发必须使用不同的 D1 数据库与 R2 bucket。
+- 生产和预发必须使用不同的 Access 应用 `aud`。
+- 通过 Wrangler 配置 `env.preview` / `env.production` 覆盖 bindings 和 vars，不混用资源。
+
 部署步骤：
 
 1. 创建官网项目。
@@ -633,11 +671,11 @@ KV namespace，可选
 6. 创建 D1 数据库并执行 migration。
 7. 创建 R2 bucket。
 8. 配置 Pages Functions / Workers bindings。
-9. 配置 Cloudflare Access 保护 `/admin/*` 和 `/api/admin/*`。
+9. 配置 Cloudflare Access 保护 `/admin/*` 和 `/api/admin/*`，并完成服务端 JWT 校验。
 10. 绑定自定义域名。
 11. 开启 HTTPS。
 12. 接入 Web Analytics。
-13. 验证公开页面、后台登录、内容发布和多语言路径。
+13. 验证公开页面、后台登录、内容发布、多语言路径和环境隔离。
 
 ## 17. 复制改造流程
 
@@ -674,10 +712,12 @@ KV namespace，可选
 - 首屏能看到产品名、定位和核心价值。
 - 所有 CTA 都指向正确产品入口。
 - 管理员可以通过 Access 登录后台。
+- `/api/admin/*` 未携带或携带无效 Access JWT 时会返回 `403`。
 - 管理员可以编辑首页内容。
 - 管理员可以新增页面并发布。
 - 已发布页面公开可访问。
 - 草稿页面公开不可访问。
+- 页面已下线或语言未发布时公开接口返回 `404`。
 - 管理员可以上传图片到 R2。
 - 每个语言的导航、CTA、FAQ、SEO 文案完整。
 - 页面没有无效链接。
@@ -688,6 +728,7 @@ KV namespace，可选
 - `html lang`、canonical、`hreflang` 正确。
 - 后台和草稿预览不被搜索引擎索引。
 - 分享图和 favicon 正常。
+- preview 与 production 使用不同的 D1、R2、Access 配置。
 
 ## 19. 后续扩展
 
