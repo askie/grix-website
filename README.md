@@ -39,4 +39,13 @@ npm run dev
 ```bash
 npm run check
 npm run build
+npm run test:guard
 ```
+
+## Governance Docs
+
+- `docs/development-plan.md`: phased execution plan and exit criteria
+- `docs/development-rules.md`: coding and workflow rules
+- `docs/layering-and-srp-rules.md`: layering boundaries and SRP checks
+- `docs/testing-plan.md`: test strategy and CI gates
+- `docs/regression-guard-tests.md`: implemented regression guard cases
