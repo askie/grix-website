@@ -1,4 +1,5 @@
 import { jsonResponse, notFound } from "../../../../shared/http/json";
+import { loadPublishedPage } from "../../../../shared/services/public-content-service";
 import { assertLocale } from "../../../../shared/validators/locale";
 
 export async function onRequestGet(context: any): Promise<Response> {
@@ -9,13 +10,14 @@ export async function onRequestGet(context: any): Promise<Response> {
     return notFound("Unsupported locale.");
   }
 
-  if (slug === "use-cases") {
-    return notFound("This locale page has not been published.");
+  const page = await loadPublishedPage(context.env, locale, slug);
+  if (!page) {
+    return notFound("This page has not been published or does not exist.");
   }
 
-  return jsonResponse({
-    locale,
-    slug,
-    status: "published"
+  return jsonResponse(page, {
+    headers: {
+      "cache-control": "public, max-age=60, s-maxage=300, stale-while-revalidate=120"
+    }
   });
 }

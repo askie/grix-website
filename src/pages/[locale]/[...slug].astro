@@ -2,13 +2,34 @@
 import PublicLayout from "@/layouts/PublicLayout.astro";
 import { defaultLocale, isSupportedLocale } from "@/i18n/config";
 import { getPublishedPageBySlug } from "@/lib/content-mapper/repository";
+import { loadServerPublishedPage } from "@/lib/server/content-loader";
+import type { PageLocaleContent } from "@/lib/content-mapper/types";
 import LandingPage from "@/templates/LandingPage.astro";
 
 const rawLocale = Astro.params.locale;
 const slug = Astro.params.slug ?? "";
 const invalidLocale = !rawLocale || !isSupportedLocale(rawLocale);
 const locale = invalidLocale ? defaultLocale : rawLocale;
-const page = invalidLocale ? null : getPublishedPageBySlug(locale, slug);
+
+let page: PageLocaleContent | null = null;
+
+if (!invalidLocale) {
+  const serverPage = await loadServerPublishedPage(locale, slug);
+  if (serverPage) {
+    page = {
+      locale,
+      title: serverPage.title,
+      description: serverPage.description,
+      seoTitle: serverPage.seoTitle,
+      seoDescription: serverPage.seoDescription,
+      ctaPrimaryText: serverPage.ctaPrimaryText,
+      ctaSecondaryText: serverPage.ctaSecondaryText,
+      sections: serverPage.sections
+    };
+  } else {
+    page = getPublishedPageBySlug(locale, slug);
+  }
+}
 
 if (invalidLocale || !page) {
   Astro.response.status = 404;

@@ -3,14 +3,38 @@ import PublicLayout from "@/layouts/PublicLayout.astro";
 import HomePage from "@/templates/HomePage.astro";
 import { defaultLocale } from "@/i18n/config";
 import { getPublishedPageBySlug } from "@/lib/content-mapper/repository";
+import { loadServerPublishedPage } from "@/lib/server/content-loader";
+import type { PageLocaleContent } from "@/lib/content-mapper/types";
 
-const page = getPublishedPageBySlug(defaultLocale, "");
+const serverPage = await loadServerPublishedPage(defaultLocale, "");
+const page: PageLocaleContent | null = serverPage
+  ? {
+      locale: defaultLocale,
+      title: serverPage.title,
+      description: serverPage.description,
+      seoTitle: serverPage.seoTitle,
+      seoDescription: serverPage.seoDescription,
+      ctaPrimaryText: serverPage.ctaPrimaryText,
+      ctaSecondaryText: serverPage.ctaSecondaryText,
+      sections: serverPage.sections
+    }
+  : getPublishedPageBySlug(defaultLocale, "");
 
 if (!page) {
-  throw new Error("Default homepage content is missing.");
+  Astro.response.status = 404;
 }
 ---
 
-<PublicLayout title={page.seoTitle} description={page.seoDescription} locale={defaultLocale}>
-  <HomePage locale={defaultLocale} page={page} />
-</PublicLayout>
+{
+  page ? (
+    <PublicLayout title={page.seoTitle} description={page.seoDescription} locale={defaultLocale}>
+      <HomePage locale={defaultLocale} page={page} />
+    </PublicLayout>
+  ) : (
+    <PublicLayout title="页面不存在" description="请求页面不存在。" locale={defaultLocale} noindex>
+      <section class="rounded-panel border border-slate-200 bg-white p-8">
+        <h1 class="text-2xl font-semibold">页面不存在</h1>
+      </section>
+    </PublicLayout>
+  )
+}

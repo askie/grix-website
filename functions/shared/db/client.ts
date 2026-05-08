@@ -1,10 +1,12 @@
+interface D1Prepared {
+  first: <T = unknown>() => Promise<T | null>;
+  all: <T = unknown>() => Promise<{ results: T[] }>;
+  run: () => Promise<unknown>;
+}
+
 interface D1Like {
-  prepare: (sql: string) => {
-    bind: (...args: unknown[]) => {
-      first: <T = unknown>() => Promise<T | null>;
-      all: <T = unknown>() => Promise<{ results: T[] }>;
-      run: () => Promise<unknown>;
-    };
+  prepare: (sql: string) => D1Prepared & {
+    bind: (...args: unknown[]) => D1Prepared;
   };
 }
 
