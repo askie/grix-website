@@ -1,0 +1,16 @@
+---
+import PublicLayout from "@/layouts/PublicLayout.astro";
+import HomePage from "@/templates/HomePage.astro";
+import { defaultLocale } from "@/i18n/config";
+import { getPublishedPageBySlug } from "@/lib/content-mapper/repository";
+
+const page = getPublishedPageBySlug(defaultLocale, "");
+
+if (!page) {
+  throw new Error("Default homepage content is missing.");
+}
+---
+
+<PublicLayout title={page.seoTitle} description={page.seoDescription} locale={defaultLocale}>
+  <HomePage locale={defaultLocale} page={page} />
+</PublicLayout>

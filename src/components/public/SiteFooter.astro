@@ -1,0 +1,16 @@
+---
+import type { LocaleCode } from "@/i18n/config";
+
+interface Props {
+  locale: LocaleCode;
+}
+
+const { locale } = Astro.props;
+---
+
+<footer class="border-t border-slate-200 py-8 text-sm text-slate-500">
+  <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 md:px-6">
+    <p>{locale === "zh-CN" ? "官网仅用于产品介绍与引流。" : "Website scope: product marketing and conversion only."}</p>
+    <p>© {new Date().getFullYear()} Grix</p>
+  </div>
+</footer>

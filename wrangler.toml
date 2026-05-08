@@ -1,0 +1,11 @@
+name = "cloudflare-web"
+compatibility_date = "2026-05-08"
+
+[assets]
+directory = "./dist/client"
+
+[env.preview]
+name = "cloudflare-web-preview"
+
+[env.production]
+name = "cloudflare-web-production"

@@ -1,0 +1,30 @@
+---
+import { localeLabels, locales, type LocaleCode } from "@/i18n/config";
+import { toLocalizedPath } from "@/i18n/routes";
+
+interface Props {
+  currentLocale: LocaleCode;
+  currentSlug?: string;
+}
+
+const { currentLocale, currentSlug = "" } = Astro.props;
+---
+
+<div class="flex items-center gap-2 text-sm">
+  {
+    locales.map((locale) => (
+      <a
+        href={toLocalizedPath(locale, currentSlug)}
+        class:list={[
+          "rounded-full px-3 py-1 transition",
+          locale === currentLocale
+            ? "bg-brand-600 text-white"
+            : "bg-white text-slate-700 hover:bg-brand-50"
+        ]}
+        aria-current={locale === currentLocale ? "page" : undefined}
+      >
+        {localeLabels[locale]}
+      </a>
+    ))
+  }
+</div>

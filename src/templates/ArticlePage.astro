@@ -1,0 +1,14 @@
+---
+import type { PageLocaleContent } from "@/lib/content-mapper/types";
+
+interface Props {
+  page: PageLocaleContent;
+}
+
+const { page } = Astro.props;
+---
+
+<article class="rounded-panel border border-slate-200 bg-white p-8">
+  <h1 class="text-3xl font-semibold text-slate-900">{page.title}</h1>
+  <p class="mt-4 text-slate-600">{page.description}</p>
+</article>

@@ -1,0 +1,22 @@
+---
+import AdminShell from "@/components/admin/AdminShell";
+import AdminLayout from "@/layouts/AdminLayout.astro";
+import { listAdminPages } from "@/lib/content-mapper/repository";
+
+const pages = listAdminPages();
+---
+
+<AdminLayout title="Admin Pages">
+  <AdminShell title="Pages" client:load>
+    <div class="space-y-3">
+      {
+        pages.map((page) => (
+          <a href={`/admin/pages/${page.slug || "home"}`} class="block rounded-lg border border-slate-200 p-3 hover:border-brand-500">
+            <p class="font-medium text-slate-900">/{page.slug || ""}</p>
+            <p class="text-xs uppercase tracking-wide text-slate-500">{page.status}</p>
+          </a>
+        ))
+      }
+    </div>
+  </AdminShell>
+</AdminLayout>
