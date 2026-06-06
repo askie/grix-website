@@ -15,6 +15,9 @@ interface Props {
 
 const { title, description, locale = defaultLocale, slug = "", noindex = false } = Astro.props;
 const alternates = buildAlternates(slug);
+const canonicalBase = "https://grix.pub";
+const canonicalPath = locale === defaultLocale ? `/${slug}` : `/en/${slug}`;
+const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canonicalBase;
 ---
 
 <!doctype html>
@@ -25,11 +28,24 @@ const alternates = buildAlternates(slug);
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
+    <link rel="canonical" href={canonical} />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Grix" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <!-- hreflang alternates -->
     {
       alternates.map((alternate) => (
         <link rel="alternate" hreflang={alternate.locale} href={alternate.href} />
       ))
     }
+    <script src="https://grix.dhf.pub/public/widget/widget.js" data-site-key="wk_8mPOzKR8rU06nMI-qXQkWM18" defer></script>
   </head>
   <body class="main-shell font-sans text-slate-900">
     <SiteHeader currentLocale={locale} currentSlug={slug} />

@@ -6,11 +6,43 @@ interface Props {
 }
 
 const { locale } = Astro.props;
+const productUrl = "https://grix.dhf.pub";
+const isCN = locale === "zh-CN";
 ---
 
-<footer class="border-t border-slate-200 py-8 text-sm text-slate-500">
-  <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 md:px-6">
-    <p>{locale === "zh-CN" ? "官网仅用于产品介绍与引流。" : "Website scope: product marketing and conversion only."}</p>
-    <p>© {new Date().getFullYear()} Grix</p>
+<footer class="border-t border-slate-200 py-10 text-sm text-slate-500">
+  <div class="mx-auto max-w-6xl px-4 md:px-6">
+    <div class="flex flex-col gap-8 md:flex-row md:justify-between">
+      <div>
+        <p class="text-base font-semibold text-slate-800">Grix</p>
+        <p class="mt-1 max-w-xs text-slate-500">
+          {isCN ? "AI 优先的人类与 Agent 混合即时通讯平台" : "AI-first messaging for humans and agents"}
+        </p>
+      </div>
+      <nav class="flex gap-8">
+        <div>
+          <p class="font-medium text-slate-700">{isCN ? "产品" : "Product"}</p>
+          <ul class="mt-2 space-y-2">
+            <li><a href="#features" class="hover:text-brand-600">{isCN ? "核心能力" : "Features"}</a></li>
+            <li><a href="#use-cases" class="hover:text-brand-600">{isCN ? "使用场景" : "Use Cases"}</a></li>
+            <li><a href="#how-it-works" class="hover:text-brand-600">{isCN ? "怎么开始" : "How it works"}</a></li>
+            <li><a href="#faq" class="hover:text-brand-600">{isCN ? "常见问题" : "FAQ"}</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="font-medium text-slate-700">{isCN ? "开始使用" : "Get started"}</p>
+          <ul class="mt-2 space-y-2">
+            <li><a href={productUrl} class="hover:text-brand-600">{isCN ? "Web 版" : "Web app"}</a></li>
+            <li><a href={productUrl} class="hover:text-brand-600">{isCN ? "iOS 下载" : "iOS"}</a></li>
+            <li><a href={productUrl} class="hover:text-brand-600">{isCN ? "Android 下载" : "Android"}</a></li>
+            <li><a href={productUrl} class="hover:text-brand-600">{isCN ? "桌面端" : "Desktop"}</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="mt-8 border-t border-slate-100 pt-6 flex flex-col gap-1">
+      <p>{isCN ? "本站仅用于产品介绍，注册与使用请前往" : "This site is for product introduction only. Sign up and use at"} <a href={productUrl} class="hover:text-brand-600 underline underline-offset-2">{productUrl}</a></p>
+      <p>© {new Date().getFullYear()} Grix</p>
+    </div>
   </div>
 </footer>

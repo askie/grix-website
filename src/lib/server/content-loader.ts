@@ -61,6 +61,8 @@ export async function loadServerPublishedPage(
 
   const normalizedSlug = slug.trim().replace(/^\/+|\/+$/g, "") || "";
 
+  try {
+
   const pageRow = await db
     .prepare(
       `SELECT p.id, p.slug, p.template
@@ -126,6 +128,9 @@ export async function loadServerPublishedPage(
     ctaSecondaryText: defaultCta.secondary,
     sections
   };
+  } catch {
+    return null;
+  }
 }
 
 export async function loadServerSiteSettings(): Promise<{

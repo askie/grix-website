@@ -3,6 +3,8 @@ import CTASection from "@/components/public/CTASection.astro";
 import FAQSection from "@/components/public/FAQSection.astro";
 import FeatureGrid from "@/components/public/FeatureGrid.astro";
 import Hero from "@/components/public/Hero.astro";
+import HowItWorks from "@/components/public/HowItWorks.astro";
+import UseCases from "@/components/public/UseCases.astro";
 import type { LocaleCode } from "@/i18n/config";
 import { resolveProductEntryUrl } from "@/lib/cta/product-url";
 import type { PageLocaleContent } from "@/lib/content-mapper/types";
@@ -13,9 +15,42 @@ interface Props {
 }
 
 const { locale, page } = Astro.props;
-const hero = page.sections.find((item) => item.type === "hero");
-const features = page.sections.find((item) => item.type === "features");
+const hero = page.sections.find((s) => s.type === "hero");
+const featuresSection = page.sections.find((s) => s.type === "features");
+const useCasesSection = page.sections.find((s) => s.type === "use_cases");
+const howItWorksSection = page.sections.find((s) => s.type === "how_it_works");
+const faqSection = page.sections.find((s) => s.type === "faq");
 const productUrl = resolveProductEntryUrl();
+
+// 将 "icon｜title｜desc" 格式的 item 字符串解析为结构化对象
+function parseIconItems(items: string[] = []) {
+  return items.map((item) => {
+    const sep = "｜";
+    const idx = item.indexOf(sep);
+    if (idx === -1) return { icon: "", title: item, desc: "" };
+    const iconTitle = item.slice(0, idx);
+    const desc = item.slice(idx + sep.length);
+    // iconTitle 格式为 "🤖 标题文字"
+    const spaceIdx = iconTitle.indexOf(" ");
+    const icon = spaceIdx !== -1 ? iconTitle.slice(0, spaceIdx) : "";
+    const title = spaceIdx !== -1 ? iconTitle.slice(spaceIdx + 1) : iconTitle;
+    return { icon, title, desc };
+  });
+}
+
+// 解析 FAQ items："问题｜答案"
+function parseFAQItems(items: string[] = []) {
+  return items.map((item) => {
+    const sep = "｜";
+    const idx = item.indexOf(sep);
+    if (idx === -1) return { q: item, a: "" };
+    return { q: item.slice(0, idx), a: item.slice(idx + sep.length) };
+  });
+}
+
+const featureItems = parseIconItems(featuresSection?.items);
+const useCaseItems = parseIconItems(useCasesSection?.items);
+const faqItems = parseFAQItems(faqSection?.items);
 ---
 
 <Hero
@@ -28,19 +63,47 @@ const productUrl = resolveProductEntryUrl();
 />
 
 {
-  features?.items && (
-    <FeatureGrid title={features.title} description={features.content} items={features.items} />
+  featuresSection && featureItems.length > 0 && (
+    <FeatureGrid
+      title={featuresSection.title}
+      description={featuresSection.content}
+      items={featureItems}
+    />
   )
 }
 
-<FAQSection locale={locale} />
+{
+  useCasesSection && useCaseItems.length > 0 && (
+    <UseCases
+      title={useCasesSection.title}
+      description={useCasesSection.content}
+      items={useCaseItems}
+    />
+  )
+}
+
+{
+  howItWorksSection && howItWorksSection.items && howItWorksSection.items.length > 0 && (
+    <HowItWorks
+      title={howItWorksSection.title}
+      description={howItWorksSection.content}
+      steps={howItWorksSection.items}
+    />
+  )
+}
+
+{
+  faqSection && faqItems.length > 0 && (
+    <FAQSection title={faqSection.title} items={faqItems} />
+  )
+}
 
 <CTASection
-  title={locale === "zh-CN" ? "准备开始了吗？" : "Ready to start?"}
+  title={locale === "zh-CN" ? "现在就开始使用 Grix" : "Start using Grix today"}
   description={
     locale === "zh-CN"
-      ? "官网负责介绍，正式注册与使用在产品站完成。"
-      : "The website introduces the product. Sign-up and usage happen in the product app."
+      ? "下载客户端或直接打开 Web 版，五分钟完成配置，让 Agent 在你的会话中工作起来。"
+      : "Download the app or open the web version. Set up in five minutes and put your Agent to work."
   }
   buttonText={page.ctaPrimaryText}
   href={productUrl}

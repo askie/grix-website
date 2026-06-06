@@ -1,11 +1,39 @@
-name = "cloudflare-web"
+name = "grix-website"
 compatibility_date = "2026-05-08"
+account_id = "94542a2022ab7e65a4b6a3266ba7f6d1"
 
 [assets]
 directory = "./dist/client"
 
+[[d1_databases]]
+binding = "DB"
+database_name = "grix-website-db"
+database_id = "69477285-31f9-4786-8c4a-c601401117e7"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "grix-website-media"
+
 [env.preview]
-name = "cloudflare-web-preview"
+name = "grix-website-preview"
+
+[[env.preview.d1_databases]]
+binding = "DB"
+database_name = "grix-website-db-preview"
+database_id = "69477285-31f9-4786-8c4a-c601401117e7"
+
+[[env.preview.r2_buckets]]
+binding = "BUCKET"
+bucket_name = "grix-website-media-preview"
 
 [env.production]
-name = "cloudflare-web-production"
+name = "grix-website-production"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "grix-website-db-production"
+database_id = ""
+
+[[env.production.r2_buckets]]
+binding = "BUCKET"
+bucket_name = "grix-website-media-production"

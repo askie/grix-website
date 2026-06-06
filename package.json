@@ -5,13 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && cp -r dist/client/* dist/ && echo 'export { default } from \"./server/entry.mjs\";' > dist/_worker.js",
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
     "test:guard": "vitest run tests/guard",
     "test:watch": "vitest",
-    "ci:guard": "npm run check && npm run build && npm run test:guard"
+    "ci:guard": "npm run check && npm run build && npm run test:guard",
+    "deploy:preview": "npm run build && wrangler pages deploy dist --project-name grix-website",
+    "deploy:production": "npm run ci:guard && wrangler pages deploy dist --project-name grix-website --branch main"
   },
   "dependencies": {
     "@astrojs/cloudflare": "latest",

@@ -3,36 +3,71 @@ import type { PageLocaleContent } from "@/lib/content-mapper/types";
 export const zhCNHome: PageLocaleContent = {
   locale: "zh-CN",
   title: "Grix",
-  description: "专业的人类和 Agent 混合即时通讯软件",
-  seoTitle: "Grix - 专业的人类和 Agent 混合即时通讯软件",
+  description: "让 AI Agent 在你的真实对话中工作",
+  seoTitle: "Grix - 让 AI Agent 在你的对话中工作",
   seoDescription:
-    "Grix 帮助企业把人、Agent 和工作流放在同一个即时通讯协作空间中，让 Agent 调度更可靠，让人可以参与关键决策。",
-  ctaPrimaryText: "立即注册",
-  ctaSecondaryText: "登录使用",
+    "Grix 是 AI 优先的即时通讯平台。在真实会话中部署 AI Agent，自动代你回复消息、处理语音通话、一键安装 Agent 能力包，全平台覆盖 iOS / Android / Web / 桌面端。",
+  ctaPrimaryText: "立即使用",
+  ctaSecondaryText: "登录",
   sections: [
     {
       id: "hero",
       type: "hero",
-      title: "让人和 Agent 在同一个会话中可靠协作",
-      content: "Grix 把即时通讯、Agent 协作和人工审批放在同一个工作空间。"
-    },
-    {
-      id: "problem",
-      type: "problem",
-      title: "企业的核心问题",
-      content: "多个 Agent 并行后，真正难点是如何保证人、Agent 和流程协作可靠。"
+      title: "让 AI Agent 在你的对话里替你工作",
+      content:
+        "Grix 是 AI 优先的即时通讯平台。把 AI Agent 直接接入你的聊天会话，让它代你自动回复、处理通话、完成任务。你随时可以接管，Agent 在后台持续工作。"
     },
     {
       id: "features",
       type: "features",
       title: "核心能力",
-      content: "第一版官网重点展示可理解的核心能力。",
+      content: "六项能力，让 AI Agent 真正融入你的日常通讯。",
       items: [
-        "人类和 Agent 混合会话",
-        "可靠的 Agent 调度",
-        "企业级工作流协作",
-        "人工审批与接管",
-        "全过程可追踪"
+        "🤖 Agent 托管自动回复｜Agent 代你监听会话，自动生成回复并以你的身份发出，你随时介入接管",
+        "📞 语音通话 + AI 实时接管｜接听电话时，AI 可以实时接管，对话结束后生成摘要",
+        "🥚 Eggs 市场｜海量 Agent 能力包，一键安装到你的 Agent，立刻扩展它的技能边界",
+        "⚡ 全双工流式对话｜消息逐字实时推送，告别等待，每一条 AI 回复即时可见",
+        "👤 多 Agent 管理｜创建并管理多个 Agent，不同场景切换不同助手",
+        "📱 全平台覆盖｜iOS、Android、Web、macOS、Windows、HarmonyOS，随时随地在线"
+      ]
+    },
+    {
+      id: "use_cases",
+      type: "use_cases",
+      title: "谁在用 Grix",
+      content: "从个人到团队，Grix 适合任何需要 AI 在通讯中实际工作的场景。",
+      items: [
+        "📞 客服与售前团队｜让 Agent 24 小时自动接待咨询，复杂问题自动转交人工，告别漏单",
+        "🏢 企业内部协作｜Agent 在群聊中自动处理任务、回答知识库问题、推进工作流",
+        "💼 个人效率提升｜外出、开会时让 Agent 替你回消息，重要消息按你的风格精准回复",
+        "🔧 开发者与创作者｜通过 OpenClaw / Claude 等协议接入自有 Agent，定制专属工作助手"
+      ]
+    },
+    {
+      id: "how_it_works",
+      type: "how_it_works",
+      title: "怎么开始",
+      content: "五步上手，五分钟让 Agent 在你的会话里工作起来。",
+      items: [
+        "注册 Grix 账号，下载你的平台客户端",
+        "在 AI 管理页面创建一个 Agent，选择模型和人格设定",
+        "打开任意聊天会话，在对话栏开启 Agent 托管",
+        "Agent 开始监听消息并自动回复，你可以随时查看和接管",
+        "通过 Eggs 市场安装能力包，持续扩展 Agent 技能"
+      ]
+    },
+    {
+      id: "faq",
+      type: "faq",
+      title: "常见问题",
+      content: "",
+      items: [
+        "Grix 是聊天工具还是 AI 平台？｜两者兼有。Grix 本身是完整可用的即时通讯 App，同时内置了 AI Agent 托管能力。你可以只用聊天，也可以把 Agent 深度接入工作流。",
+        "Agent 回复对方能看出是 AI 发的吗？｜看不出来。Agent 以你的账号和名义发出消息，对方收到的就是你的正常消息。",
+        "语音通话时 AI 怎么参与？｜通话中你可以随时开启 AI 接管，AI 以你的声线和语气接管对话，通话结束后自动生成摘要和行动项。",
+        "Eggs 市场是什么？｜Eggs（龙虾卵）是 Agent 能力定义包。你可以从市场一键安装到自己的 Agent，为它添加新技能，比如客服话术、代码审查、日程管理等。",
+        "支持哪些 AI 模型？｜支持 OpenAI、Claude、Gemini、Qwen（通义千问）、DeepSeek、本地 Ollama 等主流模型，也支持通过 OpenClaw 协议接入自部署 Agent。",
+        "我的消息和数据安全吗？｜消息全程加密传输。你的对话内容不会被用于模型训练。本地 LLM 方案可实现完全私有化部署。"
       ]
     }
   ]
