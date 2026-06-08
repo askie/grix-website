@@ -12,7 +12,8 @@ const { currentLocale, currentSlug = "" } = Astro.props;
 const navItems = [
   { label: currentLocale === "zh-CN" ? "能力" : "Features", href: "#features" },
   { label: currentLocale === "zh-CN" ? "场景" : "Use Cases", href: "#use-cases" },
-  { label: currentLocale === "zh-CN" ? "常见问题" : "FAQ", href: "#faq" }
+  { label: currentLocale === "zh-CN" ? "常见问题" : "FAQ", href: "#faq" },
+  { label: currentLocale === "zh-CN" ? "用户手册" : "Docs", href: "/docs" }
 ];
 ---
 
