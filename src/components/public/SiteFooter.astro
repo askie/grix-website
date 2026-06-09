@@ -27,7 +27,7 @@ const isCN = locale === "zh-CN";
             <li><a href="#use-cases" class="hover:text-brand-600">{isCN ? "使用场景" : "Use Cases"}</a></li>
             <li><a href="#how-it-works" class="hover:text-brand-600">{isCN ? "怎么开始" : "How it works"}</a></li>
             <li><a href="#faq" class="hover:text-brand-600">{isCN ? "常见问题" : "FAQ"}</a></li>
-            <li><a href="/docs" class="hover:text-brand-600">{isCN ? "用户手册" : "User Guide"}</a></li>
+            <li><a href={isCN ? "/zh-CN/docs" : "/docs"} class="hover:text-brand-600">{isCN ? "用户手册" : "User Guide"}</a></li>
           </ul>
         </div>
         <div>

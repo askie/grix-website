@@ -1,0 +1,60 @@
+---
+import PublicLayout from "@/layouts/PublicLayout.astro";
+import { getCollection } from "astro:content";
+import { isSupportedLocale, defaultLocale, type LocaleCode } from "@/i18n/config";
+
+const rawLocale = Astro.params.locale;
+const invalidLocale = !rawLocale || !isSupportedLocale(rawLocale);
+const locale: LocaleCode = invalidLocale ? defaultLocale : rawLocale;
+
+if (invalidLocale) {
+  Astro.response.status = 404;
+}
+
+const prefix = `${locale.toLowerCase()}/`;
+const allDocs = await getCollection("docs");
+const docs = allDocs
+  .filter((d) => d.id.startsWith(prefix))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const isCN = locale === "zh-CN";
+const pageTitle = isCN ? "Grix 用户手册 - 帮助文档" : "Grix Docs - User Guide";
+const pageDesc = isCN
+  ? "Grix 用户操作手册，涵盖产品概述、快速开始、多 Agent 编排、聊天、语音通话、安全等全面指南。"
+  : "Complete guide to Grix — product overview, quick start, multi-agent orchestration, chat, voice calls, security, and more.";
+---
+
+{!invalidLocale && docs.length > 0 ? (
+  <PublicLayout title={pageTitle} description={pageDesc} locale={locale} slug="docs">
+    <nav class="text-sm text-slate-500 mb-4">
+      <a href={`/${locale}`} class="hover:text-brand-600">{isCN ? "首页" : "Home"}</a>
+      <span class="mx-1">/</span>
+      <span class="text-slate-700">{isCN ? "用户手册" : "Docs"}</span>
+    </nav>
+
+    <section class="rounded-panel border border-slate-200 bg-white p-6 md:p-8">
+      <h1 class="text-3xl font-semibold text-slate-900 mb-2">{isCN ? "Grix 用户手册" : "Grix Docs"}</h1>
+      <p class="text-slate-500 mb-8">{isCN ? "多 Agent 编排工作台，人与 AI 无缝协作的即时通讯平台。" : "AI-first messaging for humans and agents. Multi-agent orchestration workbench."}</p>
+
+      <ul class="space-y-3">
+        {docs.map((doc) => {
+          const slug = doc.id.replace(prefix, "");
+          return (
+            <li>
+              <a href={`/${locale}/docs/${slug}`} class="group block rounded-lg border border-slate-100 p-4 hover:border-brand-100 hover:bg-brand-50/50 transition-colors">
+                <h2 class="text-lg font-medium text-slate-800 group-hover:text-brand-600">{doc.data.title}</h2>
+                <p class="text-sm text-slate-500 mt-1">{doc.data.description}</p>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  </PublicLayout>
+) : (
+  <PublicLayout title={isCN ? "页面不存在" : "Page not found"} description={isCN ? "请求页面不存在。" : "Requested page was not found."} locale={locale} noindex>
+    <section class="rounded-panel border border-slate-200 bg-white p-8">
+      <h1 class="text-2xl font-semibold">{isCN ? "页面不存在" : "Page not found"}</h1>
+    </section>
+  </PublicLayout>
+)}

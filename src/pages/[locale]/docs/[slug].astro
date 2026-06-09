@@ -1,0 +1,84 @@
+---
+import PublicLayout from "@/layouts/PublicLayout.astro";
+import { getCollection, render } from "astro:content";
+import { isSupportedLocale, defaultLocale, type LocaleCode } from "@/i18n/config";
+
+const rawLocale = Astro.params.locale;
+const invalidLocale = !rawLocale || !isSupportedLocale(rawLocale);
+const locale: LocaleCode = invalidLocale ? defaultLocale : rawLocale;
+const { slug } = Astro.params;
+
+if (invalidLocale) {
+  Astro.response.status = 404;
+}
+
+const prefix = `${locale.toLowerCase()}/`;
+const allDocs = await getCollection("docs");
+const docs = allDocs
+  .filter((d) => d.id.startsWith(prefix))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const docId = `${prefix}${slug}`;
+const doc = docs.find((d) => d.id === docId);
+
+if (!doc && !invalidLocale) {
+  return Astro.redirect(`/${locale}/docs`);
+}
+
+const isCN = locale === "zh-CN";
+let Content: any = null;
+let prev: any = null;
+let next: any = null;
+let title = "";
+let description = "";
+let slugOnly = "";
+
+if (doc) {
+  const rendered = await render(doc);
+  Content = rendered.Content;
+  title = doc.data.title;
+  description = doc.data.description;
+  slugOnly = doc.id.replace(prefix, "");
+  const currentIndex = docs.findIndex((d) => d.id === doc.id);
+  prev = currentIndex > 0 ? docs[currentIndex - 1] : null;
+  next = currentIndex < docs.length - 1 ? docs[currentIndex + 1] : null;
+}
+---
+
+{Content ? (
+  <PublicLayout
+    title={`${title} - Grix ${isCN ? "用户手册" : "Docs"}`}
+    description={description}
+    locale={locale}
+    slug={`docs/${slugOnly}`}
+  >
+    <nav class="text-sm text-slate-500 mb-4">
+      <a href={`/${locale}`} class="hover:text-brand-600">{isCN ? "首页" : "Home"}</a>
+      <span class="mx-1">/</span>
+      <a href={`/${locale}/docs`} class="hover:text-brand-600">{isCN ? "用户手册" : "Docs"}</a>
+      <span class="mx-1">/</span>
+      <span class="text-slate-700">{title}</span>
+    </nav>
+
+    <article class="rounded-panel border border-slate-200 bg-white p-6 md:p-8 prose prose-slate max-w-none">
+      <h1 class="text-3xl font-semibold text-slate-900 mb-2">{title}</h1>
+      <p class="text-slate-500 text-base mb-8 not-prose">{description}</p>
+      <Content />
+    </article>
+
+    <nav class="flex justify-between mt-6 text-sm">
+      {prev ? (
+        <a href={`/${locale}/docs/${prev.id.replace(prefix, "")}`} class="text-brand-600 hover:underline">← {prev.data.title}</a>
+      ) : <span />}
+      {next ? (
+        <a href={`/${locale}/docs/${next.id.replace(prefix, "")}`} class="text-brand-600 hover:underline">{next.data.title} →</a>
+      ) : <span />}
+    </nav>
+  </PublicLayout>
+) : (
+  <PublicLayout title={isCN ? "页面不存在" : "Page not found"} description={isCN ? "请求页面不存在。" : "Requested page was not found."} locale={locale} noindex>
+    <section class="rounded-panel border border-slate-200 bg-white p-8">
+      <h1 class="text-2xl font-semibold">{isCN ? "页面不存在" : "Page not found"}</h1>
+    </section>
+  </PublicLayout>
+)}

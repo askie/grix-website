@@ -1,32 +1,41 @@
 ---
 import PublicLayout from "@/layouts/PublicLayout.astro";
 import { getCollection, render } from "astro:content";
+import { defaultLocale } from "@/i18n/config";
 
+const locale = defaultLocale;
+const prefix = `${locale.toLowerCase()}/`;
 const { slug } = Astro.params;
-const docs = await getCollection("docs");
-const doc = docs.find((d) => d.id === slug);
+const allDocs = await getCollection("docs");
+const docs = allDocs
+  .filter((d) => d.id.startsWith(prefix))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const docId = `${prefix}${slug}`;
+const doc = docs.find((d) => d.id === docId);
 
 if (!doc) {
   return Astro.redirect("/docs");
 }
 
 const { Content } = await render(doc);
-const sorted = docs.sort((a, b) => a.data.order - b.data.order);
-const currentIndex = sorted.findIndex((d) => d.id === doc.id);
-const prev = currentIndex > 0 ? sorted[currentIndex - 1] : null;
-const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
+const currentIndex = docs.findIndex((d) => d.id === doc.id);
+const prev = currentIndex > 0 ? docs[currentIndex - 1] : null;
+const next = currentIndex < docs.length - 1 ? docs[currentIndex + 1] : null;
+
+const slugOnly = doc.id.replace(prefix, "");
 ---
 
 <PublicLayout
-  title={`${doc.data.title} - Grix 用户手册`}
+  title={`${doc.data.title} - Grix Docs`}
   description={doc.data.description}
-  locale="zh-CN"
-  slug={`docs/${doc.id}`}
+  locale={locale}
+  slug={`docs/${slugOnly}`}
 >
   <nav class="text-sm text-slate-500 mb-4">
-    <a href="/" class="hover:text-brand-600">首页</a>
+    <a href="/" class="hover:text-brand-600">Home</a>
     <span class="mx-1">/</span>
-    <a href="/docs" class="hover:text-brand-600">用户手册</a>
+    <a href="/docs" class="hover:text-brand-600">Docs</a>
     <span class="mx-1">/</span>
     <span class="text-slate-700">{doc.data.title}</span>
   </nav>
@@ -39,10 +48,10 @@ const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
 
   <nav class="flex justify-between mt-6 text-sm">
     {prev ? (
-      <a href={`/docs/${prev.id}`} class="text-brand-600 hover:underline">← {prev.data.title}</a>
+      <a href={`/docs/${prev.id.replace(prefix, "")}`} class="text-brand-600 hover:underline">← {prev.data.title}</a>
     ) : <span />}
     {next ? (
-      <a href={`/docs/${next.id}`} class="text-brand-600 hover:underline">{next.data.title} →</a>
+      <a href={`/docs/${next.id.replace(prefix, "")}`} class="text-brand-600 hover:underline">{next.data.title} →</a>
     ) : <span />}
   </nav>
 </PublicLayout>
