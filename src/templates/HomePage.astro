@@ -62,6 +62,14 @@ const faqItems = parseFAQItems(faqSection?.items);
   secondaryHref={productUrl}
 />
 
+<CTASection
+  title=""
+  description=""
+  buttonText=""
+  href=""
+  locale={locale}
+/>
+
 {
   featuresSection && featureItems.length > 0 && (
     <FeatureGrid
@@ -97,11 +105,3 @@ const faqItems = parseFAQItems(faqSection?.items);
     <FAQSection title={faqSection.title} items={faqItems} />
   )
 }
-
-<CTASection
-  title=""
-  description=""
-  buttonText=""
-  href=""
-  locale={locale}
-/>
