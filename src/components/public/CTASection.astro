@@ -1,18 +1,95 @@
 ---
+import type { LocaleCode } from "@/i18n/config";
+
 interface Props {
   title: string;
   description: string;
   buttonText: string;
   href: string;
+  locale: LocaleCode;
 }
 
-const { title, description, buttonText, href } = Astro.props;
+const { locale } = Astro.props;
+const isCN = locale === "zh-CN";
+
+const platforms = [
+  {
+    name: "iOS",
+    label: isCN ? "iOS (TestFlight)" : "iOS (TestFlight)",
+    href: "https://testflight.apple.com/join/D8SRWBam",
+    icon: "🍎",
+  },
+  {
+    name: "Android",
+    label: "Android",
+    href: "https://github.com/askie/grix/releases/latest/download/Grix-Android.apk",
+    icon: "🤖",
+  },
+  {
+    name: "macOS",
+    label: "macOS",
+    href: "https://github.com/askie/grix/releases/latest/download/Grix-macOS.zip",
+    icon: "💻",
+  },
+  {
+    name: "Windows",
+    label: "Windows",
+    href: "https://github.com/askie/grix/releases/latest/download/Grix-Windows.zip",
+    icon: "🪟",
+  },
+  {
+    name: "Linux",
+    label: "Linux",
+    href: "https://github.com/askie/grix/releases/latest/download/Grix-Linux-x64.tar.gz",
+    icon: "🐧",
+  },
+  {
+    name: "Web",
+    label: "Web",
+    href: "https://grix.im",
+    icon: "🌐",
+  },
+];
+
+const qrUrl =
+  "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Ftestflight.apple.com%2Fjoin%2FD8SRWBam";
+const testflightUrl = "https://testflight.apple.com/join/D8SRWBam";
 ---
 
 <section class="rounded-panel border border-brand-100 bg-brand-50 p-6 md:p-8">
-  <h2 class="text-2xl font-semibold text-brand-700">{title}</h2>
-  <p class="mt-2 max-w-3xl text-slate-700">{description}</p>
-  <a href={href} class="mt-5 inline-block rounded-full bg-brand-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-700">
-    {buttonText}
-  </a>
+  <h2 class="text-2xl font-semibold text-brand-700">
+    {isCN ? "下载 Grix" : "Download Grix"}
+  </h2>
+  <p class="mt-2 max-w-3xl text-slate-700">
+    {isCN
+      ? "支持 iOS、Android、macOS、Windows、Linux 和 Web，随时随地使用。"
+      : "Available on iOS, Android, macOS, Windows, Linux, and Web. Use it anywhere."}
+  </p>
+
+  <div class="mt-6 flex flex-col gap-6 md:flex-row md:items-start">
+    <!-- iOS QR Code -->
+    <div class="flex flex-col items-center gap-2 rounded-xl border border-slate-200 bg-white p-4">
+      <a href={testflightUrl} target="_blank" rel="noopener noreferrer">
+        <img src={qrUrl} alt="TestFlight QR Code" class="h-[140px] w-[140px]" />
+      </a>
+      <span class="text-xs text-slate-500">
+        {isCN ? "扫码加入 iOS 测试" : "Scan for iOS beta"}
+      </span>
+    </div>
+
+    <!-- Platform download links -->
+    <div class="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-3">
+      {platforms.map((p) => (
+        <a
+          href={p.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
+        >
+          <span class="text-lg">{p.icon}</span>
+          {p.label}
+        </a>
+      ))}
+    </div>
+  </div>
 </section>

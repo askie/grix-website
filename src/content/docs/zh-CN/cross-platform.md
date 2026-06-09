@@ -8,15 +8,15 @@ Grix 基于 Flutter 实现 7 平台全覆盖，针对各平台深度适配。
 
 ## 平台特色
 
-| 平台 | 特色能力 |
-|------|---------|
-| iOS | 推送、相机扫码、Apple 登录、CallKit |
-| Android | 推送、相机扫码、Google 登录 |
-| macOS | 系统托盘、Agent 工具栏、文件拖拽 |
-| Windows | 系统托盘、Agent 工具栏、开机自启 |
-| Linux | 系统托盘、Agent 工具栏 |
-| Web (PWA) | 离线缓存、浏览器通知、SW |
-| 鸿蒙 | 原生适配 |
+| 平台 | 特色能力 | 下载 |
+|------|---------|------|
+| iOS | 推送、相机扫码、Apple 登录、CallKit | [TestFlight](https://testflight.apple.com/join/D8SRWBam) |
+| Android | 推送、相机扫码、Google 登录 | [APK 下载](https://github.com/askie/grix/releases/latest/download/Grix-Android.apk) |
+| macOS | 系统托盘、Agent 工具栏、文件拖拽 | [macOS 下载](https://github.com/askie/grix/releases/latest/download/Grix-macOS.zip) |
+| Windows | 系统托盘、Agent 工具栏、开机自启 | [Windows 下载](https://github.com/askie/grix/releases/latest/download/Grix-Windows.zip) |
+| Linux | 系统托盘、Agent 工具栏 | [Linux 下载](https://github.com/askie/grix/releases/latest/download/Grix-Linux-x64.tar.gz) |
+| Web (PWA) | 离线缓存、浏览器通知、SW | [在线使用](https://grix.im) |
+| 鸿蒙 | 原生适配 | 即将上线 |
 
 ## Web 端
 

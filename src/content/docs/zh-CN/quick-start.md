@@ -19,11 +19,13 @@ order: 2
 
 ### 第 1 步：下载安装桌面版
 
-| 平台 | 下载说明 |
+| 平台 | 下载链接 |
 |------|---------|
-| macOS | 下载 `.dmg`，拖入 Applications |
-| Windows | 下载 `.exe` 安装包，双击安装 |
-| Linux | 下载 `.AppImage` 或对应包格式 |
+| macOS | [Grix-macOS.zip](https://github.com/askie/grix/releases/latest/download/Grix-macOS.zip) — 下载后解压，拖入 Applications |
+| Windows | [Grix-Windows.zip](https://github.com/askie/grix/releases/latest/download/Grix-Windows.zip) — 下载后解压，双击安装 |
+| Linux | [Grix-Linux-x64.tar.gz](https://github.com/askie/grix/releases/latest/download/Grix-Linux-x64.tar.gz) — 下载后解压运行 |
+
+> 💡 所有链接始终指向最新版本。历史版本请访问 [Releases 页面](https://github.com/askie/grix/releases)。
 
 ### 第 2 步：注册/登录 Grix 账号
 
