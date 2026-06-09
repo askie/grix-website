@@ -6,18 +6,18 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          50: "#eff9ff",
-          100: "#dff1ff",
-          500: "#1477ff",
-          600: "#0f61d4",
-          700: "#0f4da7"
+          50: "#fff5f5",
+          100: "#ffd9dc",
+          500: "#e63946",
+          600: "#a51d2a",
+          700: "#6e0f18"
         }
       },
       borderRadius: {
         panel: "14px"
       },
       boxShadow: {
-        panel: "0 10px 30px -20px rgba(15, 97, 212, 0.35)"
+        panel: "0 10px 30px -20px rgba(230, 57, 70, 0.25)"
       }
     }
   },
