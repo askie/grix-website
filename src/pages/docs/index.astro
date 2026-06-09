@@ -13,7 +13,7 @@ const sorted = docs.sort((a, b) => a.data.order - b.data.order);
   slug="docs"
 >
   <nav class="text-sm text-slate-500 mb-4">
-    <a href="/" class="hover:text-blue-600">首页</a>
+    <a href="/" class="hover:text-brand-600">首页</a>
     <span class="mx-1">/</span>
     <span class="text-slate-700">用户手册</span>
   </nav>
@@ -25,8 +25,8 @@ const sorted = docs.sort((a, b) => a.data.order - b.data.order);
     <ul class="space-y-3">
       {sorted.map((doc) => (
         <li>
-          <a href={`/docs/${doc.id}`} class="group block rounded-lg border border-slate-100 p-4 hover:border-blue-200 hover:bg-blue-50/50 transition-colors">
-            <h2 class="text-lg font-medium text-slate-800 group-hover:text-blue-600">{doc.data.title}</h2>
+          <a href={`/docs/${doc.id}`} class="group block rounded-lg border border-slate-100 p-4 hover:border-brand-100 hover:bg-brand-50/50 transition-colors">
+            <h2 class="text-lg font-medium text-slate-800 group-hover:text-brand-600">{doc.data.title}</h2>
             <p class="text-sm text-slate-500 mt-1">{doc.data.description}</p>
           </a>
         </li>
