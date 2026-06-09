@@ -39,12 +39,11 @@ When you first visit the "System" page in Grix Desktop:
 
 ### Step 4: Add an Agent with One Click
 
-1. Go to the "System" page and select the agent type you want (e.g., Claude, OpenClaw, Kiro, etc.)
+1. Go to the "System" page and select the agent type you want (e.g., Claude, Gemini, Qwen, etc.)
 2. Click the type icon → click "New" in the dialog
 3. Enter a name → click "Create"
 
 Grix automatically:
-- ✅ Installs the agent CLI (first-time auto-install)
 - ✅ Registers the agent on the server
 - ✅ Configures local connection parameters
 - ✅ Starts the agent process
@@ -67,52 +66,109 @@ Install Grix on your phone (iOS / Android) and log in with the same account:
 
 Use this if you don't want the desktop GUI, or need to deploy agents on a remote server.
 
-### Step 1: Install grix-connector
+### Step 1: Register a Grix Account
+
+Go to [grix.dhf.pub](https://grix.dhf.pub), sign up and get your API key and Agent ID.
+
+### Step 2: Install grix-connector
 
 ```bash
-# macOS / Linux
+# Requires Node.js >= 18
 npm install -g grix-connector
 ```
 
-### Step 2: Create an Agent in Grix
+On Windows, `grix-connector` uses the built-in Task Scheduler (no extra dependency required).
 
-From any Grix client (Web / mobile / desktop):
+### Step 3: Create Agent Config
 
-1. Go to the "AI" tab → click "+" to create an agent
-2. Enter a name, select "Agent API" as the provider type
-3. Choose the integration type (Claude / OpenClaw / Hermes, etc.)
-4. Save and get three credentials: Agent ID, Endpoint (WebSocket URL), API Key
+Create `~/.grix/config/agents.json`:
 
-### Step 3: Install the Agent CLI
-
-Install the corresponding agent CLI tool on the target computer:
-
-```bash
-# Example: Install Claude Agent
-npm install -g @dhf-claude/grix
-
-# Example: Install OpenClaw Agent
-npm install -g @dhf-openclaw/grix
+```json
+{
+  "agents": [
+    {
+      "name": "my-agent",
+      "ws_url": "wss://grix.dhf.pub/v1/agent-api/ws",
+      "agent_id": "your-agent-id",
+      "api_key": "your-grix-api-key",
+      "client_type": "claude"
+    }
+  ]
+}
 ```
 
-### Step 4: Configure Connection Parameters
+Change `client_type` to match the agent you want to connect (see table below). You can define multiple agents in one file, or use separate files under `~/.grix/config/`.
 
-Configure the agent using the credentials from Step 2:
+#### Supported Agent Types
 
-```bash
-grix-claude install \
-  --ws-url <Endpoint> \
-  --agent-id <Agent ID> \
-  --api-key <API Key>
+| `client_type` | Agent | Required CLI |
+|---|---|---|
+| `claude` | Claude Code (Anthropic) | `claude` |
+| `codex` | Codex (OpenAI) | `codex` |
+| `copilot` | GitHub Copilot | `copilot` or `gh` |
+| `gemini` | Gemini (Google) | `gemini` |
+| `qwen` | Qwen (Alibaba) | `qwen` |
+| `codewhale` | CodeWhale | `codewhale` |
+| `cursor` | Cursor Agent | `agent` |
+| `opencode` | OpenCode | `opencode` |
+| `pi` | Pi | `pi` |
+| `openhuman` | OpenHuman | `openhuman-core` |
+| `reasonix` | Reasonix | `reasonix` |
+
+> ⚠️ Make sure the corresponding CLI tool is installed locally before connecting an agent. grix-connector will automatically find and launch the CLI based on `client_type`.
+
+#### Config Reference
+
+| Field | Required | Description |
+|---|---|---|
+| `name` | yes | Display name for this agent |
+| `ws_url` | yes | WebSocket endpoint URL, e.g. `wss://grix.dhf.pub/v1/agent-api/ws` |
+| `agent_id` | yes | Agent ID from Grix platform |
+| `api_key` | yes | API key for authentication |
+| `client_type` | yes | See Supported Agents table above |
+| `prompt_timeout_ms` | no | Prompt execution timeout (ms) |
+| `pool.maxSize` | no | Max adapter pool size (default 20) |
+| `pool.idleTimeoutMs` | no | Idle adapter eviction timeout (default 300000 = 5 min) |
+
+#### Multi-Agent Example
+
+```json
+{
+  "agents": [
+    {
+      "name": "my-claude",
+      "ws_url": "wss://grix.dhf.pub/v1/agent-api/ws",
+      "agent_id": "agent-id-1",
+      "api_key": "your-api-key",
+      "client_type": "claude"
+    },
+    {
+      "name": "my-gemini",
+      "ws_url": "wss://grix.dhf.pub/v1/agent-api/ws",
+      "agent_id": "agent-id-2",
+      "api_key": "your-api-key",
+      "client_type": "gemini"
+    }
+  ]
+}
 ```
 
-### Step 5: Start grix-connector
+### Step 4: Start grix-connector
 
 ```bash
 grix-connector start
 ```
 
-Once started, the agent automatically connects to the Grix platform and appears online.
+The daemon connects to Grix via WebSocket and starts routing chat messages to your agents.
+
+### Commands
+
+```bash
+grix-connector start      # Start as system service (auto-installs on first run)
+grix-connector stop       # Stop the service
+grix-connector restart    # Restart the service
+grix-connector status     # Check service status
+```
 
 ## Comparison
 
@@ -120,7 +176,7 @@ Once started, the agent automatically connects to the Grix platform and appears 
 |--------|----------------------|-----------------|
 | Installation complexity | Download and install | Requires command line |
 | Connector management | Auto install, start, restart | Manual management |
-| Adding agents | One-click in UI | Manual credential setup |
-| Agent CLI install | Auto-detect and install | Manual npm install |
+| Adding agents | One-click in UI | Edit JSON config file |
+| Agent CLI install | Auto-detect and install | Install corresponding CLI yourself |
 | Best for | All users | Developers, server deployments |
 | Mobile usage | ✅ Same account | ✅ Same account |
