@@ -8,15 +8,15 @@ Grix is built on Flutter for full coverage across 7 platforms, with deep platfor
 
 ## Platform Features
 
-| Platform | Key Capabilities |
-|----------|-----------------|
-| iOS | Push notifications, camera QR scanning, Apple Sign-In, CallKit |
-| Android | Push notifications, camera QR scanning, Google Sign-In |
-| macOS | System tray, agent toolbar, file drag-and-drop |
-| Windows | System tray, agent toolbar, auto-start on boot |
-| Linux | System tray, agent toolbar |
-| Web (PWA) | Offline caching, browser notifications, Service Worker |
-| HarmonyOS | Native adaptation |
+| Platform | Key Capabilities | Download |
+|----------|-----------------|----------|
+| iOS | Push notifications, camera QR scanning, Apple Sign-In, CallKit | [TestFlight](https://testflight.apple.com/join/D8SRWBam) |
+| Android | Push notifications, camera QR scanning, Google Sign-In | [APK Download](https://github.com/askie/grix/releases/latest/download/Grix-Android.apk) |
+| macOS | System tray, agent toolbar, file drag-and-drop | [macOS Download](https://github.com/askie/grix/releases/latest/download/Grix-macOS.zip) |
+| Windows | System tray, agent toolbar, auto-start on boot | [Windows Download](https://github.com/askie/grix/releases/latest/download/Grix-Windows.zip) |
+| Linux | System tray, agent toolbar | [Linux Download](https://github.com/askie/grix/releases/latest/download/Grix-Linux-x64.tar.gz) |
+| Web (PWA) | Offline caching, browser notifications, Service Worker | [Use Online](https://grix.im) |
+| HarmonyOS | Native adaptation | Coming soon |
 
 ## Web Version
 
