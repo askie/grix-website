@@ -51,9 +51,13 @@ const platforms = [
   },
 ];
 
-const qrUrl =
+const iosQrUrl =
   "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Ftestflight.apple.com%2Fjoin%2FD8SRWBam";
 const testflightUrl = "https://testflight.apple.com/join/D8SRWBam";
+const androidApkUrl =
+  "https://github.com/askie/grix/releases/latest/download/Grix-Android.apk";
+const androidQrUrl =
+  `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(androidApkUrl)}`;
 ---
 
 <section class="rounded-panel border border-brand-100 bg-brand-50 p-6 md:p-8">
@@ -67,14 +71,24 @@ const testflightUrl = "https://testflight.apple.com/join/D8SRWBam";
   </p>
 
   <div class="mt-6 flex flex-col gap-6 md:flex-row md:items-start">
-    <!-- iOS QR Code -->
-    <div class="flex flex-col items-center gap-2 rounded-xl border border-slate-200 bg-white p-4">
-      <a href={testflightUrl} target="_blank" rel="noopener noreferrer">
-        <img src={qrUrl} alt="TestFlight QR Code" class="h-[140px] w-[140px]" />
-      </a>
-      <span class="text-xs text-slate-500">
-        {isCN ? "扫码加入 iOS 测试" : "Scan for iOS beta"}
-      </span>
+    <!-- QR Codes -->
+    <div class="flex gap-4">
+      <div class="flex flex-col items-center gap-2 rounded-xl border border-slate-200 bg-white p-4">
+        <a href={testflightUrl} target="_blank" rel="noopener noreferrer">
+          <img src={iosQrUrl} alt="TestFlight QR Code" class="h-[140px] w-[140px]" />
+        </a>
+        <span class="text-xs text-slate-500">
+          {isCN ? "扫码加入 iOS 测试" : "Scan for iOS beta"}
+        </span>
+      </div>
+      <div class="flex flex-col items-center gap-2 rounded-xl border border-slate-200 bg-white p-4">
+        <a href={androidApkUrl} target="_blank" rel="noopener noreferrer">
+          <img src={androidQrUrl} alt="Android QR Code" class="h-[140px] w-[140px]" />
+        </a>
+        <span class="text-xs text-slate-500">
+          {isCN ? "扫码下载 Android" : "Scan for Android"}
+        </span>
+      </div>
     </div>
 
     <!-- Platform download links -->
