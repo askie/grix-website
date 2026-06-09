@@ -16,7 +16,7 @@ interface Props {
 const { title, description, locale = defaultLocale, slug = "", noindex = false } = Astro.props;
 const alternates = buildAlternates(slug);
 const canonicalBase = "https://grix.pub";
-const canonicalPath = locale === defaultLocale ? `/${slug}` : `/en/${slug}`;
+const canonicalPath = locale === defaultLocale ? `/${slug}` : `/${locale}/${slug}`;
 const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canonicalBase;
 ---
 
@@ -53,5 +53,19 @@ const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canon
       <slot />
     </main>
     <SiteFooter locale={locale} />
+    {locale === defaultLocale && (
+      <script is:inline>
+        (function () {
+          var KEY = 'grix_locale';
+          if (localStorage.getItem(KEY)) return;
+          var lang = navigator.language || '';
+          if (lang.startsWith('zh')) {
+            localStorage.setItem(KEY, 'zh-CN');
+            var slug = location.pathname === '/' ? '' : location.pathname;
+            location.replace('/zh-CN' + slug + location.search);
+          }
+        })();
+      </script>
+    )}
   </body>
 </html>

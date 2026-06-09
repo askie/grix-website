@@ -15,6 +15,7 @@ const { currentLocale, currentSlug = "" } = Astro.props;
     locales.map((locale) => (
       <a
         href={toLocalizedPath(locale, currentSlug)}
+        data-locale={locale}
         class:list={[
           "rounded-full px-3 py-1 transition",
           locale === currentLocale
@@ -28,3 +29,10 @@ const { currentLocale, currentSlug = "" } = Astro.props;
     ))
   }
 </div>
+<script is:inline>
+  document.querySelectorAll('[data-locale]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      localStorage.setItem('grix_locale', el.getAttribute('data-locale') || 'en');
+    });
+  });
+</script>

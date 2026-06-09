@@ -7,8 +7,8 @@ export default defineConfig({
   adapter: cloudflare(),
   integrations: [react()],
   i18n: {
-    defaultLocale: "zh-CN",
-    locales: ["zh-CN", "en"],
+    defaultLocale: "en",
+    locales: ["en", "zh-CN"],
     routing: {
       prefixDefaultLocale: false
     }
