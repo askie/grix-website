@@ -2,6 +2,21 @@
 
 This repository contains a minimal, production-oriented code skeleton for a Cloudflare-hosted product marketing website with an admin CMS boundary.
 
+## Download Grix
+
+<table>
+<tr>
+<td align="center">
+<a href="https://testflight.apple.com/join/D8SRWBam"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Ftestflight.apple.com%2Fjoin%2FD8SRWBam" alt="iOS TestFlight QR" width="150" /></a><br/>
+<i>iOS (TestFlight)</i>
+</td>
+<td align="center">
+<a href="https://github.com/askie/grix/releases/latest/download/Grix-Android.apk"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fgithub.com%2Faskie%2Fgrix%2Freleases%2Flatest%2Fdownload%2FGrix-Android.apk" alt="Android APK QR" width="150" /></a><br/>
+<i>Android APK</i>
+</td>
+</tr>
+</table>
+
 ## Scope Boundary
 
 - Public website: marketing pages, multilingual routes, SEO, CTA conversion.
