@@ -4,18 +4,18 @@ export const enHome: PageLocaleContent = {
   locale: "en",
   title: "Grix",
   description: "Let AI Agents do the work inside your real conversations",
-  seoTitle: "Grix - AI-First Messaging for Humans and Agents",
+  seoTitle: "Grix - Bring Multiple AI Agents Into One Conversation",
   seoDescription:
-    "Grix is an AI-first instant messaging platform. Deploy AI Agents inside your real conversations to auto-reply, handle voice calls, and install Agent skill packs. Available on iOS, Android, Web, and desktop.",
+    "Grix is an AI-first instant messaging platform. Orchestrate Claude, Codex, Gemini, Copilot, Qwen and more AI Agents in a single conversation — they collaborate in parallel like a group chat, auto-reply, handle voice calls, and install skill packs. Available on iOS, Android, Web, and desktop.",
   ctaPrimaryText: "Get started",
   ctaSecondaryText: "Sign in",
   sections: [
     {
       id: "hero",
       type: "hero",
-      title: "Let AI Agents work inside your conversations",
+      title: "Bring multiple AI Agents together in one conversation",
       content:
-        "Grix is an AI-first messaging platform. Connect AI Agents directly to your chats so they auto-reply, handle calls, and complete tasks on your behalf — while you stay in control and can take over anytime."
+        "Grix is an AI-first messaging platform. Pull Claude, Codex, Gemini, Copilot, Qwen and more leading AI Agents into a single chat — assign each one its own task and let them work in parallel, like a team in a group chat, while you stay in control."
     },
     {
       id: "features",
