@@ -4,18 +4,18 @@ export const zhCNHome: PageLocaleContent = {
   locale: "zh-CN",
   title: "Grix",
   description: "让 AI Agent 在你的真实对话中工作",
-  seoTitle: "Grix - 让 AI Agent 在你的对话中工作",
+  seoTitle: "Grix - 让多个 AI Agent 在同一个对话里协作",
   seoDescription:
-    "Grix 是 AI 优先的即时通讯平台。在真实会话中部署 AI Agent，自动代你回复消息、处理语音通话、一键安装 Agent 能力包，全平台覆盖 iOS / Android / Web / 桌面端。",
+    "Grix 是 AI 优先的即时通讯平台。在同一个会话里调度 Claude、Codex、Gemini、Copilot、Qwen 等多个 AI Agent，像群聊一样并行协作、各司其职，自动回复消息、处理语音通话、一键安装能力包，全平台覆盖 iOS / Android / Web / 桌面端。",
   ctaPrimaryText: "立即使用",
   ctaSecondaryText: "登录",
   sections: [
     {
       id: "hero",
       type: "hero",
-      title: "让 AI Agent 在你的对话里替你工作",
+      title: "让多个 AI Agent 在同一个对话里协作",
       content:
-        "Grix 是 AI 优先的即时通讯平台。把 AI Agent 直接接入你的聊天会话，让它代你自动回复、处理通话、完成任务。你随时可以接管，Agent 在后台持续工作。"
+        "Grix 是 AI 优先的即时通讯平台。把 Claude、Codex、Gemini、Copilot、Qwen 等主流 AI Agent 拉进同一个会话，像群聊一样给每个 Agent 分配任务，它们并行工作、各司其职，你随时可以接管。"
     },
     {
       id: "features",

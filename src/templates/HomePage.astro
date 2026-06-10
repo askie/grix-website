@@ -1,4 +1,5 @@
 ---
+import AgentLogoWall from "@/components/public/AgentLogoWall.astro";
 import CTASection from "@/components/public/CTASection.astro";
 import FAQSection from "@/components/public/FAQSection.astro";
 import FeatureGrid from "@/components/public/FeatureGrid.astro";
@@ -60,6 +61,15 @@ const faqItems = parseFAQItems(faqSection?.items);
   secondaryCtaLabel={page.ctaSecondaryText}
   primaryHref={productUrl}
   secondaryHref={productUrl}
+/>
+
+<AgentLogoWall
+  heading={locale === "zh-CN" ? "已支持的 AI Agent" : "Supported AI Agents"}
+  description={
+    locale === "zh-CN"
+      ? "Claude、Codex、Gemini、Copilot、Qwen 等主流 Agent 都能接入同一个会话，各司其职、并行协作。"
+      : "Claude, Codex, Gemini, Copilot, Qwen and more — all join the same conversation to collaborate in parallel, each on its own task."
+  }
 />
 
 {

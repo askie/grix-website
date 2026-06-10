@@ -1,0 +1,51 @@
+---
+// Agent logo 墙：展示官网已支持、可接入同一对话协作的主流 AI Agent。
+// 仅展示拥有官方 logo 资源的 Agent，保证视觉一致性。
+interface Props {
+  heading: string;
+  description?: string;
+}
+
+const { heading, description } = Astro.props;
+
+// 展示用 Agent 列表（name 为对外展示名，logo 为 public 下静态资源路径）
+const agents = [
+  { name: "Claude", logo: "/assets/agents/claude.svg" },
+  { name: "Codex", logo: "/assets/agents/codex.svg" },
+  { name: "Gemini", logo: "/assets/agents/gemini.svg" },
+  { name: "Copilot", logo: "/assets/agents/copilot.svg" },
+  { name: "Qwen", logo: "/assets/agents/qwen.svg" },
+  { name: "Kiro", logo: "/assets/agents/kiro.svg" },
+  { name: "OpenClaw", logo: "/assets/agents/openclaw.svg" },
+  { name: "OpenCode", logo: "/assets/agents/opencode.svg" },
+  { name: "Pi", logo: "/assets/agents/pi.svg" },
+  { name: "Hermes", logo: "/assets/agents/hermes.svg" },
+  { name: "Reasonix", logo: "/assets/agents/reasonix.svg" },
+  { name: "CodeWhale", logo: "/assets/agents/codewhale.svg" }
+];
+---
+
+<section class="rounded-panel border border-slate-200 bg-white p-6 md:p-8">
+  <h2 class="text-2xl font-semibold text-slate-900">{heading}</h2>
+  {description && <p class="mt-2 max-w-3xl text-slate-600">{description}</p>}
+  <ul class="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6">
+    {
+      agents.map((agent) => (
+        <li class="group flex flex-col items-center justify-center gap-2 rounded-xl border border-slate-100 bg-slate-50 px-3 py-4 transition-colors hover:border-brand-500 hover:bg-brand-50">
+          <img
+            src={agent.logo}
+            alt={`${agent.name} logo`}
+            width="28"
+            height="28"
+            loading="lazy"
+            decoding="async"
+            class="h-7 w-7 object-contain opacity-60 grayscale transition group-hover:opacity-100 group-hover:grayscale-0"
+          />
+          <span class="text-xs font-medium text-slate-500 transition-colors group-hover:text-slate-900">
+            {agent.name}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
