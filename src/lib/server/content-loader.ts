@@ -155,3 +155,27 @@ export async function loadServerSiteSettings(): Promise<{
     ctaUrls: JSON.parse(row.cta_urls_json as string)
   };
 }
+
+export async function listServerPublishedPages(
+  locale: LocaleCode
+): Promise<Array<{ slug: string }>> {
+  const db = await getD1();
+  if (!db) return [];
+
+  try {
+    const { results } = await db
+      .prepare(
+        `SELECT p.slug
+         FROM pages p
+         JOIN page_locales pl ON pl.page_id = p.id AND pl.locale = ?
+         WHERE p.status != 'archived' AND pl.status = 'published'`
+      )
+      .bind(locale)
+      .all();
+
+    return results as Array<{ slug: string }>;
+  } catch {
+    return [];
+  }
+}
+

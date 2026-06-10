@@ -6,6 +6,8 @@ order: 14
 
 Grix is built on Flutter for full coverage across 7 platforms, with deep platform-specific adaptations.
 
+For quick installation and setup instructions after downloading, please refer to the [Quick Start](./quick-start).
+
 ## Platform Features
 
 | Platform | Key Capabilities | Download |

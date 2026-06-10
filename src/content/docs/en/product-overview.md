@@ -31,7 +31,7 @@ Grix supports managing and deploying multiple types of AI agents simultaneously:
 
 ### 📱 Cross-Platform
 
-Grix provides native clients for all major platforms:
+Grix provides native clients for all major platforms. For detailed installation steps and download links, please refer to the [Quick Start](./quick-start) or [Cross-Platform](./cross-platform) documentation:
 
 | Platform | Support |
 |----------|---------|
