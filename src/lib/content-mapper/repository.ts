@@ -3,7 +3,12 @@ import { zhCNHome } from "@/content/defaults/zh-CN";
 import type { LocaleCode } from "@/i18n/config";
 import type { LocalizedPage, PageLocaleContent } from "@/lib/content-mapper/types";
 
-const productUrl = "https://grix.dhf.pub";
+const productUrls = {
+  global: "https://gb.grix.im",
+  cn: "https://grix.dhf.pub"
+} as const;
+
+export type ProductUrls = { global: string; cn: string };
 
 const pages: LocalizedPage[] = [
   {
@@ -58,8 +63,12 @@ const pages: LocalizedPage[] = [
   }
 ];
 
+export function getProductUrls(): ProductUrls {
+  return productUrls;
+}
+
 export function getProductUrl(): string {
-  return productUrl;
+  return productUrls.cn;
 }
 
 export function getPublishedPageBySlug(locale: LocaleCode, slug: string): PageLocaleContent | null {

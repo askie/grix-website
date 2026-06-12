@@ -1,32 +1,30 @@
 ---
+import type { LocaleCode } from "@/i18n/config";
+
 interface Props {
   heading: string;
   description: string;
-  primaryCtaLabel: string;
-  secondaryCtaLabel: string;
-  primaryHref: string;
-  secondaryHref: string;
+  ctaLabel: string;
+  globalHref: string;
+  cnHref: string;
+  locale: LocaleCode;
 }
 
-const {
-  heading,
-  description,
-  primaryCtaLabel,
-  secondaryCtaLabel,
-  primaryHref,
-  secondaryHref
-} = Astro.props;
+const { heading, description, ctaLabel, globalHref, cnHref, locale } = Astro.props;
+const isCN = locale === "zh-CN";
+const globalLabel = isCN ? "全球" : "Global";
+const cnLabel = isCN ? "中国大陆" : "China mainland";
 ---
 
 <section class="rounded-panel border border-slate-200 bg-white p-8 shadow-panel md:p-12">
   <h1 class="text-3xl font-semibold leading-tight text-slate-900 md:text-5xl">{heading}</h1>
   <p class="mt-5 max-w-3xl text-base leading-7 text-slate-600 md:text-lg">{description}</p>
   <div class="mt-8 flex flex-wrap gap-3">
-    <a href={primaryHref} class="rounded-full bg-brand-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-700">
-      {primaryCtaLabel}
+    <a href={globalHref} target="_blank" rel="noopener noreferrer" class="rounded-full bg-brand-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-700">
+      {ctaLabel} · {globalLabel}
     </a>
-    <a href={secondaryHref} class="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 hover:border-brand-500 hover:text-brand-700">
-      {secondaryCtaLabel}
+    <a href={cnHref} target="_blank" rel="noopener noreferrer" class="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 hover:border-brand-500 hover:text-brand-700">
+      {ctaLabel} · {cnLabel}
     </a>
   </div>
 </section>

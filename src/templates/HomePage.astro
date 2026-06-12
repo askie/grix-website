@@ -7,7 +7,7 @@ import Hero from "@/components/public/Hero.astro";
 import HowItWorks from "@/components/public/HowItWorks.astro";
 import UseCases from "@/components/public/UseCases.astro";
 import type { LocaleCode } from "@/i18n/config";
-import { resolveProductEntryUrl } from "@/lib/cta/product-url";
+import { resolveProductEntryUrls } from "@/lib/cta/product-url";
 import type { PageLocaleContent } from "@/lib/content-mapper/types";
 
 interface Props {
@@ -21,7 +21,7 @@ const featuresSection = page.sections.find((s) => s.type === "features");
 const useCasesSection = page.sections.find((s) => s.type === "use_cases");
 const howItWorksSection = page.sections.find((s) => s.type === "how_it_works");
 const faqSection = page.sections.find((s) => s.type === "faq");
-const productUrl = resolveProductEntryUrl();
+const productUrls = resolveProductEntryUrls();
 
 // 将 "icon｜title｜desc" 格式的 item 字符串解析为结构化对象
 function parseIconItems(items: string[] = []) {
@@ -57,10 +57,10 @@ const faqItems = parseFAQItems(faqSection?.items);
 <Hero
   heading={hero?.title ?? page.title}
   description={hero?.content ?? page.description}
-  primaryCtaLabel={page.ctaPrimaryText}
-  secondaryCtaLabel={page.ctaSecondaryText}
-  primaryHref={productUrl}
-  secondaryHref={productUrl}
+  ctaLabel={page.ctaPrimaryText}
+  globalHref={productUrls.global}
+  cnHref={productUrls.cn}
+  locale={locale}
 />
 
 <CTASection
