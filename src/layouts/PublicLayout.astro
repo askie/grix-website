@@ -45,7 +45,11 @@ const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canon
         <link rel="alternate" hreflang={alternate.locale} href={alternate.href} />
       ))
     }
-    <script src="https://grix.dhf.pub/public/widget/widget.js" data-site-key="wk_8mPOzKR8rU06nMI-qXQkWM18" defer></script>
+    {locale === 'zh-CN' ? (
+      <script src="https://grix.dhf.pub/public/widget/widget.js" data-site-key="wk_8mPOzKR8rU06nMI-qXQkWM18" defer></script>
+    ) : (
+      <script src="https://gb.grix.im/public/widget/widget.js" data-site-key="wk_GWr9rwSjyBiXHxhQGGFJvBq3" defer></script>
+    )}
   </head>
   <body class="main-shell font-sans text-slate-900">
     <SiteHeader currentLocale={locale} currentSlug={slug} />
