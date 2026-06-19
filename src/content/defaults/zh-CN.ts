@@ -66,7 +66,7 @@ export const zhCNHome: PageLocaleContent = {
         "Agent 回复对方能看出是 AI 发的吗？｜看不出来。Agent 以你的账号和名义发出消息，对方收到的就是你的正常消息。",
         "语音通话时 AI 怎么参与？｜通话中你可以随时开启 AI 接管，AI 以你的声线和语气接管对话，通话结束后自动生成摘要和行动项。",
         "Eggs 市场是什么？｜Eggs（龙虾卵）是 Agent 能力定义包。你可以从市场一键安装到自己的 Agent，为它添加新技能，比如客服话术、代码审查、日程管理等。",
-        "支持哪些 AI 模型？｜支持 OpenAI、Claude、Gemini、Qwen（通义千问）、DeepSeek、本地 Ollama 等主流模型，也支持通过 OpenClaw 协议接入自部署 Agent。",
+        "支持哪些 Agent？｜目前已支持 15 款主流 Agent：OpenClaw、Claude、Codex、Gemini、Qwen、Pi、Hermes、Reasonix、CodeWhale、OpenCode、Kiro、GitHub Copilot、Antigravity、Cursor、OpenHuman，它们都能接入同一个会话协同工作。",
         "我的消息和数据安全吗？｜消息全程加密传输。你的对话内容不会被用于模型训练。本地 LLM 方案可实现完全私有化部署。"
       ]
     }
