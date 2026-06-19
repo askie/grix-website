@@ -8,20 +8,24 @@ interface Props {
 
 const { heading, description } = Astro.props;
 
-// 展示用 Agent 列表（name 为对外展示名，logo 为 public 下静态资源路径）
+// 展示用 Agent 列表（name 为对外展示名，logo 为 public 下静态资源路径）。
+// 与 aibot 的权威清单 (agent_client_type_meta.dart) 对齐，共 15 个。
 const agents = [
-  { name: "Claude", logo: "/assets/agents/claude.svg" },
-  { name: "Codex", logo: "/assets/agents/codex.svg" },
-  { name: "Gemini", logo: "/assets/agents/gemini.svg" },
-  { name: "Copilot", logo: "/assets/agents/copilot.svg" },
-  { name: "Qwen", logo: "/assets/agents/qwen.svg" },
-  { name: "Kiro", logo: "/assets/agents/kiro.svg" },
   { name: "OpenClaw", logo: "/assets/agents/openclaw.svg" },
-  { name: "OpenCode", logo: "/assets/agents/opencode.svg" },
+  { name: "Claude", logo: "/assets/agents/anthropic.svg" },
+  { name: "Codex", logo: "/assets/agents/openai.svg" },
+  { name: "Gemini", logo: "/assets/agents/googlegemini.svg" },
+  { name: "Qwen", logo: "/assets/agents/qwen.svg" },
   { name: "Pi", logo: "/assets/agents/pi.svg" },
   { name: "Hermes", logo: "/assets/agents/hermes.svg" },
   { name: "Reasonix", logo: "/assets/agents/reasonix.svg" },
-  { name: "CodeWhale", logo: "/assets/agents/codewhale.svg" }
+  { name: "CodeWhale", logo: "/assets/agents/codewhale.svg" },
+  { name: "OpenCode", logo: "/assets/agents/opencode.svg" },
+  { name: "Kiro", logo: "/assets/agents/kiro.svg" },
+  { name: "GitHub Copilot", logo: "/assets/agents/github-copilot.svg" },
+  { name: "Antigravity", logo: "/assets/agents/agy.svg" },
+  { name: "Cursor", logo: "/assets/agents/cursor.svg" },
+  { name: "OpenHuman", logo: "/assets/agents/openhuman.svg" }
 ];
 ---
 
