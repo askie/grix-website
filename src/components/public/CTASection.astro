@@ -1,4 +1,5 @@
 ---
+import Icon from "@/components/public/Icon.astro";
 import type { LocaleCode } from "@/i18n/config";
 
 interface Props {
@@ -15,45 +16,45 @@ const isCN = locale === "zh-CN";
 const platforms = [
   {
     name: "iOS",
-    label: isCN ? "iOS (TestFlight)" : "iOS (TestFlight)",
-    href: "https://testflight.apple.com/join/D8SRWBam",
-    icon: "🍎",
+    label: "iOS (App Store)",
+    href: "https://apps.apple.com/app/grix-ai/id6761908445",
+    icon: "apple",
   },
   {
     name: "Android",
     label: "Android",
     href: "https://github.com/askie/grix/releases/latest/download/Grix-Android.apk",
-    icon: "🤖",
+    icon: "android",
   },
   {
     name: "macOS",
     label: "macOS",
     href: "https://github.com/askie/grix/releases/latest/download/Grix-macOS.zip",
-    icon: "💻",
+    icon: "apple",
   },
   {
     name: "Windows",
     label: "Windows",
     href: "https://github.com/askie/grix/releases/latest/download/Grix-Windows.zip",
-    icon: "🪟",
+    icon: "windows",
   },
   {
     name: "Linux",
     label: "Linux",
     href: "https://github.com/askie/grix/releases/latest/download/Grix-Linux-x64.tar.gz",
-    icon: "🐧",
+    icon: "linux",
   },
   {
     name: "Web",
     label: "Web",
     href: "https://grix.im",
-    icon: "🌐",
+    icon: "globe",
   },
 ];
 
+const iosAppStoreUrl = "https://apps.apple.com/app/grix-ai/id6761908445";
 const iosQrUrl =
-  "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Ftestflight.apple.com%2Fjoin%2FD8SRWBam";
-const testflightUrl = "https://testflight.apple.com/join/D8SRWBam";
+  `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(iosAppStoreUrl)}`;
 const androidApkUrl =
   "https://github.com/askie/grix/releases/latest/download/Grix-Android.apk";
 const androidQrUrl =
@@ -74,11 +75,11 @@ const androidQrUrl =
     <!-- QR Codes -->
     <div class="grid grid-cols-2 gap-4 sm:flex">
       <div class="flex min-w-0 flex-col items-center gap-2 rounded-xl border border-slate-200 bg-white p-4">
-        <a href={testflightUrl} target="_blank" rel="noopener noreferrer" class="block w-full max-w-[140px]">
-          <img src={iosQrUrl} alt="TestFlight QR Code" class="aspect-square h-auto w-full object-contain" />
+        <a href={iosAppStoreUrl} target="_blank" rel="noopener noreferrer" class="block w-full max-w-[140px]">
+          <img src={iosQrUrl} alt="App Store QR Code" class="aspect-square h-auto w-full object-contain" />
         </a>
         <span class="text-xs text-slate-500">
-          {isCN ? "扫码加入 iOS 测试" : "Scan for iOS beta"}
+          {isCN ? "扫码下载 iOS" : "Scan for iOS"}
         </span>
       </div>
       <div class="flex min-w-0 flex-col items-center gap-2 rounded-xl border border-slate-200 bg-white p-4">
@@ -98,9 +99,9 @@ const androidQrUrl =
           href={p.href}
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
+          class="group flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
         >
-          <span class="text-lg">{p.icon}</span>
+          <Icon name={p.icon} class="h-5 w-5 flex-shrink-0 text-slate-500 transition-colors group-hover:text-brand-600" />
           {p.label}
         </a>
       ))}

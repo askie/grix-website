@@ -1,6 +1,7 @@
 ---
 import SiteHeader from "@/components/public/SiteHeader.astro";
 import SiteFooter from "@/components/public/SiteFooter.astro";
+import ScrollFX from "@/components/public/ScrollFX.astro";
 import { buildAlternates } from "@/lib/seo/meta";
 import { defaultLocale, type LocaleCode } from "@/i18n/config";
 import "@/styles/global.css";
@@ -45,6 +46,14 @@ const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canon
         <link rel="alternate" hreflang={alternate.locale} href={alternate.href} />
       ))
     }
+    <!-- Mark the doc for the no-flash reveal before first paint (skips reduced-motion). -->
+    <script is:inline>
+      try {
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.classList.add('fx');
+        }
+      } catch (e) {}
+    </script>
     {locale === 'zh-CN' ? (
       <script src="https://grix.dhf.pub/public/widget/widget.js" data-site-key="wk_8mPOzKR8rU06nMI-qXQkWM18" defer></script>
     ) : (
@@ -57,6 +66,7 @@ const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canon
       <slot />
     </main>
     <SiteFooter locale={locale} />
+    <ScrollFX />
     {locale === defaultLocale && (
       <script is:inline>
         (function () {

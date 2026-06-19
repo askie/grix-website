@@ -1,4 +1,6 @@
 ---
+import Icon from "@/components/public/Icon.astro";
+
 interface UseCaseItem {
   icon: string;
   title: string;
@@ -21,7 +23,9 @@ const { title, description, items } = Astro.props;
     {
       items.map((item) => (
         <li class="flex gap-4 rounded-xl border border-slate-100 p-5 hover:border-brand-200 transition-colors">
-          <span class="text-3xl flex-shrink-0">{item.icon}</span>
+          <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-brand-100 text-brand-600">
+            <Icon emoji={item.icon} class="h-5 w-5" />
+          </span>
           <div>
             <h3 class="font-semibold text-slate-900">{item.title}</h3>
             <p class="mt-1 text-sm text-slate-600 leading-6">{item.desc}</p>
