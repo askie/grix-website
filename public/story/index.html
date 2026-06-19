@@ -18,6 +18,13 @@
 
   html { scroll-behavior: smooth; }
 
+  /* Lenis smooth-scroll (disabled gracefully if Lenis is absent) */
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+  .lenis.lenis-stopped { overflow: hidden; }
+  .lenis.lenis-smooth iframe { pointer-events: none; }
+
   body {
     font-family: "Iowan Old Style", "Palatino Linotype", "Songti SC", Georgia, "Times New Roman", serif;
     color: var(--ink);
@@ -239,7 +246,8 @@
     </section>
   </main>
 
-<!-- GSAP + ScrollTrigger (vendored locally) for cinematic scene entrances. -->
+<!-- Lenis smooth scroll + GSAP/ScrollTrigger (vendored locally). -->
+<script src="./vendor/lenis.min.js"></script>
 <script src="./vendor/gsap.min.js"></script>
 <script src="./vendor/ScrollTrigger.min.js"></script>
 <script>
@@ -249,13 +257,32 @@
   const rail = document.getElementById('rail');
   const dotsNav = document.getElementById('dots');
   const root = document.documentElement;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- Lenis: buttery smooth scroll, driven by GSAP's ticker so ScrollTrigger
+  //      stays perfectly in sync. Skipped under reduced-motion or if absent. ----
+  let lenis = null;
+  if (window.Lenis && !prefersReduced) {
+    lenis = new window.Lenis({ lerp: 0.085, wheelMultiplier: 1, smoothWheel: true });
+    if (window.gsap && window.ScrollTrigger) {
+      lenis.on('scroll', window.ScrollTrigger.update);
+      window.gsap.ticker.add((t) => lenis.raf(t * 1000)); // gsap ticker = seconds
+      window.gsap.ticker.lagSmoothing(0);
+    } else {
+      const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+    }
+    window.lenis = lenis;
+  }
+  const goTo = (el) => lenis ? lenis.scrollTo(el, { duration: 1.6 })
+                             : el.scrollIntoView({ behavior: 'smooth' });
 
   // ---- Build chapter dots ----
   sections.forEach((sec, i) => {
     const b = document.createElement('button');
     b.setAttribute('aria-label', sec.dataset.title || ('章节 ' + (i+1)));
     b.innerHTML = '<span>' + (sec.dataset.title || '') + '</span>';
-    b.addEventListener('click', () => sec.scrollIntoView({ behavior: 'smooth' }));
+    b.addEventListener('click', () => goTo(sec));
     dotsNav.appendChild(b);
   });
   const dots = [...dotsNav.children];
@@ -394,7 +421,7 @@
   window.addEventListener('resize', onScroll);
 
   document.getElementById('restart').addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    lenis ? lenis.scrollTo(0, { duration: 1.8 }) : window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // init
