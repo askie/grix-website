@@ -1,25 +1,50 @@
 ---
-// Progressive-enhancement visual layer for public pages:
-//  - Lenis buttery smooth scroll
-//  - GSAP ScrollTrigger cinematic section reveals (content untouched)
-//  - A soft, warm, AI-flavoured aurora (Three.js) that reacts to the cursor
+// Progressive-enhancement "tech" visual layer for public pages:
+//  - Lenis buttery smooth scroll (+ cool scan progress bar)
+//  - GSAP ScrollTrigger cinematic clip reveals (content untouched)
+//  - Three.js cool energy-field + drifting grid that reacts to the cursor
+//  - A cursor-reactive particle constellation (the "AI plexus")
 // All effects degrade gracefully: no WebGL -> CSS background; reduced-motion
 // or missing libs -> content shown instantly. No page copy is modified.
 ---
 
-<canvas id="fx-aurora" aria-hidden="true"></canvas>
+<canvas id="fx-field" aria-hidden="true"></canvas>
+<canvas id="fx-plexus" aria-hidden="true"></canvas>
+<div id="fx-progress" aria-hidden="true"></div>
 
 <style is:global>
-  /* Aurora sits behind everything; white cards keep all text readable. */
-  #fx-aurora {
-    position: fixed; inset: 0; z-index: -1;
-    width: 100%; height: 100%; display: block;
-    opacity: 0; transition: opacity 1.4s ease; pointer-events: none;
-  }
-  #fx-aurora.ready { opacity: 1; }
+  :root { --fx-accent: 99 102 241; } /* indigo, used by the FX layer only */
 
-  /* No-flash reveal: only hide section blocks once we've committed to animating
-     them (html.fx is set synchronously in <head>). Cleared if effects can't run. */
+  /* Canvases sit behind everything; white cards keep all text readable. */
+  #fx-field, #fx-plexus {
+    position: fixed; inset: 0; z-index: -1;
+    width: 100%; height: 100%; display: block; pointer-events: none;
+  }
+  #fx-field { z-index: -2; opacity: 0; transition: opacity 1.4s ease; }
+  #fx-field.ready { opacity: 1; }
+  #fx-plexus { opacity: 0; transition: opacity 1.6s ease; }
+  #fx-plexus.ready { opacity: 1; }
+
+  /* Top scan/progress bar in the cool accent. */
+  #fx-progress {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0; z-index: 60;
+    background: linear-gradient(90deg, rgb(var(--fx-accent)), #22d3ee);
+    box-shadow: 0 0 10px rgb(var(--fx-accent) / 0.8);
+    transition: width .1s linear;
+  }
+
+  /* Tech hover: cool glow ring on the card-like blocks. */
+  body main .rounded-xl,
+  body main .rounded-panel {
+    transition: box-shadow .35s ease, border-color .35s ease, transform .35s ease;
+  }
+  body main .rounded-xl:hover {
+    border-color: rgb(var(--fx-accent) / 0.45);
+    box-shadow: 0 0 0 1px rgb(var(--fx-accent) / 0.25),
+                0 12px 34px -16px rgb(var(--fx-accent) / 0.55);
+  }
+
+  /* No-flash reveal: hide section blocks only once we commit to animating them. */
   html.fx body main > * { opacity: 0; will-change: opacity, transform; }
 
   /* Lenis */
@@ -30,7 +55,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     html.fx body main > * { opacity: 1; }
-    #fx-aurora { transition: none; }
+    #fx-field, #fx-plexus { transition: none; }
   }
 </style>
 
@@ -44,40 +69,51 @@
   const root = document.documentElement;
   const gsap = window.gsap, ST = window.ScrollTrigger;
 
-  // ---- 1. Cinematic section reveals (or fail-safe reveal) ----
-  function revealInstant() {
+  // Shared, smoothed cursor in normalised coords (0..1, y-down for 2D canvas).
+  const pointer = { x: 0.5, y: 0.4, tx: 0.5, ty: 0.4, energy: 0 };
+  let lpx = 0.5, lpy = 0.4;
+  function onPointer(x, y) {
+    const nx = x / window.innerWidth, ny = y / window.innerHeight;
+    pointer.energy = Math.min(1, pointer.energy + Math.hypot(nx - lpx, ny - lpy) * 6);
+    lpx = nx; lpy = ny; pointer.tx = nx; pointer.ty = ny;
+  }
+  window.addEventListener('pointermove', e => onPointer(e.clientX, e.clientY), { passive: true });
+  window.addEventListener('touchmove', e => { if (e.touches[0]) onPointer(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+
+  // ---- 1. Cinematic clip reveals (or fail-safe reveal) ----
+  if (reduce || !gsap || !ST) {
     root.classList.remove('fx');
     document.querySelectorAll('main > *').forEach(el => { el.style.opacity = '1'; });
-  }
-  if (reduce || !gsap || !ST) {
-    revealInstant();
   } else {
     gsap.registerPlugin(ST);
-    const blocks = [...document.querySelectorAll('main > *')];
-    blocks.forEach((block) => {
-      gsap.set(block, { opacity: 0, y: 48, filter: 'blur(8px)' });
+    [...document.querySelectorAll('main > *')].forEach((block) => {
+      gsap.set(block, { opacity: 0, y: 46, clipPath: 'inset(0 0 12% 0)' });
       const grid = block.querySelector('.grid');
       const cards = grid ? [...grid.children] : [];
       const tl = gsap.timeline({
         scrollTrigger: { trigger: block, start: 'top 86%', once: true },
-        defaults: { ease: 'power3.out' },
+        defaults: { ease: 'power4.out' },
       });
-      tl.to(block, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.9 });
+      tl.to(block, { opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 0.9 });
       if (cards.length > 1) {
-        gsap.set(cards, { y: 22, opacity: 0 });
-        tl.to(cards, { y: 0, opacity: 1, duration: 0.6, stagger: 0.08 }, 0.18);
+        gsap.set(cards, { y: 24, opacity: 0 });
+        tl.to(cards, { y: 0, opacity: 1, duration: 0.55, stagger: 0.07 }, 0.16);
       }
     });
-    // Reveal whatever is already on screen at load.
     requestAnimationFrame(() => ST.refresh());
   }
 
-  // ---- 2. Lenis smooth scroll, driven by the GSAP ticker ----
+  // ---- 2. Lenis smooth scroll + scan progress bar ----
   let lenis = null;
+  const progress = document.getElementById('fx-progress');
+  function updateProgress() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (progress) progress.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+  }
   if (window.Lenis && !reduce) {
     lenis = new window.Lenis({ lerp: 0.09, smoothWheel: true });
+    lenis.on('scroll', () => { updateProgress(); if (ST) ST.update(); });
     if (gsap && ST) {
-      lenis.on('scroll', ST.update);
       gsap.ticker.add((t) => lenis.raf(t * 1000));
       gsap.ticker.lagSmoothing(0);
     } else {
@@ -85,7 +121,6 @@
       requestAnimationFrame(raf);
     }
     window.lenis = lenis;
-    // Smooth in-page anchor jumps (header nav etc.)
     document.addEventListener('click', (e) => {
       const a = e.target.closest && e.target.closest('a[href^="#"]');
       if (!a) return;
@@ -94,27 +129,26 @@
         e.preventDefault(); lenis.scrollTo(id, { offset: -80, duration: 1.4 });
       }
     });
+  } else {
+    window.addEventListener('scroll', updateProgress, { passive: true });
   }
+  updateProgress();
 
-  // ---- 3. Warm AI aurora background (Three.js) ----
+  // ---- 3. Three.js cool energy-field + drifting grid ----
   (() => {
     const THREE = window.THREE;
-    const canvas = document.getElementById('fx-aurora');
+    const canvas = document.getElementById('fx-field');
     if (!THREE || !canvas) return;
     let renderer;
     try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); }
     catch (e) { return; }
-
     const DPR = Math.min(window.devicePixelRatio || 1, 2);
     renderer.setPixelRatio(DPR);
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
     const uniforms = {
-      uTime:  { value: 0 },
-      uRes:   { value: new THREE.Vector2(1, 1) },
-      uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-      uMV:    { value: 0 },
+      uTime: { value: 0 }, uRes: { value: new THREE.Vector2(1, 1) },
+      uMouse: { value: new THREE.Vector2(0.5, 0.5) }, uMV: { value: 0 },
     };
     const material = new THREE.ShaderMaterial({
       uniforms,
@@ -123,81 +157,129 @@
         precision highp float;
         varying vec2 vUv;
         uniform float uTime, uMV; uniform vec2 uRes, uMouse;
-        // warm pastel palette
-        const vec3 cream = vec3(0.992,0.976,0.937);
-        const vec3 peach = vec3(1.000,0.860,0.835);
-        const vec3 gold  = vec3(1.000,0.918,0.804);
-        const vec3 rose  = vec3(1.000,0.815,0.842);
-        const vec3 brand = vec3(0.918,0.443,0.388);
+        // cool tech palette on a near-white base
+        const vec3 base   = vec3(0.957, 0.969, 0.996);
+        const vec3 indigo = vec3(0.392, 0.412, 0.945);
+        const vec3 cyan   = vec3(0.180, 0.760, 0.900);
+        const vec3 violet = vec3(0.545, 0.380, 0.945);
         float hash(vec2 p){ p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+45.32); return fract(p.x*p.y); }
         float noise(vec2 p){ vec2 i=floor(p),f=fract(p);
           float a=hash(i),b=hash(i+vec2(1,0)),c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1));
           vec2 u=f*f*(3.-2.*f); return mix(mix(a,b,u.x),mix(c,d,u.x),u.y); }
         float fbm(vec2 p){ float v=0.,a=.5; mat2 m=mat2(1.6,1.2,-1.2,1.6);
           for(int i=0;i<5;i++){ v+=a*noise(p); p=m*p; a*=.5; } return v; }
+        // anti-aliased drifting grid
+        float grid(vec2 uv, float scale){
+          vec2 g = abs(fract(uv*scale - 0.5) - 0.5) / fwidth(uv*scale);
+          float l = min(g.x, g.y);
+          return 1.0 - min(l, 1.0);
+        }
         void main(){
           vec2 uv = vUv;
           float aspect = uRes.x/max(uRes.y,1.0);
           vec2 p = uv; p.x *= aspect;
           vec2 m = uMouse; m.x *= aspect;
-          vec2 toM = p - m; float dM = length(toM);
-          float infl = exp(-dM*dM*6.0);
-          float ang = (0.5 + 1.1*uMV) * infl;
-          float s=sin(ang),c=cos(ang);
-          p += (mat2(c,-s,s,c)*toM - toM) * 0.5;
-
-          float t = uTime*0.04;
-          vec2 q = vec2(fbm(p*1.7+vec2(0.,t)), fbm(p*1.7+vec2(4.2,-t)));
-          vec2 r = vec2(fbm(p*1.7+2.4*q+vec2(1.7,9.2)+t), fbm(p*1.7+2.4*q+vec2(8.3,2.8)-t));
-          float f = fbm(p*1.7+3.0*r);
-
-          // soft warm wash, mostly cream with peach/gold/rose drifting through
-          vec3 col = mix(cream, peach, smoothstep(0.2,0.9,f));
-          col = mix(col, gold,  smoothstep(0.4,1.0,length(q))*0.6);
-          col = mix(col, rose,  smoothstep(0.55,1.0,length(r))*0.5);
-          // faint brand-coloured veins, very restrained
-          col = mix(col, brand, pow(f,4.0)*0.10);
-          // gentle light that follows the cursor
-          col += vec3(1.0,0.97,0.94) * exp(-dM*dM*9.0) * (0.05 + 0.18*uMV);
-
-          // keep the top-right glow the site already has
-          float corner = smoothstep(1.1,0.1,length(uv-vec2(0.95,0.05)));
-          col = mix(col, mix(col,rose,0.5), corner*0.35);
-
+          float dM = length(p - m);
+          float t = uTime*0.05;
+          // flowing cool nebula (subtle)
+          vec2 q = vec2(fbm(p*1.6+vec2(0.,t)), fbm(p*1.6+vec2(4.2,-t)));
+          vec2 r = vec2(fbm(p*1.6+2.2*q+vec2(1.7,9.2)+t), fbm(p*1.6+2.2*q+vec2(8.3,2.8)-t));
+          float f = fbm(p*1.6+3.0*r);
+          vec3 col = base;
+          col = mix(col, indigo, smoothstep(0.35,0.95,f)*0.16);
+          col = mix(col, cyan,   smoothstep(0.55,1.0,length(q))*0.10);
+          col = mix(col, violet, smoothstep(0.6,1.0,length(r))*0.10);
+          // drifting tech grid, brighter near the cursor
+          vec2 guv = uv*vec2(aspect,1.0) + vec2(t*0.15, t*0.08);
+          float gl = grid(guv, 26.0)*0.05 + grid(guv, 6.5)*0.05;
+          float near = exp(-dM*dM*4.0);
+          col = mix(col, indigo, gl*(0.5 + 1.6*near));
+          // cursor energy glow
+          col += (indigo*0.6 + cyan*0.4) * exp(-dM*dM*7.0) * (0.05 + 0.22*uMV);
+          // soft vignette to settle edges
+          col = mix(col, base, smoothstep(0.5,1.25,length(uv-0.5))*0.25);
           gl_FragColor = vec4(col, 1.0);
         }
       `,
     });
-    scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2), material));
-
-    function resize(){
-      const w = window.innerWidth, h = window.innerHeight;
-      renderer.setSize(w, h, false);
-      uniforms.uRes.value.set(w*DPR, h*DPR);
-    }
+    scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+    function resize(){ const w=window.innerWidth,h=window.innerHeight; renderer.setSize(w,h,false); uniforms.uRes.value.set(w*DPR,h*DPR); }
     window.addEventListener('resize', resize); resize();
-
-    const target = new THREE.Vector2(0.5, 0.5);
-    let energy = 0, lx = 0.5, ly = 0.5;
-    function point(x, y){
-      const nx = x/window.innerWidth, ny = 1 - y/window.innerHeight;
-      energy = Math.min(1, energy + Math.hypot(nx-lx, ny-ly)*6);
-      lx = nx; ly = ny; target.set(nx, ny);
-    }
-    window.addEventListener('pointermove', e => point(e.clientX, e.clientY), { passive: true });
-
+    const mv = new THREE.Vector2(0.5, 0.5);
     const clock = new THREE.Clock();
     function frame(){
       const dt = Math.min(clock.getDelta(), 0.05);
       uniforms.uTime.value += reduce ? dt*0.2 : dt;
-      uniforms.uMouse.value.lerp(target, 0.06);
-      energy *= 0.94;
-      uniforms.uMV.value += (energy - uniforms.uMV.value)*0.1;
+      mv.set(pointer.x, 1.0 - pointer.y);           // shader uses y-up
+      uniforms.uMouse.value.lerp(mv, 0.06);
+      uniforms.uMV.value += (pointer.energy - uniforms.uMV.value)*0.1;
       renderer.render(scene, camera);
       requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
     requestAnimationFrame(() => canvas.classList.add('ready'));
+  })();
+
+  // ---- 4. Cursor-reactive particle constellation (AI plexus) ----
+  (() => {
+    if (reduce) return;
+    const canvas = document.getElementById('fx-plexus');
+    const ctx = canvas && canvas.getContext('2d');
+    if (!ctx) return;
+    let w = 0, h = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+    let pts = [];
+    function resize(){
+      w = window.innerWidth; h = window.innerHeight;
+      canvas.width = w*DPR; canvas.height = h*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+      const target = Math.min(90, Math.round(w*h/22000));
+      pts = Array.from({length: target}, (_, i) => ({
+        x: ((i*53)%w), y: ((i*97)%h),                // deterministic spread (no Math.random)
+        vx: (((i*7)%5)-2)*0.05, vy: (((i*11)%5)-2)*0.05,
+      }));
+    }
+    window.addEventListener('resize', resize); resize();
+    const LINK = 130, ACC = '99,102,241';
+    function frame(){
+      ctx.clearRect(0,0,w,h);
+      const mx = pointer.x*w, my = pointer.y*h;
+      for (const a of pts) {
+        a.x += a.vx; a.y += a.vy;
+        if (a.x<0||a.x>w) a.vx*=-1; if (a.y<0||a.y>h) a.vy*=-1;
+        // gentle attraction toward cursor
+        const dxm = mx-a.x, dym = my-a.y, dm = Math.hypot(dxm,dym);
+        if (dm < 200) { a.x += dxm/dm*0.4; a.y += dym/dm*0.4; }
+      }
+      for (let i=0;i<pts.length;i++){
+        const a = pts[i];
+        for (let j=i+1;j<pts.length;j++){
+          const b = pts[j];
+          const d = Math.hypot(a.x-b.x, a.y-b.y);
+          if (d < LINK){
+            ctx.strokeStyle = `rgba(${ACC},${(1-d/LINK)*0.16})`;
+            ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+          }
+        }
+        // link to cursor
+        const dc = Math.hypot(a.x-mx, a.y-my);
+        if (dc < 170){
+          ctx.strokeStyle = `rgba(34,211,238,${(1-dc/170)*0.5})`;
+          ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(mx,my); ctx.stroke();
+        }
+        ctx.fillStyle = `rgba(${ACC},0.5)`;
+        ctx.beginPath(); ctx.arc(a.x,a.y,1.4,0,6.2832); ctx.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+    requestAnimationFrame(() => canvas.classList.add('ready'));
+  })();
+
+  // ---- shared cursor smoothing (drives shader + plexus) ----
+  (function smooth(){
+    pointer.x += (pointer.tx - pointer.x)*0.12;
+    pointer.y += (pointer.ty - pointer.y)*0.12;
+    pointer.energy *= 0.94;
+    requestAnimationFrame(smooth);
   })();
 })();
 </script>
