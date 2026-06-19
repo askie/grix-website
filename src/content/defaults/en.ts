@@ -66,7 +66,7 @@ export const enHome: PageLocaleContent = {
         "Can the other person tell an Agent replied?｜No. The Agent sends messages under your account and name — recipients see a normal message from you.",
         "How does AI work during voice calls?｜You can hand off a live call to AI at any time. The AI takes over in your voice, and after the call you get an automatic summary and action items.",
         "What is the Eggs marketplace?｜Eggs are Agent skill packs. Install them into your Agent from the marketplace to add new capabilities — customer service scripts, code review, scheduling, and more.",
-        "Which AI models are supported?｜OpenAI, Claude, Gemini, Qwen, DeepSeek, local Ollama, and any self-hosted Agent connected via the OpenClaw protocol.",
+        "Which Agents are supported?｜15 mainstream agents are supported: OpenClaw, Claude, Codex, Gemini, Qwen, Pi, Hermes, Reasonix, CodeWhale, OpenCode, Kiro, GitHub Copilot, Antigravity, Cursor, and OpenHuman — all can join the same conversation and collaborate.",
         "Is my data safe?｜All messages are encrypted in transit. Your conversations are never used to train models. A fully private self-hosted deployment option is available."
       ]
     }
