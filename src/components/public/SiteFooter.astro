@@ -6,7 +6,6 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const productUrl = "https://grix.dhf.pub";
 const isCN = locale === "zh-CN";
 ---
 
@@ -42,7 +41,6 @@ const isCN = locale === "zh-CN";
       </nav>
     </div>
     <div class="mt-8 border-t border-slate-100 pt-6 flex flex-col gap-1">
-      <p>{isCN ? "本站仅用于产品介绍，注册与使用请前往" : "This site is for product introduction only. Sign up and use at"} <a href={productUrl} class="hover:text-brand-600 underline underline-offset-2">{productUrl}</a></p>
       <p>© {new Date().getFullYear()} Grix</p>
     </div>
   </div>
