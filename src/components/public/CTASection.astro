@@ -16,8 +16,8 @@ const isCN = locale === "zh-CN";
 const platforms = [
   {
     name: "iOS",
-    label: isCN ? "iOS (TestFlight)" : "iOS (TestFlight)",
-    href: "https://testflight.apple.com/join/D8SRWBam",
+    label: "iOS (App Store)",
+    href: "https://apps.apple.com/app/grix-ai/id6761908445",
     icon: "apple",
   },
   {
@@ -52,9 +52,9 @@ const platforms = [
   },
 ];
 
+const iosAppStoreUrl = "https://apps.apple.com/app/grix-ai/id6761908445";
 const iosQrUrl =
-  "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Ftestflight.apple.com%2Fjoin%2FD8SRWBam";
-const testflightUrl = "https://testflight.apple.com/join/D8SRWBam";
+  `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(iosAppStoreUrl)}`;
 const androidApkUrl =
   "https://github.com/askie/grix/releases/latest/download/Grix-Android.apk";
 const androidQrUrl =
@@ -75,11 +75,11 @@ const androidQrUrl =
     <!-- QR Codes -->
     <div class="grid grid-cols-2 gap-4 sm:flex">
       <div class="flex min-w-0 flex-col items-center gap-2 rounded-xl border border-slate-200 bg-white p-4">
-        <a href={testflightUrl} target="_blank" rel="noopener noreferrer" class="block w-full max-w-[140px]">
-          <img src={iosQrUrl} alt="TestFlight QR Code" class="aspect-square h-auto w-full object-contain" />
+        <a href={iosAppStoreUrl} target="_blank" rel="noopener noreferrer" class="block w-full max-w-[140px]">
+          <img src={iosQrUrl} alt="App Store QR Code" class="aspect-square h-auto w-full object-contain" />
         </a>
         <span class="text-xs text-slate-500">
-          {isCN ? "扫码加入 iOS 测试" : "Scan for iOS beta"}
+          {isCN ? "扫码下载 iOS" : "Scan for iOS"}
         </span>
       </div>
       <div class="flex min-w-0 flex-col items-center gap-2 rounded-xl border border-slate-200 bg-white p-4">
