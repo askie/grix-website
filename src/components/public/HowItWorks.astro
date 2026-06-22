@@ -8,17 +8,17 @@ interface Props {
 const { title, description, steps } = Astro.props;
 ---
 
-<section id="how-it-works" class="rounded-panel border border-slate-200 bg-white p-6 md:p-8">
-  <h2 class="text-2xl font-semibold text-slate-900">{title}</h2>
-  <p class="mt-2 text-slate-600">{description}</p>
-  <ol class="mt-6 space-y-4">
+<section id="how-it-works" class="steep-card p-7 md:p-10">
+  <h2 class="text-[26px] font-medium leading-tight text-ink">{title}</h2>
+  <p class="mt-2 max-w-2xl text-[16px] leading-[1.5] text-ash">{description}</p>
+  <ol class="mt-8 space-y-5">
     {
       steps.map((step, i) => (
         <li class="flex items-start gap-4">
-          <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand-600 text-sm font-semibold text-white">
+          <span class="font-display flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-brand-600 text-[15px] text-white">
             {i + 1}
           </span>
-          <p class="pt-1 text-slate-700 leading-6">{step}</p>
+          <p class="pt-1 text-[16px] leading-[1.55] text-ash">{step}</p>
         </li>
       ))
     }

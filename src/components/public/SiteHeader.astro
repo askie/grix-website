@@ -17,13 +17,16 @@ const navItems = [
 ];
 ---
 
-<header class="sticky top-0 z-10 border-b border-slate-200/70 bg-white/90 backdrop-blur">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
-    <a href={toLocalizedPath(currentLocale)} class="text-lg font-semibold text-brand-700">Grix</a>
-    <nav class="hidden gap-5 text-sm text-slate-700 md:flex">
+<header class="sticky top-0 z-20 border-b border-black/5 bg-white/80 backdrop-blur-md">
+  <div class="mx-auto flex max-w-shell items-center justify-between px-4 py-3.5 md:px-6">
+    <a href={toLocalizedPath(currentLocale)} class="flex items-center gap-2.5 text-lg font-semibold tracking-tight text-ink">
+      <img src="/assets/brand/app_logo.png" alt="Grix" width="30" height="30" class="h-7 w-7" />
+      Grix
+    </a>
+    <nav class="hidden gap-7 text-[15px] font-normal text-ash md:flex">
       {
         navItems.map((item) => (
-          <a href={item.href} class="hover:text-brand-600">
+          <a href={item.href} class="transition-colors hover:text-ink">
             {item.label}
           </a>
         ))
