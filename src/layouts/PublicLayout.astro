@@ -4,6 +4,7 @@ import SiteFooter from "@/components/public/SiteFooter.astro";
 import ScrollFX from "@/components/public/ScrollFX.astro";
 import { buildAlternates } from "@/lib/seo/meta";
 import { defaultLocale, type LocaleCode } from "@/i18n/config";
+import { resolvePool, resolveWidget } from "@/lib/widget/config";
 import "@/styles/global.css";
 
 interface Props {
@@ -19,6 +20,17 @@ const alternates = buildAlternates(slug);
 const canonicalBase = "https://grix.pub";
 const canonicalPath = locale === defaultLocale ? `/${slug}` : `/${locale}/${slug}`;
 const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canonicalBase;
+
+// Resolve the grix widget for this deploy target: CF_POOL env var wins, else
+// the request hostname, else the default pool. Falls back gracefully when the
+// Cloudflare runtime env is unavailable (e.g. local astro dev).
+let envPool: string | null = null;
+try {
+  envPool = (Astro.locals as any)?.runtime?.env?.CF_POOL ?? import.meta.env.CF_POOL ?? null;
+} catch {
+  envPool = null;
+}
+const widget = resolveWidget(resolvePool({ envPool, hostname: Astro.url?.hostname }), locale);
 ---
 
 <!doctype html>
@@ -54,11 +66,7 @@ const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canon
         }
       } catch (e) {}
     </script>
-    {locale === 'zh-CN' ? (
-      <script src="https://grix.dhf.pub/public/widget/widget.js" data-site-key="wk_8mPOzKR8rU06nMI-qXQkWM18" defer></script>
-    ) : (
-      <script src="https://gb.grix.im/public/widget/widget.js" data-site-key="wk_GWr9rwSjyBiXHxhQGGFJvBq3" defer></script>
-    )}
+    <script src={widget.src} data-site-key={widget.siteKey} defer is:inline></script>
   </head>
   <body class="main-shell font-sans text-slate-900">
     <SiteHeader currentLocale={locale} currentSlug={slug} />

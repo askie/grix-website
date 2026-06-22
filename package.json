@@ -12,8 +12,10 @@
     "test:guard": "vitest run tests/guard",
     "test:watch": "vitest",
     "ci:guard": "npm run check && npm run build && npm run test:guard",
-    "deploy:preview": "npm run build && wrangler pages deploy dist --project-name grix-website",
-    "deploy:production": "npm run ci:guard && wrangler pages deploy dist --project-name grix-website --branch main"
+    "deploy:preview": "npm run build && wrangler pages deploy dist --project-name ${CF_PAGES_PROJECT:-grix-website}",
+    "deploy:production": "npm run ci:guard && wrangler pages deploy dist --project-name ${CF_PAGES_PROJECT:-grix-website} --branch main",
+    "deploy:grix": "CF_PAGES_PROJECT=grix-website npm run deploy:production",
+    "deploy:9rix": "CF_PAGES_PROJECT=9rix-website npm run deploy:production"
   },
   "dependencies": {
     "@astrojs/cloudflare": "latest",
