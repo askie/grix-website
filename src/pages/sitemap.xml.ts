@@ -2,8 +2,7 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import { defaultLocale, locales } from "@/i18n/config";
 import { listServerPublishedPages } from "@/lib/server/content-loader";
-
-const domain = "https://grix.im";
+import { resolveSiteOrigin } from "@/lib/widget/config";
 
 interface SitemapUrl {
   loc: string;
@@ -13,7 +12,16 @@ interface SitemapUrl {
   }>;
 }
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async (context) => {
+  // Self-reference the active deploy domain (grix.im / 9rix.com).
+  let envPool: string | null = null;
+  try {
+    envPool = (context.locals as any)?.runtime?.env?.CF_POOL ?? import.meta.env.CF_POOL ?? null;
+  } catch {
+    envPool = null;
+  }
+  const domain = resolveSiteOrigin({ envPool, hostname: context.url?.hostname });
+
   const sitemapUrls: SitemapUrl[] = [];
 
   // Helper to add URL with multi-language alternates
