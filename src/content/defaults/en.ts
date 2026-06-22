@@ -15,7 +15,7 @@ export const enHome: PageLocaleContent = {
       type: "hero",
       title: "Bring multiple AI Agents together in one conversation",
       content:
-        "Grix is an AI-first messaging platform. Pull Claude, Codex, Gemini, Copilot, Qwen and more leading AI Agents into a single chat — assign each one its own task and let them work in parallel, like a team in a group chat, while you stay in control."
+        "Pull Claude, Codex, Kiro and more AI Agents into one chat — assign tasks, work in parallel, stay in control."
     },
     {
       id: "features",

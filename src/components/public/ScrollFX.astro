@@ -8,12 +8,10 @@
 // or missing libs -> content shown instantly. No page copy is modified.
 ---
 
-<canvas id="fx-field" aria-hidden="true"></canvas>
-<canvas id="fx-plexus" aria-hidden="true"></canvas>
 <div id="fx-progress" aria-hidden="true"></div>
 
 <style is:global>
-  :root { --fx-accent: 99 102 241; } /* indigo, used by the FX layer only */
+  :root { --fx-accent: 230 57 70; } /* 龙虾红 — matches the app theme */
 
   /* Canvases sit behind everything; white cards keep all text readable. */
   #fx-field, #fx-plexus {
@@ -28,8 +26,8 @@
   /* Top scan/progress bar in the cool accent. */
   #fx-progress {
     position: fixed; top: 0; left: 0; height: 2px; width: 0; z-index: 60;
-    background: linear-gradient(90deg, rgb(var(--fx-accent)), #22d3ee);
-    box-shadow: 0 0 10px rgb(var(--fx-accent) / 0.8);
+    background: linear-gradient(90deg, #e63946, #a51d2a);
+    box-shadow: 0 0 8px rgb(var(--fx-accent) / 0.45);
     transition: width .1s linear;
   }
 
@@ -39,9 +37,9 @@
     transition: box-shadow .35s ease, border-color .35s ease, transform .35s ease;
   }
   body main .rounded-xl:hover {
-    border-color: rgb(var(--fx-accent) / 0.45);
-    box-shadow: 0 0 0 1px rgb(var(--fx-accent) / 0.25),
-                0 12px 34px -16px rgb(var(--fx-accent) / 0.55);
+    box-shadow: 0 0 0 1px rgba(23,25,28,0.06),
+                0 20px 25px -5px rgba(0,0,0,0.10),
+                0 8px 10px -6px rgba(0,0,0,0.10);
   }
 
   /* No-flash reveal: hide section blocks only once we commit to animating them. */

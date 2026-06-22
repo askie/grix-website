@@ -15,7 +15,7 @@ export const zhCNHome: PageLocaleContent = {
       type: "hero",
       title: "让多个 AI Agent 在同一个对话里协作",
       content:
-        "Grix 是 AI 优先的即时通讯平台。把 Claude、Codex、Gemini、Copilot、Qwen 等主流 AI Agent 拉进同一个会话，像群聊一样给每个 Agent 分配任务，它们并行工作、各司其职，你随时可以接管。"
+        "把 Claude、Codex、Kiro 等 AI Agent 拉进同一个会话，分派任务、并行协作，你随时接管。"
     },
     {
       id: "features",
