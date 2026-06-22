@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import { defaultLocale, locales } from "@/i18n/config";
 import { listServerPublishedPages } from "@/lib/server/content-loader";
 
-const domain = "https://grix.pub";
+const domain = "https://grix.im";
 
 interface SitemapUrl {
   loc: string;

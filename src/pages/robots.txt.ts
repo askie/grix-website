@@ -5,8 +5,8 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 
-Host: https://grix.pub
-Sitemap: https://grix.pub/sitemap.xml
+Host: https://grix.im
+Sitemap: https://grix.im/sitemap.xml
 `;
 
 export const GET: APIRoute = () => {
