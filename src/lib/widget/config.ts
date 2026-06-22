@@ -79,3 +79,12 @@ export function resolveWidget(pool: string, locale: string): WidgetConfig {
   const widgets = WIDGET_POOLS[pool] ?? WIDGET_POOLS[DEFAULT_POOL];
   return locale === "zh-CN" ? widgets.zh : widgets.default;
 }
+
+/**
+ * Resolve the public site origin (scheme + host) for the active pool, so each
+ * deploy target self-canonicalizes (grix.im → https://grix.im,
+ * 9rix.com → https://9rix.com). Pool keys are the public domains.
+ */
+export function resolveSiteOrigin(opts: { envPool?: string | null; hostname?: string | null }): string {
+  return `https://${resolvePool(opts)}`;
+}

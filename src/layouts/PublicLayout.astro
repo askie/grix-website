@@ -17,20 +17,23 @@ interface Props {
 
 const { title, description, locale = defaultLocale, slug = "", noindex = false } = Astro.props;
 const alternates = buildAlternates(slug);
-const canonicalBase = "https://grix.im";
-const canonicalPath = locale === defaultLocale ? `/${slug}` : `/${locale}/${slug}`;
-const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canonicalBase;
 
-// Resolve the grix widget for this deploy target: CF_POOL env var wins, else
-// the request hostname, else the default pool. Falls back gracefully when the
-// Cloudflare runtime env is unavailable (e.g. local astro dev).
+// Resolve the active deploy pool: CF_POOL env var wins, else the request
+// hostname, else the default pool. Falls back gracefully when the Cloudflare
+// runtime env is unavailable (e.g. local astro dev).
 let envPool: string | null = null;
 try {
   envPool = (Astro.locals as any)?.runtime?.env?.CF_POOL ?? import.meta.env.CF_POOL ?? null;
 } catch {
   envPool = null;
 }
-const widget = resolveWidget(resolvePool({ envPool, hostname: Astro.url?.hostname }), locale);
+const pool = resolvePool({ envPool, hostname: Astro.url?.hostname });
+const widget = resolveWidget(pool, locale);
+
+// Each deploy target self-canonicalizes to its own public domain.
+const canonicalBase = `https://${pool}`;
+const canonicalPath = locale === defaultLocale ? `/${slug}` : `/${locale}/${slug}`;
+const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canonicalBase;
 ---
 
 <!doctype html>
