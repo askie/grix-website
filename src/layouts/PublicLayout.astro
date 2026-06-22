@@ -17,7 +17,7 @@ interface Props {
 
 const { title, description, locale = defaultLocale, slug = "", noindex = false } = Astro.props;
 const alternates = buildAlternates(slug);
-const canonicalBase = "https://grix.pub";
+const canonicalBase = "https://grix.im";
 const canonicalPath = locale === defaultLocale ? `/${slug}` : `/${locale}/${slug}`;
 const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canonicalBase;
 
