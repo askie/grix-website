@@ -17,6 +17,7 @@
 html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
 body {
@@ -26,6 +27,7 @@ body {
   color: var(--ink);
   font-family: "Inter", "Untitled Sans", system-ui, sans-serif;
   letter-spacing: -0.009em;
+  overflow-x: clip;
 }
 
 .main-shell {
@@ -47,6 +49,7 @@ body {
   .hero-glow {
     position: relative;
     isolation: isolate;
+    overflow: clip;
   }
   .hero-glow::before {
     content: "";
