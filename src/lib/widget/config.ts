@@ -33,16 +33,14 @@ export const WIDGET_POOLS: Record<string, PoolWidgets> = {
       siteKey: "wk_GWr9rwSjyBiXHxhQGGFJvBq3"
     }
   },
-  // 9rix.com widget not provisioned yet — mirrors grix.im as a placeholder.
-  // Replace both entries once the dedicated 9rix widget keys are issued.
   "9rix.com": {
     zh: {
       src: "https://grix.dhf.pub/public/widget/widget.js",
-      siteKey: "wk_8mPOzKR8rU06nMI-qXQkWM18"
+      siteKey: "wk_zTRNW-kPqfD-V_wjmZaDDXNe"
     },
     default: {
       src: "https://gb.grix.im/public/widget/widget.js",
-      siteKey: "wk_GWr9rwSjyBiXHxhQGGFJvBq3"
+      siteKey: "wk_RhCssDJBZb2nwvDvWooeHO5I"
     }
   }
 };
