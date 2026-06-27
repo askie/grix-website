@@ -47,12 +47,12 @@ export const WIDGET_POOLS: Record<string, PoolWidgets> = {
 
 /**
  * Pool key → Google Analytics 4 Measurement ID (G-XXXXXXXXXX).
- * Each deploy target reports to its own data stream. An empty string disables
- * analytics for that pool (no gtag tag is emitted).
+ * Both streams live under the single "Grix" GA4 property. An empty string
+ * disables analytics for that pool (no gtag tag is emitted).
  */
 export const GA_MEASUREMENT_IDS: Record<string, string> = {
   "grix.im": "G-T6SQH4KGT5",
-  "9rix.com": "G-DSH1Y2KXC8"
+  "9rix.com": "G-ZB6TZ5YNZZ"
 };
 
 /** Resolve the GA4 Measurement ID for a given pool. Empty string = disabled. */
