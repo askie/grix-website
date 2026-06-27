@@ -4,7 +4,7 @@ import SiteFooter from "@/components/public/SiteFooter.astro";
 import ScrollFX from "@/components/public/ScrollFX.astro";
 import { buildAlternates } from "@/lib/seo/meta";
 import { defaultLocale, type LocaleCode } from "@/i18n/config";
-import { resolvePool, resolveWidget } from "@/lib/widget/config";
+import { resolvePool, resolveWidget, resolveGaId } from "@/lib/widget/config";
 import "@/styles/global.css";
 
 interface Props {
@@ -29,6 +29,7 @@ try {
 }
 const pool = resolvePool({ envPool, hostname: Astro.url?.hostname });
 const widget = resolveWidget(pool, locale);
+const gaId = resolveGaId(pool);
 
 // Each deploy target self-canonicalizes to its own public domain.
 const canonicalBase = `https://${pool}`;
@@ -77,6 +78,18 @@ const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canon
       } catch (e) {}
     </script>
     <script src={widget.src} data-site-key={widget.siteKey} defer is:inline></script>
+    <!-- Google Analytics 4 (gtag), per-pool measurement ID. -->
+    {gaId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} is:inline></script>
+        <script is:inline define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
   </head>
   <body class="main-shell overflow-x-hidden font-sans text-ink">
     <SiteHeader currentLocale={locale} currentSlug={slug} />

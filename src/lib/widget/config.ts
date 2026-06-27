@@ -45,6 +45,21 @@ export const WIDGET_POOLS: Record<string, PoolWidgets> = {
   }
 };
 
+/**
+ * Pool key → Google Analytics 4 Measurement ID (G-XXXXXXXXXX).
+ * Each deploy target reports to its own data stream. An empty string disables
+ * analytics for that pool (no gtag tag is emitted).
+ */
+export const GA_MEASUREMENT_IDS: Record<string, string> = {
+  "grix.im": "G-T6SQH4KGT5",
+  "9rix.com": "G-DSH1Y2KXC8"
+};
+
+/** Resolve the GA4 Measurement ID for a given pool. Empty string = disabled. */
+export function resolveGaId(pool: string): string {
+  return GA_MEASUREMENT_IDS[pool] ?? "";
+}
+
 /** Fallback pool when neither env var nor hostname resolves a known pool. */
 export const DEFAULT_POOL = "grix.im";
 
