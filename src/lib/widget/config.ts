@@ -51,8 +51,8 @@ export const WIDGET_POOLS: Record<string, PoolWidgets> = {
  * analytics for that pool (no gtag tag is emitted).
  */
 export const GA_MEASUREMENT_IDS: Record<string, string> = {
-  "grix.im": "",
-  "9rix.com": ""
+  "grix.im": "G-T6SQH4KGT5",
+  "9rix.com": "G-DSH1Y2KXC8"
 };
 
 /** Resolve the GA4 Measurement ID for a given pool. Empty string = disabled. */
