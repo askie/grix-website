@@ -53,12 +53,10 @@ const platforms = [
 ];
 
 const iosAppStoreUrl = "https://apps.apple.com/app/grix-ai/id6761908445";
-const iosQrUrl =
-  `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(iosAppStoreUrl)}`;
 const androidApkUrl =
   "https://github.com/askie/grix/releases/latest/download/Grix-Android.apk";
-const androidQrUrl =
-  `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(androidApkUrl)}`;
+const iosQrUrl = "/qr/ios.svg";
+const androidQrUrl = "/qr/android.svg";
 ---
 
 <section class="steep-card overflow-hidden p-7 md:p-10" style="background:#fbe1d1;">
