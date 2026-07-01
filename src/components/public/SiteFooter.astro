@@ -43,8 +43,22 @@ const isCN = locale === "zh-CN";
         </div>
       </nav>
     </div>
-    <div class="mt-10 border-t border-black/5 pt-6">
+    <div class="mt-10 flex flex-col gap-3 border-t border-black/5 pt-6 md:flex-row md:items-center md:justify-between">
       <p>© {new Date().getFullYear()} Grix</p>
+      <nav class="flex gap-6">
+        <a
+          href="https://gb.grix.im/legal/privacy-policy"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="transition-colors hover:text-ink"
+        >{isCN ? "隐私政策" : "Privacy Policy"}</a>
+        <a
+          href="https://gb.grix.im/legal/terms-of-service"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="transition-colors hover:text-ink"
+        >{isCN ? "服务条款" : "Terms of Service"}</a>
+      </nav>
     </div>
   </div>
 </footer>
