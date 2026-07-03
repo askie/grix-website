@@ -28,9 +28,15 @@ export const WIDGET_POOLS: Record<string, PoolWidgets> = {
       src: "https://grix.dhf.pub/public/widget/widget.js",
       siteKey: "wk_8mPOzKR8rU06nMI-qXQkWM18"
     },
+    // Temporarily pointed at the zh (domestic) instance; original overseas
+    // config kept below for restoring later.
+    // default: {
+    //   src: "https://gb.grix.im/public/widget/widget.js",
+    //   siteKey: "wk_GWr9rwSjyBiXHxhQGGFJvBq3"
+    // }
     default: {
-      src: "https://gb.grix.im/public/widget/widget.js",
-      siteKey: "wk_GWr9rwSjyBiXHxhQGGFJvBq3"
+      src: "https://grix.dhf.pub/public/widget/widget.js",
+      siteKey: "wk_8mPOzKR8rU06nMI-qXQkWM18"
     }
   },
   "9rix.com": {
@@ -38,9 +44,15 @@ export const WIDGET_POOLS: Record<string, PoolWidgets> = {
       src: "https://grix.dhf.pub/public/widget/widget.js",
       siteKey: "wk_zTRNW-kPqfD-V_wjmZaDDXNe"
     },
+    // Temporarily pointed at the zh (domestic) instance; original overseas
+    // config kept below for restoring later.
+    // default: {
+    //   src: "https://gb.grix.im/public/widget/widget.js",
+    //   siteKey: "wk_RhCssDJBZb2nwvDvWooeHO5I"
+    // }
     default: {
-      src: "https://gb.grix.im/public/widget/widget.js",
-      siteKey: "wk_RhCssDJBZb2nwvDvWooeHO5I"
+      src: "https://grix.dhf.pub/public/widget/widget.js",
+      siteKey: "wk_zTRNW-kPqfD-V_wjmZaDDXNe"
     }
   }
 };
