@@ -13,6 +13,10 @@ interface Props {
 const { locale } = Astro.props;
 const isCN = locale === "zh-CN";
 
+const ghBase = "https://github.com/askie/grix/releases/latest/download";
+const ossBase = "https://release.dhf.pub/latest";
+const dlBase = isCN ? ossBase : ghBase;
+
 const platforms = [
   {
     name: "iOS",
@@ -23,25 +27,25 @@ const platforms = [
   {
     name: "Android",
     label: "Android",
-    href: "https://github.com/askie/grix/releases/latest/download/Grix-Android.apk",
+    href: `${dlBase}/Grix-Android.apk`,
     icon: "android",
   },
   {
     name: "macOS",
     label: "macOS",
-    href: "https://github.com/askie/grix/releases/latest/download/Grix-macOS.zip",
+    href: `${dlBase}/Grix-macOS.zip`,
     icon: "apple",
   },
   {
     name: "Windows",
     label: "Windows",
-    href: "https://github.com/askie/grix/releases/latest/download/Grix-Windows.zip",
+    href: `${dlBase}/Grix-Windows.zip`,
     icon: "windows",
   },
   {
     name: "Linux",
     label: "Linux",
-    href: "https://github.com/askie/grix/releases/latest/download/Grix-Linux-x64.tar.gz",
+    href: `${dlBase}/Grix-Linux-x64.tar.gz`,
     icon: "linux",
   },
   {
@@ -53,8 +57,7 @@ const platforms = [
 ];
 
 const iosAppStoreUrl = "https://apps.apple.com/app/grix-ai/id6761908445";
-const androidApkUrl =
-  "https://github.com/askie/grix/releases/latest/download/Grix-Android.apk";
+const androidApkUrl = `${dlBase}/Grix-Android.apk`;
 const iosQrUrl = "/qr/ios.svg";
 const androidQrUrl = "/qr/android.svg";
 ---

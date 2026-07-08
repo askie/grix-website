@@ -7,6 +7,12 @@ interface Props {
 
 const { locale } = Astro.props;
 const isCN = locale === "zh-CN";
+const androidUrl = isCN
+  ? "https://release.dhf.pub/latest/Grix-Android.apk"
+  : "https://github.com/askie/grix/releases/latest/download/Grix-Android.apk";
+const desktopUrl = isCN
+  ? "https://release.dhf.pub/latest/"
+  : "https://github.com/askie/grix/releases/latest";
 ---
 
 <footer class="mt-8 border-t border-black/5 py-12 text-[14px] text-graphite">
@@ -37,8 +43,8 @@ const isCN = locale === "zh-CN";
           <ul class="mt-3 space-y-2.5">
             <li><a href="https://grix.im" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-ink">{isCN ? "Web 版" : "Web app"}</a></li>
             <li><a href="https://apps.apple.com/app/grix-ai/id6761908445" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-ink">{isCN ? "iOS 下载" : "iOS"}</a></li>
-            <li><a href="https://github.com/askie/grix/releases/latest/download/Grix-Android.apk" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-ink">{isCN ? "Android 下载" : "Android"}</a></li>
-            <li><a href="https://github.com/askie/grix/releases/latest" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-ink">{isCN ? "桌面端" : "Desktop"}</a></li>
+            <li><a href={androidUrl} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-ink">{isCN ? "Android 下载" : "Android"}</a></li>
+            <li><a href={desktopUrl} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-ink">{isCN ? "桌面端" : "Desktop"}</a></li>
           </ul>
         </div>
       </nav>
