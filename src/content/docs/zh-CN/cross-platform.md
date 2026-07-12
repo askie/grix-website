@@ -13,10 +13,10 @@ Grix 基于 Flutter 实现 7 平台全覆盖，针对各平台深度适配。
 | 平台 | 特色能力 | 下载 |
 |------|---------|------|
 | iOS | 推送、相机扫码、Apple 登录、CallKit | [App Store](https://apps.apple.com/app/grix-ai/id6761908445) |
-| Android | 推送、相机扫码、Google 登录 | [APK 下载](https://github.com/askie/grix/releases/latest/download/Grix-Android.apk) |
-| macOS | 系统托盘、Agent 工具栏、文件拖拽 | [macOS 下载](https://github.com/askie/grix/releases/latest/download/Grix-macOS.zip) |
-| Windows | 系统托盘、Agent 工具栏、开机自启 | [Windows 下载](https://github.com/askie/grix/releases/latest/download/Grix-Windows.zip) |
-| Linux | 系统托盘、Agent 工具栏 | [Linux 下载](https://github.com/askie/grix/releases/latest/download/Grix-Linux-x64.tar.gz) |
+| Android | 推送、相机扫码、Google 登录 | [APK 下载](https://release.dhf.pub/latest/Grix-Android.apk) |
+| macOS | 系统托盘、Agent 工具栏、文件拖拽 | [macOS 下载](https://release.dhf.pub/latest/Grix-macOS.zip) |
+| Windows | 系统托盘、Agent 工具栏、开机自启 | [Windows 下载](https://release.dhf.pub/latest/Grix-Windows.zip) |
+| Linux | 系统托盘、Agent 工具栏 | [Linux 下载](https://release.dhf.pub/latest/Grix-Linux-x64.tar.gz) |
 | Web (PWA) | 离线缓存、浏览器通知、SW | [在线使用](https://grix.im) |
 | 鸿蒙 | 原生适配 | 即将上线 |
 
