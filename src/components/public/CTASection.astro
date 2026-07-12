@@ -11,7 +11,10 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const isCN = locale === "zh-CN";
+// 下载源同时看「页面语言」和「访客真实地区」：中文页或中国 IP 一律走国内 OSS，
+// 避免国内访客落在英文页时拿到 GitHub 链接（国内无法下载）。
+const cfCountry = Astro.request.headers.get("cf-ipcountry") ?? "";
+const isCN = locale === "zh-CN" || cfCountry === "CN";
 
 const ghBase = "https://github.com/askie/grix/releases/latest/download";
 const ossBase = "https://release.dhf.pub/latest";
