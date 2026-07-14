@@ -21,7 +21,7 @@ order: 2
 
 | 平台 | 下载链接 |
 |------|---------|
-| macOS | [Grix-macOS.zip](https://release.dhf.pub/latest/Grix-macOS.zip) — 下载后解压，拖入 Applications |
+| macOS | [Grix-macOS.dmg](https://release.dhf.pub/latest/Grix-macOS.dmg) — 打开后将 Grix 拖入 Applications |
 | Windows | [Grix-Windows.zip](https://release.dhf.pub/latest/Grix-Windows.zip) — 下载后解压，双击安装 |
 | Linux | [Grix-Linux-x64.tar.gz](https://release.dhf.pub/latest/Grix-Linux-x64.tar.gz) — 下载后解压运行 |
 

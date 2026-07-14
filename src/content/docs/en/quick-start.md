@@ -21,7 +21,7 @@ This is the fastest path. After installing the desktop app, Grix automatically i
 
 | Platform | Download Link |
 |----------|--------------|
-| macOS | [Grix-macOS.zip](https://github.com/askie/grix/releases/latest/download/Grix-macOS.zip) — unzip and drag to Applications |
+| macOS | [Grix-macOS.dmg](https://github.com/askie/grix/releases/latest/download/Grix-macOS.dmg) — open the disk image and drag Grix to Applications |
 | Windows | [Grix-Windows.zip](https://github.com/askie/grix/releases/latest/download/Grix-Windows.zip) — unzip and run the installer |
 | Linux | [Grix-Linux-x64.tar.gz](https://github.com/askie/grix/releases/latest/download/Grix-Linux-x64.tar.gz) — extract and run |
 
