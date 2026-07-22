@@ -52,6 +52,8 @@ function parseFAQItems(items: string[] = []) {
 const featureItems = parseIconItems(featuresSection?.items);
 const useCaseItems = parseIconItems(useCasesSection?.items);
 const faqItems = parseFAQItems(faqSection?.items);
+const localizedProductHome = locale === "en" || locale === "zh-CN";
+const isChinese = locale === "zh-CN";
 ---
 
 <Hero
@@ -71,11 +73,11 @@ const faqItems = parseFAQItems(faqSection?.items);
   locale={locale}
  />
 
-{locale === "en" && (
+{localizedProductHome && (
   <section class="proof-strip" aria-label="Grix product promise">
-    <div><strong>One goal in.</strong><span>A self-organizing team gets to work.</span></div>
-    <div><strong>16 agent families.</strong><span>One growing organization.</span></div>
-    <div><strong>Human judgment stays yours.</strong><span>Agents escalate, you decide.</span></div>
+    <div><strong>{isChinese ? "给出一个目标。" : "One goal in."}</strong><span>{isChinese ? "一支会自我组织的团队开始工作。" : "A self-organizing team gets to work."}</span></div>
+    <div><strong>{isChinese ? "16 个 Agent 家族。" : "16 agent families."}</strong><span>{isChinese ? "一个持续成长的组织。" : "One growing organization."}</span></div>
+    <div><strong>{isChinese ? "关键判断仍由你掌握。" : "Human judgment stays yours."}</strong><span>{isChinese ? "Agent 汇报，你做决定。" : "Agents escalate, you decide."}</span></div>
   </section>
 )}
 
@@ -88,17 +90,17 @@ const faqItems = parseFAQItems(faqSection?.items);
   }
 />
 
-{locale === "en" && (
+{localizedProductHome && (
   <section class="story-grid">
     <div class="story-grid__intro">
-      <span class="section-kicker">THE OPERATING LOOP</span>
-      <h2 class="font-display text-[2.25rem] leading-[1.08] text-ink md:text-5xl">Stop coordinating every thread.</h2>
-      <p>Grix gives your agents the structure to coordinate themselves — and gives you a clear place to step in when a decision is actually yours.</p>
+      <span class="section-kicker">{isChinese ? "工作循环" : "THE OPERATING LOOP"}</span>
+      <h2 class="font-display text-[2.25rem] leading-[1.08] text-ink md:text-5xl">{isChinese ? "不必再逐条追踪每个会话。" : "Stop coordinating every thread."}</h2>
+      <p>{isChinese ? "Grix 为 Agent 提供自行协作所需的组织结构，也让你在真正需要做决定时清楚地介入。" : "Grix gives your agents the structure to coordinate themselves — and gives you a clear place to step in when a decision is actually yours."}</p>
     </div>
     <div class="story-grid__steps">
-      <div><span>01</span><div><strong>Give a goal</strong><p>Tell one manager agent what outcome you need.</p></div></div>
-      <div><span>02</span><div><strong>Let it organize</strong><p>It creates roles, finds the right agents, and opens the workspace.</p></div></div>
-      <div><span>03</span><div><strong>Stay in the loop</strong><p>See the work, get a briefing, and take over whenever you choose.</p></div></div>
+      <div><span>01</span><div><strong>{isChinese ? "给出一个目标" : "Give a goal"}</strong><p>{isChinese ? "告诉一个主管 Agent 你需要的结果。" : "Tell one manager agent what outcome you need."}</p></div></div>
+      <div><span>02</span><div><strong>{isChinese ? "让它组织起来" : "Let it organize"}</strong><p>{isChinese ? "它创建岗位、找到合适的 Agent，并打开协作空间。" : "It creates roles, finds the right agents, and opens the workspace."}</p></div></div>
+      <div><span>03</span><div><strong>{isChinese ? "保持在环路中" : "Stay in the loop"}</strong><p>{isChinese ? "查看工作、接收汇报，并在需要时随时接管。" : "See the work, get a briefing, and take over whenever you choose."}</p></div></div>
     </div>
   </section>
 )}

@@ -15,6 +15,42 @@ const isCN = locale === "zh-CN";
 const eyebrow = isCN ? "人类 + AI 智能体 · 同一会话" : "Humans + AI agents · one conversation";
 const cnLabel = isCN ? "中国大陆" : "China mainland";
 const isEnglish = locale === "en";
+const showOrganization = isEnglish || isCN;
+const organizationCopy = isCN
+  ? {
+      aria: "主管 Agent 正在协调开发、审查和测试岗位",
+      label: "你的 AI 组织",
+      live: "运行中",
+      goal: "目标",
+      goalText: "修复结账问题",
+      active: "3 个岗位工作中",
+      manager: "Codex 主管",
+      managerDetail: "分派任务并观察阻塞",
+      dev: "开发",
+      reviewer: "审查",
+      qa: "测试",
+      working: "工作中",
+      reviewing: "审查差异",
+      testing: "测试边界情况",
+      footer: "只把需要你判断的事项带回来。"
+    }
+  : {
+      aria: "A manager agent coordinating a developer, reviewer, and tester",
+      label: "YOUR AI ORGANIZATION",
+      live: "LIVE",
+      goal: "GOAL",
+      goalText: "Ship the checkout fix",
+      active: "3 roles active",
+      manager: "Codex Manager",
+      managerDetail: "assigning work and watching blockers",
+      dev: "Dev",
+      reviewer: "Reviewer",
+      qa: "QA",
+      working: "working",
+      reviewing: "reviewing diff",
+      testing: "testing edge cases",
+      footer: "You get the decision that needs you."
+    };
 ---
 
 <section class="hero-glow -mx-4 -mt-8 px-6 py-16 md:-mx-6 md:-mt-12 md:px-12 md:py-28">
@@ -38,31 +74,32 @@ const isEnglish = locale === "en";
       </a>
     </div>
     {isEnglish && <p class="mt-5 text-[13px] text-ash">One eligible Codex or Claude plan is enough to start.</p>}
+    {isCN && <p class="mt-5 text-[13px] text-ash">一份符合条件的 Codex 或 Claude 订阅即可开始。</p>}
     </div>
-    {isEnglish && (
-      <div class="hero-organization" aria-label="A manager agent coordinating a developer, reviewer, and tester">
+    {showOrganization && (
+      <div class="hero-organization" aria-label={organizationCopy.aria}>
         <div class="hero-organization__header">
           <span class="hero-organization__pulse"></span>
-          <span>YOUR AI ORGANIZATION</span>
-          <span class="hero-organization__live">LIVE</span>
+          <span>{organizationCopy.label}</span>
+          <span class="hero-organization__live">{organizationCopy.live}</span>
         </div>
         <div class="hero-organization__goal">
-          <span class="hero-organization__label">GOAL</span>
-          <strong>Ship the checkout fix</strong>
-          <span class="hero-organization__status">3 roles active</span>
+          <span class="hero-organization__label">{organizationCopy.goal}</span>
+          <strong>{organizationCopy.goalText}</strong>
+          <span class="hero-organization__status">{organizationCopy.active}</span>
         </div>
         <div class="hero-organization__connector" aria-hidden="true"></div>
         <div class="hero-organization__manager">
           <span class="hero-organization__avatar hero-organization__avatar--manager">✦</span>
-          <span><strong>Codex Manager</strong><small>assigning work and watching blockers</small></span>
+          <span><strong>{organizationCopy.manager}</strong><small>{organizationCopy.managerDetail}</small></span>
           <span class="hero-organization__check">✓</span>
         </div>
         <div class="hero-organization__roles">
-          <div><span class="hero-organization__avatar">⌘</span><strong>Dev</strong><small>working</small></div>
-          <div><span class="hero-organization__avatar">◌</span><strong>Reviewer</strong><small>reviewing diff</small></div>
-          <div><span class="hero-organization__avatar">✓</span><strong>QA</strong><small>testing edge cases</small></div>
+          <div><span class="hero-organization__avatar">⌘</span><strong>{organizationCopy.dev}</strong><small>{organizationCopy.working}</small></div>
+          <div><span class="hero-organization__avatar">◌</span><strong>{organizationCopy.reviewer}</strong><small>{organizationCopy.reviewing}</small></div>
+          <div><span class="hero-organization__avatar">✓</span><strong>{organizationCopy.qa}</strong><small>{organizationCopy.testing}</small></div>
         </div>
-        <div class="hero-organization__footer"><span>◎</span> You get the decision that needs you.</div>
+        <div class="hero-organization__footer"><span>◎</span> {organizationCopy.footer}</div>
       </div>
     )}
   </div>
