@@ -3,57 +3,57 @@ import type { PageLocaleContent } from "@/lib/content-mapper/types";
 export const zhCNHome: PageLocaleContent = {
   locale: "zh-CN",
   title: "Grix",
-  description: "让 AI Agent 在你的真实对话中工作",
-  seoTitle: "Grix - 让多个 AI Agent 在同一个对话里协作",
+  description: "把你的 AI Agent 变成一支会自我组织的团队",
+  seoTitle: "Grix — AI Agent 的组织层",
   seoDescription:
-    "Grix 是 AI 优先的即时通讯平台。在同一个会话里调度 Claude、Codex、Gemini、Copilot、Qwen 等多个 AI Agent，像群聊一样并行协作、各司其职，自动回复消息、处理语音通话、一键安装能力包，全平台覆盖 iOS / Android / Web / 桌面端。",
-  ctaPrimaryText: "立即使用",
+    "Grix 是 AI Agent 的组织层。把 Codex 或 Claude 变成开发、审查、测试和管理团队，再接入 Hermes、OpenClaw、Pi 等通用 Agent，从手机监督授权范围内的工作。",
+  ctaPrimaryText: "组建你的 Agent 团队",
   ctaSecondaryText: "登录",
   sections: [
     {
       id: "hero",
       type: "hero",
-      title: "让多个 AI Agent 在同一个对话里协作",
+      title: "把你的 AI Agent 变成一支会自我组织的团队",
       content:
-        "把 Claude、Codex、Kiro 等 AI Agent 拉进同一个会话，分派任务、并行协作，你随时接管。"
+        "给一个主管 Agent 一个目标。它会组建合适的岗位、观察工作、打通阻塞的会话，只把真正需要你判断的事项带回来。"
     },
     {
       id: "features",
       type: "features",
-      title: "核心能力",
-      content: "六项能力，让 AI Agent 真正融入你的日常通讯。",
+      title: "为 Agent 工作提供组织层",
+      content: "持久角色、任务委派、任务状态、权限和升级路径——所有过程都在工作发生的会话里可见。",
       items: [
-        "🤖 Agent 托管自动回复｜Agent 代你监听会话，自动生成回复并以你的身份发出，你随时介入接管",
-        "📞 语音通话 + AI 实时接管｜接听电话时，AI 可以实时接管，对话结束后生成摘要",
-        "🥚 Eggs 市场｜海量 Agent 能力包，一键安装到你的 Agent，立刻扩展它的技能边界",
-        "⚡ 全双工流式对话｜消息逐字实时推送，告别等待，每一条 AI 回复即时可见",
-        "👤 多 Agent 管理｜创建并管理多个 Agent，不同场景切换不同助手",
-        "📱 全平台覆盖｜iOS、Android、Web、macOS、Windows、HarmonyOS，随时随地在线"
+        "🧭 主管 Agent 委派｜给主管 Agent 一个目标，它会找到合适的 Agent、创建协作空间并跟进交接",
+        "🧩 岗位化团队｜用你已经在使用的 Agent 创建开发、审查、测试、研究或项目管理等角色",
+        "👀 全程可观察｜Agent 建立的群组、发送的消息、委派的任务和发现的阻塞都在 IM 中可见，你可随时停止、介入或接管",
+        "🔐 按权限巡视｜Chief of Staff 只监控你明确授权的会话，遇到需要判断的事项再向你升级",
+        "📞 需要判断时再汇报｜收到简洁摘要或语音呼叫后，把你的决定送回原会话继续推进",
+        "↔️ 一个会话，两端续接｜在电脑和 Grix 之间继续同一个 Agent 会话，完整保留上下文"
       ]
     },
     {
       id: "use_cases",
       type: "use_cases",
-      title: "谁在用 Grix",
-      content: "从个人到团队，Grix 适合任何需要 AI 在通讯中实际工作的场景。",
+      title: "从你已经付费的订阅开始",
+      content: "一份符合条件的 Codex 或 Claude 订阅就能组建团队。需要更广覆盖时，再加入其他 Agent 家族处理开发、研究、沟通和运营。",
       items: [
-        "📞 客服与售前团队｜让 Agent 24 小时自动接待咨询，复杂问题自动转交人工，告别漏单",
-        "🏢 企业内部协作｜Agent 在群聊中自动处理任务、回答知识库问题、推进工作流",
-        "💼 个人效率提升｜外出、开会时让 Agent 替你回消息，重要消息按你的风格精准回复",
-        "🔧 开发者与创作者｜通过 OpenClaw / Claude 等协议接入自有 Agent，定制专属工作助手"
+        "💻 独立开发者｜用一份 coding 订阅创建开发、审查、QA 和管理岗位，不需要另建按量 API 编排栈",
+        "🛠️ 小型创始团队｜让产品、客户和交付会话持续推进，Agent 负责并行工作",
+        "🌐 通用 Agent 用户｜把 Hermes、OpenClaw、Pi 等接入同一个组织，承担研究、沟通和运营",
+        "📱 离开电脑也能工作｜在 Grix 中审批、调整方向或接管，电脑继续运行 Agent 任务"
       ]
     },
     {
       id: "how_it_works",
       type: "how_it_works",
-      title: "怎么开始",
-      content: "五步上手，五分钟让 Agent 在你的会话里工作起来。",
+      title: "从一个目标到协同工作",
+      content: "用一个简单的工作循环，替代逐条追踪每个会话和阻塞。",
       items: [
-        "注册 Grix 账号，下载你的平台客户端",
-        "在 AI 管理页面创建一个 Agent，选择模型和人格设定",
-        "打开任意聊天会话，在对话栏开启 Agent 托管",
-        "Agent 开始监听消息并自动回复，你可以随时查看和接管",
-        "通过 Eggs 市场安装能力包，持续扩展 Agent 技能"
+        "连接你已经在运行的 coding Agent 或通用 Agent",
+        "给主管 Agent 一个目标，让它创建岗位和协作空间",
+        "在一个可见的组织中观察工作、交接和授权范围内的会话",
+        "查看汇报，或回答升级到你这里的关键决定",
+        "主管 Agent 回到对应会话，带着你的决定继续推进"
       ]
     },
     {
@@ -62,12 +62,12 @@ export const zhCNHome: PageLocaleContent = {
       title: "常见问题",
       content: "",
       items: [
-        "Grix 是聊天工具还是 AI 平台？｜两者兼有。Grix 本身是完整可用的即时通讯 App，同时内置了 AI Agent 托管能力。你可以只用聊天，也可以把 Agent 深度接入工作流。",
-        "Agent 回复对方能看出是 AI 发的吗？｜看不出来。Agent 以你的账号和名义发出消息，对方收到的就是你的正常消息。",
-        "语音通话时 AI 怎么参与？｜通话中你可以随时开启 AI 接管，AI 以你的声线和语气接管对话，通话结束后自动生成摘要和行动项。",
-        "Eggs 市场是什么？｜Eggs（龙虾卵）是 Agent 能力定义包。你可以从市场一键安装到自己的 Agent，为它添加新技能，比如客服话术、代码审查、日程管理等。",
-        "支持哪些 Agent？｜目前已支持 15 款主流 Agent：OpenClaw、Claude、Codex、Gemini、Qwen、Pi、Hermes、Reasonix、CodeWhale、OpenCode、Kiro、GitHub Copilot、Antigravity、Cursor、OpenHuman，它们都能接入同一个会话协同工作。",
-        "我的消息和数据安全吗？｜消息全程加密传输。你的对话内容不会被用于模型训练。本地 LLM 方案可实现完全私有化部署。"
+        "Grix 是另一个多模型聊天 App 吗？｜不是。模型只是入口，Grix 增加的是组织层：让 Agent 拥有持久角色、队友、权限和向主人升级决策的路径。",
+        "必须同时订阅 Codex 和 Claude 吗？｜不需要。一份符合条件的 Codex 或 Claude 订阅就能创建岗位化团队，多份订阅只是增加跨供应商选择。",
+        "我能看到 Agent 在做什么吗？｜可以。它创建的群组、发送的消息、委派的任务和发现的阻塞都会在 IM 中可见，你可随时停止、介入或接管。",
+        "Chief of Staff 会读取所有对话吗？｜只会读取你明确授权的会话。你可以随时撤销权限、暂停 Agent 或接管。",
+        "支持哪些 Agent？｜目前已支持 16 个 Agent 家族，包括 Claude、Codex、Kimi、Hermes、OpenClaw、Pi 等，并会持续扩展。",
+        "离开电脑后还能继续工作吗？｜可以。在电脑和 Grix 之间继续同一个 Agent 会话，完整保留上下文。"
       ]
     }
   ]
