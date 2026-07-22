@@ -1,14 +1,12 @@
 ---
 // Progressive-enhancement "tech" visual layer for public pages:
-//  - Lenis buttery smooth scroll (+ cool scan progress bar)
+//  - Lenis buttery smooth scroll
 //  - GSAP ScrollTrigger cinematic clip reveals (content untouched)
 //  - Three.js cool energy-field + drifting grid that reacts to the cursor
 //  - A cursor-reactive particle constellation (the "AI plexus")
 // All effects degrade gracefully: no WebGL -> CSS background; reduced-motion
 // or missing libs -> content shown instantly. No page copy is modified.
 ---
-
-<div id="fx-progress" aria-hidden="true"></div>
 
 <style is:global>
   :root { --fx-accent: 230 57 70; } /* 龙虾红 — matches the app theme */
@@ -22,14 +20,6 @@
   #fx-field.ready { opacity: 1; }
   #fx-plexus { opacity: 0; transition: opacity 1.6s ease; }
   #fx-plexus.ready { opacity: 1; }
-
-  /* Top scan/progress bar in the cool accent. */
-  #fx-progress {
-    position: fixed; top: 0; left: 0; height: 2px; width: 0; z-index: 60;
-    background: linear-gradient(90deg, #e63946, #a51d2a);
-    box-shadow: 0 0 8px rgb(var(--fx-accent) / 0.45);
-    transition: width .1s linear;
-  }
 
   /* Tech hover: cool glow ring on the card-like blocks. */
   body main .rounded-xl,
@@ -101,16 +91,11 @@
     requestAnimationFrame(() => ST.refresh());
   }
 
-  // ---- 2. Lenis smooth scroll + scan progress bar ----
+  // ---- 2. Lenis smooth scroll ----
   let lenis = null;
-  const progress = document.getElementById('fx-progress');
-  function updateProgress() {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    if (progress) progress.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
-  }
   if (window.Lenis && !reduce) {
     lenis = new window.Lenis({ lerp: 0.09, smoothWheel: true });
-    lenis.on('scroll', () => { updateProgress(); if (ST) ST.update(); });
+    lenis.on('scroll', () => { if (ST) ST.update(); });
     if (gsap && ST) {
       gsap.ticker.add((t) => lenis.raf(t * 1000));
       gsap.ticker.lagSmoothing(0);
@@ -127,10 +112,7 @@
         e.preventDefault(); lenis.scrollTo(id, { offset: -80, duration: 1.4 });
       }
     });
-  } else {
-    window.addEventListener('scroll', updateProgress, { passive: true });
   }
-  updateProgress();
 
   // ---- 3. Three.js cool energy-field + drifting grid ----
   (() => {
