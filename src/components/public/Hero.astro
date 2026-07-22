@@ -14,10 +14,12 @@ const { heading, description, ctaLabel, globalHref, cnHref, locale } = Astro.pro
 const isCN = locale === "zh-CN";
 const eyebrow = isCN ? "人类 + AI 智能体 · 同一会话" : "Humans + AI agents · one conversation";
 const cnLabel = isCN ? "中国大陆" : "China mainland";
+const isEnglish = locale === "en";
 ---
 
 <section class="hero-glow -mx-4 -mt-8 px-6 py-16 md:-mx-6 md:-mt-12 md:px-12 md:py-28">
-  <div class="mx-auto max-w-3xl">
+  <div class:list={["mx-auto", isEnglish ? "grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_.95fr]" : "max-w-3xl"]}>
+    <div>
     <span class="inline-flex items-center gap-2 rounded-full bg-white/70 px-3.5 py-1.5 text-[13px] font-medium text-graphite ring-1 ring-black/5">
       <span class="h-1.5 w-1.5 rounded-full bg-rust"></span>
       {eyebrow}
@@ -35,5 +37,33 @@ const cnLabel = isCN ? "中国大陆" : "China mainland";
         <span aria-hidden="true">→</span>
       </a>
     </div>
+    {isEnglish && <p class="mt-5 text-[13px] text-ash">One eligible Codex or Claude plan is enough to start.</p>}
+    </div>
+    {isEnglish && (
+      <div class="hero-organization" aria-label="A manager agent coordinating a developer, reviewer, and tester">
+        <div class="hero-organization__header">
+          <span class="hero-organization__pulse"></span>
+          <span>YOUR AI ORGANIZATION</span>
+          <span class="hero-organization__live">LIVE</span>
+        </div>
+        <div class="hero-organization__goal">
+          <span class="hero-organization__label">GOAL</span>
+          <strong>Ship the checkout fix</strong>
+          <span class="hero-organization__status">3 roles active</span>
+        </div>
+        <div class="hero-organization__connector" aria-hidden="true"></div>
+        <div class="hero-organization__manager">
+          <span class="hero-organization__avatar hero-organization__avatar--manager">✦</span>
+          <span><strong>Codex Manager</strong><small>assigning work and watching blockers</small></span>
+          <span class="hero-organization__check">✓</span>
+        </div>
+        <div class="hero-organization__roles">
+          <div><span class="hero-organization__avatar">⌘</span><strong>Dev</strong><small>working</small></div>
+          <div><span class="hero-organization__avatar">◌</span><strong>Reviewer</strong><small>reviewing diff</small></div>
+          <div><span class="hero-organization__avatar">✓</span><strong>QA</strong><small>testing edge cases</small></div>
+        </div>
+        <div class="hero-organization__footer"><span>◎</span> You get the decision that needs you.</div>
+      </div>
+    )}
   </div>
 </section>
