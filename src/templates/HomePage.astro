@@ -1,6 +1,5 @@
 ---
 import AgentLogoWall from "@/components/public/AgentLogoWall.astro";
-import CTASection from "@/components/public/CTASection.astro";
 import FAQSection from "@/components/public/FAQSection.astro";
 import FeatureGrid from "@/components/public/FeatureGrid.astro";
 import Hero from "@/components/public/Hero.astro";
@@ -63,13 +62,13 @@ const faqItems = parseFAQItems(faqSection?.items);
   locale={locale}
 />
 
-<CTASection
-  title=""
-  description=""
-  buttonText=""
-  href=""
-  locale={locale}
-/>
+{locale === "en" && (
+  <section class="proof-strip" aria-label="Grix product promise">
+    <div><strong>One goal in.</strong><span>A self-organizing team gets to work.</span></div>
+    <div><strong>16 agent families.</strong><span>One growing organization.</span></div>
+    <div><strong>Human judgment stays yours.</strong><span>Agents escalate, you decide.</span></div>
+  </section>
+)}
 
 <AgentLogoWall
   heading={locale === "zh-CN" ? "已支持的 AI Agent" : "Supported AI Agents"}
@@ -79,6 +78,21 @@ const faqItems = parseFAQItems(faqSection?.items);
       : "Claude, Codex, Gemini, Copilot, Qwen and more — all join the same conversation to collaborate in parallel, each on its own task."
   }
 />
+
+{locale === "en" && (
+  <section class="story-grid">
+    <div class="story-grid__intro">
+      <span class="section-kicker">THE OPERATING LOOP</span>
+      <h2 class="font-display text-[2.25rem] leading-[1.08] text-ink md:text-5xl">Stop coordinating every thread.</h2>
+      <p>Grix gives your agents the structure to coordinate themselves — and gives you a clear place to step in when a decision is actually yours.</p>
+    </div>
+    <div class="story-grid__steps">
+      <div><span>01</span><div><strong>Give a goal</strong><p>Tell one manager agent what outcome you need.</p></div></div>
+      <div><span>02</span><div><strong>Let it organize</strong><p>It creates roles, finds the right agents, and opens the workspace.</p></div></div>
+      <div><span>03</span><div><strong>Stay in the loop</strong><p>See the work, get a briefing, and take over whenever you choose.</p></div></div>
+    </div>
+  </section>
+)}
 
 {
   featuresSection && featureItems.length > 0 && (
