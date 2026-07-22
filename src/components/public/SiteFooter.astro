@@ -6,13 +6,14 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-// 中文页或中国 IP 一律走国内 OSS，避免国内访客在英文页拿到无法下载的 GitHub 链接。
+// 中国 IP 使用国内下载源，避免下载失败；页脚文案始终跟随页面语言。
 const cfCountry = Astro.request.headers.get("cf-ipcountry") ?? "";
-const isCN = locale === "zh-CN" || cfCountry === "CN";
-const androidUrl = isCN
+const isCN = locale === "zh-CN";
+const useChinaDownloads = isCN || cfCountry === "CN";
+const androidUrl = useChinaDownloads
   ? "https://release.dhf.pub/latest/Grix-Android.apk"
   : "https://github.com/askie/grix/releases/latest/download/Grix-Android.apk";
-const desktopUrl = isCN
+const desktopUrl = useChinaDownloads
   ? "https://release.dhf.pub/latest/"
   : "https://github.com/askie/grix/releases/latest";
 ---
