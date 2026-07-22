@@ -1,5 +1,6 @@
 ---
 import AgentLogoWall from "@/components/public/AgentLogoWall.astro";
+import CTASection from "@/components/public/CTASection.astro";
 import FAQSection from "@/components/public/FAQSection.astro";
 import FeatureGrid from "@/components/public/FeatureGrid.astro";
 import Hero from "@/components/public/Hero.astro";
@@ -61,6 +62,14 @@ const faqItems = parseFAQItems(faqSection?.items);
   cnHref={productUrls.cn}
   locale={locale}
 />
+
+<CTASection
+  title=""
+  description=""
+  buttonText=""
+  href=""
+  locale={locale}
+ />
 
 {locale === "en" && (
   <section class="proof-strip" aria-label="Grix product promise">
