@@ -23,7 +23,7 @@ order: 3
 
 - 用 Claude Agent 写代码、重构项目
 - 用 Codex Agent 分析代码库
-- 用 Gemini Agent 做技术调研
+- 用 Qwen Agent 做技术调研
 
 **操作方式**：
 
@@ -46,14 +46,14 @@ order: 3
 ├── 你（项目负责人）
 ├── Claude Agent（前端开发，工作目录: /projects/frontend）
 ├── Codex Agent（后端开发，工作目录: /projects/backend）
-└── Gemini Agent（技术文档，工作目录: /projects/docs）
+└── Qwen Agent（技术文档，工作目录: /projects/docs）
 ```
 
 **你说**：「这个需求需要前端加一个按钮，后端加一个接口，文档同步更新」
 
 - Claude 在 frontend 目录写前端代码
 - Codex 在 backend 目录写后端接口
-- Gemini 在 docs 目录更新文档
+- Qwen 在 docs 目录更新文档
 
 三个 Agent **同时工作**，各自在自己的目录下操作，互不干扰。
 
@@ -103,7 +103,7 @@ Grix 中的 Agent 不仅能回复消息，还具备**团队管理能力**（需�
 
 ### 编程 Agent（执行者）
 
-Claude、Codex、Gemini、Kiro、GitHub Copilot —— 它们擅长写代码、分析问题、执行具体开发任务。
+Claude、Codex、Qwen、Kiro、GitHub Copilot —— 它们擅长写代码、分析问题、执行具体开发任务。
 
 ### 主控 Agent（编排者）
 
@@ -163,7 +163,7 @@ Claude 写前端 / Codex 写后端 / OpenClaw 验收
 
 ### 3. 用主控 Agent 做编排
 
-复杂任务交给 OpenClaw/Hermes 拆分和调度，具体执行交给 Claude/Codex/Gemini。
+复杂任务交给 OpenClaw/Hermes 拆分和调度，具体执行交给 Claude/Codex/Qwen。
 
 ### 4. 手机端做决策，电脑端做执行
 

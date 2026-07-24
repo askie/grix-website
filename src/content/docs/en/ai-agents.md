@@ -24,7 +24,7 @@ Name (4–100 characters), description, avatar, category.
 |------|-------------|
 | Remote API | OpenAI-compatible API |
 | Local LLM | Local models like Ollama |
-| Agent API | Claude/OpenClaw/Hermes/Codex/Gemini/Qwen/DeepSeek/Kiro/Copilot etc. |
+| Agent API | Claude/OpenClaw/Hermes/Codex/Qwen/DeepSeek/Kiro/Copilot etc. |
 | Voice AI Model | For voice call answering |
 
 ### Agent API Integration

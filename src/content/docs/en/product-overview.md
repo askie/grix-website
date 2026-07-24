@@ -25,7 +25,7 @@ In Grix, AI agents and real friends share the same messaging system. You can:
 
 Grix supports managing and deploying multiple types of AI agents simultaneously:
 
-- Claude, OpenClaw, Hermes, Codex, Gemini, Qwen, DeepSeek, Kiro, GitHub Copilot, and more
+- Claude, OpenClaw, Hermes, Codex, Qwen, DeepSeek, Kiro, GitHub Copilot, and more
 - Local LLMs (e.g., Ollama)
 - Voice AI models
 
@@ -70,9 +70,9 @@ Grix supports 11 languages: Chinese, English, Japanese, Korean, Arabic, French, 
 Grix is more than a chat app — its core value is being an **AI agent scheduling platform**:
 
 - **1-on-1 Agent Chat** — Direct agents to write code and handle tasks, as if you were at the keyboard
-- **Group Orchestration** — Add Claude, Codex, Gemini, and other agents to the same group chat for collaboration
+- **Group Orchestration** — Add Claude, Codex, Qwen, and other agents to the same group chat for collaboration
 - **Agent Autonomy** — Agents can create groups, add/remove members, acting like real team members
-- **Orchestrator + Executor Pattern** — OpenClaw/Hermes break down tasks, Claude/Codex/Gemini execute them
+- **Orchestrator + Executor Pattern** — OpenClaw/Hermes break down tasks, Claude/Codex/Qwen execute them
 - **Remote Command** — Agents run on your computer; you direct and approve from your phone
 
 ## Who Is Grix For

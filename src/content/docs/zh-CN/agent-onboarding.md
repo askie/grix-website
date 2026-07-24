@@ -1,6 +1,6 @@
 ---
 title: "Grix Agent 接入指南"
-description: "详细介绍如何将 Claude、OpenClaw、Codex、Gemini 等各类 AI Agent 接入 Grix 平台。"
+description: "详细介绍如何将 Claude、OpenClaw、Codex、Qwen 等各类 AI Agent 接入 Grix 平台。"
 order: 16
 ---
 
@@ -13,7 +13,6 @@ order: 16
 | OpenClaw | `openclaw` |
 | Claude | `claude` |
 | Codex | `codex` |
-| Gemini | `gemini` |
 | Qwen | `qwen` |
 | Pi | `pi` |
 | Hermes | `hermes` |

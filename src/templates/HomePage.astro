@@ -3,6 +3,7 @@ import AgentLogoWall from "@/components/public/AgentLogoWall.astro";
 import CTASection from "@/components/public/CTASection.astro";
 import FAQSection from "@/components/public/FAQSection.astro";
 import FeatureGrid from "@/components/public/FeatureGrid.astro";
+import DemoVideo from "@/components/public/DemoVideo.astro";
 import Hero from "@/components/public/Hero.astro";
 import HowItWorks from "@/components/public/HowItWorks.astro";
 import UseCases from "@/components/public/UseCases.astro";
@@ -59,6 +60,8 @@ const isChinese = locale === "zh-CN";
   description={hero?.content ?? page.description}
   locale={locale}
 />
+
+<DemoVideo locale={locale} />
 
 <CTASection
   title=""

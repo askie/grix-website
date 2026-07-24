@@ -41,7 +41,7 @@ When you first visit the "System" page in Grix Desktop:
 
 ### Step 4: Add an Agent with One Click
 
-1. Go to the "System" page and select the agent type you want (e.g., Claude, Gemini, Qwen, etc.)
+1. Go to the "System" page and select the agent type you want (e.g., Claude, Codex, Qwen, etc.)
 2. Click the type icon → click "New" in the dialog
 3. Enter a name → click "Create"
 
@@ -108,7 +108,6 @@ Change `client_type` to match the agent you want to connect (see table below). Y
 | `claude` | Claude Code (Anthropic) | `claude` |
 | `codex` | Codex (OpenAI) | `codex` |
 | `copilot` | GitHub Copilot | `copilot` or `gh` |
-| `gemini` | Gemini (Google) | `gemini` |
 | `qwen` | Qwen (Alibaba) | `qwen` |
 | `codewhale` | CodeWhale | `codewhale` |
 | `cursor` | Cursor Agent | `agent` |
@@ -145,11 +144,11 @@ Change `client_type` to match the agent you want to connect (see table below). Y
       "client_type": "claude"
     },
     {
-      "name": "my-gemini",
+      "name": "my-qwen",
       "ws_url": "wss://grix.dhf.pub/v1/agent-api/ws",
       "agent_id": "agent-id-2",
       "api_key": "your-api-key",
-      "client_type": "gemini"
+      "client_type": "qwen"
     }
   ]
 }

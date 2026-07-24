@@ -9,13 +9,12 @@ interface Props {
 const { heading, description } = Astro.props;
 
 // 展示用 Agent 列表（name 为对外展示名，logo 为 public 下静态资源路径）。
-// 与 aibot 的权威清单 (agent_client_type_meta.dart) 对齐，首发清单展示 16 个。
+// 与 aibot 的当前公开清单 (agent_client_type_meta.dart) 对齐。
 const agents: { name: string; logo?: string }[] = [
   { name: "OpenClaw", logo: "/assets/agents/openclaw.svg" },
   { name: "Claude", logo: "/assets/agents/anthropic.svg" },
   { name: "Codex", logo: "/assets/agents/openai.svg" },
   { name: "Kimi" },
-  { name: "Gemini", logo: "/assets/agents/googlegemini.svg" },
   { name: "Qwen", logo: "/assets/agents/qwen.svg" },
   { name: "Pi", logo: "/assets/agents/pi.svg" },
   { name: "Hermes", logo: "/assets/agents/hermes.svg" },

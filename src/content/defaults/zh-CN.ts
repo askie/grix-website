@@ -66,7 +66,7 @@ export const zhCNHome: PageLocaleContent = {
         "必须同时订阅 Codex 和 Claude 吗？｜不需要。一份符合条件的 Codex 或 Claude 订阅就能创建岗位化团队，多份订阅只是增加跨供应商选择。",
         "我能看到 Agent 在做什么吗？｜可以。它创建的群组、发送的消息、委派的任务和发现的阻塞都会在 IM 中可见，你可随时停止、介入或接管。",
         "Chief of Staff 会读取所有对话吗？｜只会读取你明确授权的会话。你可以随时撤销权限、暂停 Agent 或接管。",
-        "支持哪些 Agent？｜目前已支持 16 个 Agent 家族，包括 Claude、Codex、Kimi、Hermes、OpenClaw、Pi 等，并会持续扩展。",
+        "支持哪些 Agent？｜目前已支持丰富且持续扩展的 Agent 生态，包括 Claude、Codex、Kimi、Hermes、OpenClaw、Pi 等。",
         "离开电脑后还能继续工作吗？｜可以。在电脑和 Grix 之间继续同一个 Agent 会话，完整保留上下文。"
       ]
     }

@@ -24,7 +24,7 @@ order: 7
 |------|------|
 | 远端 API | OpenAI 兼容 API |
 | 本地 LLM | Ollama 等本地模型 |
-| Agent API | Claude/OpenClaw/Hermes/Codex/Gemini/Qwen/DeepSeek/Kiro/Copilot 等 |
+| Agent API | Claude/OpenClaw/Hermes/Codex/Qwen/DeepSeek/Kiro/Copilot 等 |
 | 语音大模型 | 用于语音通话代接 |
 
 ### Agent API 接入

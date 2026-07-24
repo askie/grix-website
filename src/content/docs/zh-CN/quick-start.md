@@ -41,7 +41,7 @@ order: 2
 
 ### 第 4 步：一键添加 Agent
 
-1. 进入「系统」页面，在 Agent 工具栏中选择你想使用的 Agent 类型（如 Claude、Gemini、Qwen 等）
+1. 进入「系统」页面，在 Agent 工具栏中选择你想使用的 Agent 类型（如 Claude、Codex、Qwen 等）
 2. 点击该类型图标 → 弹窗中点击「新增」
 3. 输入名称 → 点击「创建」
 
@@ -108,7 +108,6 @@ Windows 下 `grix-connector` 使用系统自带的任务计划程序，无需额
 | `claude` | Claude Code (Anthropic) | `claude` |
 | `codex` | Codex (OpenAI) | `codex` |
 | `copilot` | GitHub Copilot | `copilot` 或 `gh` |
-| `gemini` | Gemini (Google) | `gemini` |
 | `qwen` | Qwen (阿里) | `qwen` |
 | `codewhale` | CodeWhale | `codewhale` |
 | `cursor` | Cursor Agent | `agent` |
@@ -145,11 +144,11 @@ Windows 下 `grix-connector` 使用系统自带的任务计划程序，无需额
       "client_type": "claude"
     },
     {
-      "name": "my-gemini",
+      "name": "my-qwen",
       "ws_url": "wss://grix.dhf.pub/v1/agent-api/ws",
       "agent_id": "agent-id-2",
       "api_key": "your-api-key",
-      "client_type": "gemini"
+      "client_type": "qwen"
     }
   ]
 }

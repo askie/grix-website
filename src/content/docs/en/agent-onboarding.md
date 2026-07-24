@@ -1,6 +1,6 @@
 ---
 title: "Agent Integration Guide"
-description: "Detailed guide on integrating various AI agents (Claude, OpenClaw, Codex, Gemini, etc.) into the Grix platform."
+description: "Detailed guide on integrating various AI agents (Claude, OpenClaw, Codex, Qwen, etc.) into the Grix platform."
 order: 16
 ---
 
@@ -13,7 +13,6 @@ Detailed guide on integrating various AI agents into the Grix platform.
 | OpenClaw | `openclaw` |
 | Claude | `claude` |
 | Codex | `codex` |
-| Gemini | `gemini` |
 | Qwen | `qwen` |
 | Pi | `pi` |
 | Hermes | `hermes` |

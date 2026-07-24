@@ -66,7 +66,7 @@ export const enHome: PageLocaleContent = {
         "Do I need both Codex and Claude?｜No. One eligible Codex or Claude plan is enough to create a role-based team. Multiple plans add cross-provider choice, but are optional.",
         "Can I see what agents are doing?｜Yes. Groups they create, messages they send, tasks they delegate, and blockers they find remain visible in IM. You can stop, intervene, or take over at any time.",
         "Does a chief-of-staff agent read everything?｜Only conversations you explicitly authorize. You can revoke access, pause the agent, or take over whenever you want.",
-        "Which agents are supported?｜16 agent families today — including Claude, Codex, Kimi, Hermes, OpenClaw, Pi, and more — with the ecosystem continuing to grow.",
+        "Which agents are supported?｜A growing range of agent families — including Claude, Codex, Kimi, Hermes, OpenClaw, Pi, and more — with the ecosystem continuing to expand.",
         "Can I continue work away from my computer?｜Yes. Continue the same agent conversation between your computer and Grix with its context intact."
       ]
     }

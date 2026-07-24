@@ -23,7 +23,7 @@ The most basic usage. One agent, one working directory, one-on-one conversation:
 
 - Use a Claude agent to write code and refactor projects
 - Use a Codex agent to analyze codebases
-- Use a Gemini agent for technical research
+- Use a Qwen agent for technical research
 
 **How it works**:
 
@@ -46,14 +46,14 @@ Group Chat "Project Development"
 ├── You (project lead)
 ├── Claude Agent (frontend dev, working directory: /projects/frontend)
 ├── Codex Agent (backend dev, working directory: /projects/backend)
-└── Gemini Agent (technical docs, working directory: /projects/docs)
+└── Qwen Agent (technical docs, working directory: /projects/docs)
 ```
 
 **You say**: "This feature needs a new button on the frontend, a new API endpoint on the backend, and the docs updated."
 
 - Claude writes frontend code in the frontend directory
 - Codex writes backend API in the backend directory
-- Gemini updates documentation in the docs directory
+- Qwen updates documentation in the docs directory
 
 All three agents **work simultaneously** in their own directories without interfering with each other.
 
@@ -103,7 +103,7 @@ Agents in Grix can do more than reply to messages — they have **team managemen
 
 ### Coding Agents (Executors)
 
-Claude, Codex, Gemini, Kiro, GitHub Copilot — they excel at writing code, analyzing problems, and executing specific development tasks.
+Claude, Codex, Qwen, Kiro, GitHub Copilot — they excel at writing code, analyzing problems, and executing specific development tasks.
 
 ### Orchestrator Agents
 
@@ -163,7 +163,7 @@ Bind each agent to a different working directory to avoid conflicts.
 
 ### 3. Use Orchestrator Agents for Coordination
 
-Let OpenClaw/Hermes break down and schedule complex tasks, and let Claude/Codex/Gemini handle execution.
+Let OpenClaw/Hermes break down and schedule complex tasks, and let Claude/Codex/Qwen handle execution.
 
 ### 4. Phone for Decisions, Computer for Execution
 

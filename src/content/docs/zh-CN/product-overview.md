@@ -25,7 +25,7 @@ Grix 的核心理念是：**消息即指令，对话即工作流**。
 
 Grix 支持同时管理和部署多种类型的 AI Agent：
 
-- Claude、OpenClaw、Hermes、Codex、Gemini、Qwen、DeepSeek、Kiro、GitHub Copilot 等
+- Claude、OpenClaw、Hermes、Codex、Qwen、DeepSeek、Kiro、GitHub Copilot 等
 - 本地 LLM（如 Ollama）
 - 语音大模型
 
@@ -70,9 +70,9 @@ Grix 内置 11 种语言：中文、English、日本語、한국어、العرب
 Grix 不是单纯的聊天工具，它的核心价值是 **AI Agent 调度平台**：
 
 - **私聊 Agent** — 像在电脑前一样，一对一指挥 Agent 写代码、处理任务
-- **群聊编排** — 把 Claude、Codex、Gemini 等多个 Agent 拉进同一群聊协作
+- **群聊编排** — 把 Claude、Codex、Qwen 等多个 Agent 拉进同一群聊协作
 - **Agent 自主管理** — Agent 可以自己建群、拉人、踢人，像真人团队成员
-- **主控 + 执行组合** — OpenClaw/Hermes 拆分任务，Claude/Codex/Gemini 执行
+- **主控 + 执行组合** — OpenClaw/Hermes 拆分任务，Claude/Codex/Qwen 执行
 - **手机远程指挥** — Agent 在电脑运行，你在手机上下达指令和审批
 
 ## 适用人群
