@@ -72,7 +72,7 @@ const canonical = `${canonicalBase}${canonicalPath}`.replace(/\/$/, "") || canon
         }
       } catch (e) {}
     </script>
-    <script src={widget.src} data-site-key={widget.siteKey} defer is:inline></script>
+    <script src={widget.src} data-site-key={widget.siteKey} data-locale={widget.locale} defer is:inline></script>
     <!-- Google Analytics 4 (gtag), per-pool measurement ID. -->
     {gaId && (
       <>

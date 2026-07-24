@@ -2,23 +2,30 @@
  * Grix widget pool configuration.
  *
  * One source code, multiple deploy targets (domains). Each pool resolves the
- * embedded grix widget script (host + site-key) per locale. The active pool is
- * chosen by the CF_POOL env var when set, otherwise by request hostname.
+ * embedded grix widget script (host + site-key + locale) per page locale. The
+ * active pool is chosen by the CF_POOL env var when set, otherwise by request
+ * hostname.
  */
 
-export interface WidgetConfig {
+export interface WidgetScriptConfig {
   /** widget.js source URL */
   src: string;
   /** data-site-key attribute value */
   siteKey: string;
 }
 
+/** Resolved widget tag attributes including data-locale. */
+export interface WidgetConfig extends WidgetScriptConfig {
+  /** data-locale attribute value (e.g. en_US, zh_CN) */
+  locale: string;
+}
+
 /** Per-pool widget configs, split by locale group. */
 export interface PoolWidgets {
   /** Chinese locale (zh-CN) → domestic grix instance */
-  zh: WidgetConfig;
+  zh: WidgetScriptConfig;
   /** All other locales → overseas grix instance */
-  default: WidgetConfig;
+  default: WidgetScriptConfig;
 }
 
 /** Pool key → widget configs. Pool keys are the public domains. */
@@ -84,6 +91,14 @@ const HOST_POOL_MAP: Record<string, string> = {
 };
 
 /**
+ * Map site page locale → widget data-locale.
+ * zh-CN → zh_CN; everything else → en_US.
+ */
+export function toWidgetLocale(locale: string): string {
+  return locale === "zh-CN" ? "zh_CN" : "en_US";
+}
+
+/**
  * Resolve the active pool key.
  * Priority: explicit env var (CF_POOL) → request hostname → DEFAULT_POOL.
  */
@@ -102,7 +117,11 @@ export function resolvePool(opts: { envPool?: string | null; hostname?: string |
 /** Resolve the widget config for a given pool + locale. */
 export function resolveWidget(pool: string, locale: string): WidgetConfig {
   const widgets = WIDGET_POOLS[pool] ?? WIDGET_POOLS[DEFAULT_POOL];
-  return locale === "zh-CN" ? widgets.zh : widgets.default;
+  const script = locale === "zh-CN" ? widgets.zh : widgets.default;
+  return {
+    ...script,
+    locale: toWidgetLocale(locale)
+  };
 }
 
 /**
