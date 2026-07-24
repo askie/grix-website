@@ -4,56 +4,16 @@ import type { LocaleCode } from "@/i18n/config";
 interface Props {
   heading: string;
   description: string;
-  ctaLabel: string;
-  globalHref: string;
-  cnHref: string;
   locale: LocaleCode;
 }
 
-const { heading, description, ctaLabel, globalHref, cnHref, locale } = Astro.props;
+const { heading, description, locale } = Astro.props;
 const isCN = locale === "zh-CN";
 const eyebrow = isCN ? "人类 + AI 智能体 · 同一会话" : "Humans + AI agents · one conversation";
-const cnLabel = isCN ? "中国大陆" : "China mainland";
 const isEnglish = locale === "en";
-const showOrganization = isEnglish || isCN;
-const organizationCopy = isCN
-  ? {
-      aria: "主管 Agent 正在协调开发、审查和测试岗位",
-      label: "你的 AI 组织",
-      live: "运行中",
-      goal: "目标",
-      goalText: "修复结账问题",
-      active: "3 个岗位工作中",
-      manager: "Codex 主管",
-      managerDetail: "分派任务并观察阻塞",
-      dev: "开发",
-      reviewer: "审查",
-      qa: "测试",
-      working: "工作中",
-      reviewing: "审查差异",
-      testing: "测试边界情况",
-      footer: "只把需要你判断的事项带回来。"
-    }
-  : {
-      aria: "A manager agent coordinating a developer, reviewer, and tester",
-      label: "YOUR AI ORGANIZATION",
-      live: "LIVE",
-      goal: "GOAL",
-      goalText: "Ship the checkout fix",
-      active: "3 roles active",
-      manager: "Codex Manager",
-      managerDetail: "assigning work and watching blockers",
-      dev: "Dev",
-      reviewer: "Reviewer",
-      qa: "QA",
-      working: "working",
-      reviewing: "reviewing diff",
-      testing: "testing edge cases",
-      footer: "You get the decision that needs you."
-    };
 ---
 
-<section class="hero-glow -mx-4 -mt-8 px-6 py-16 md:-mx-6 md:-mt-12 md:px-12 md:py-28">
+<section class="hero-glow -mx-4 -mt-8 px-6 pb-10 pt-16 md:-mx-6 md:-mt-12 md:px-12 md:pb-14 md:pt-28">
   <div class:list={["mx-auto", isEnglish ? "grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_.95fr]" : "max-w-3xl"]}>
     <div>
     <span class="inline-flex items-center gap-2 rounded-full bg-white/70 px-3.5 py-1.5 text-[13px] font-medium text-graphite ring-1 ring-black/5">
@@ -65,42 +25,102 @@ const organizationCopy = isCN
     </h1>
     <p class="mt-5 max-w-2xl text-[18px] leading-[1.55] text-ash">{description}</p>
     <div class="mt-9 flex flex-wrap items-center gap-3">
-      <a href={globalHref} target="_blank" rel="noopener noreferrer" class="btn-ink">
-        {ctaLabel}
-      </a>
-      <a href={cnHref} target="_blank" rel="noopener noreferrer" class="btn-text">
-        {cnLabel}
-        <span aria-hidden="true">→</span>
+      <a href="#download" class="btn-ink">
+        {isCN ? "开始使用" : "Get started"}
       </a>
     </div>
     {isEnglish && <p class="mt-5 text-[13px] text-ash">One eligible Codex or Claude plan is enough to start.</p>}
     {isCN && <p class="mt-5 text-[13px] text-ash">一份符合条件的 Codex 或 Claude 订阅即可开始。</p>}
     </div>
-    {showOrganization && (
-      <div class="hero-organization" aria-label={organizationCopy.aria}>
-        <div class="hero-organization__header">
-          <span class="hero-organization__pulse"></span>
-          <span>{organizationCopy.label}</span>
-          <span class="hero-organization__live">{organizationCopy.live}</span>
+    <div class="flex items-center justify-center">
+      {/*
+        Aspect ratio lives on the SCREEN, not the outer shell. Equal padding/border
+        on a fixed-AR shell warps the inner box, so the video top drifts and the
+        bottom bleeds into the bezel (worse on iOS Safari video layers).
+      */}
+      <div
+        class="hero-phone relative w-full max-w-[220px] rounded-[1.75rem] bg-ink p-2 shadow-2xl sm:max-w-[240px] sm:rounded-[2rem] sm:p-[9px] md:max-w-[260px] md:rounded-[2.25rem] md:p-2.5 lg:max-w-[280px] lg:rounded-[2.5rem]"
+      >
+        <div class="absolute -left-[10px] top-[18%] h-8 w-[3px] rounded-l-md bg-ink sm:-left-[11px] sm:h-9 sm:w-[4px] md:-left-[12px] md:h-10"></div>
+        <div class="absolute -left-[10px] top-[26%] h-14 w-[3px] rounded-l-md bg-ink sm:-left-[11px] sm:h-[60px] sm:w-[4px] md:-left-[12px] md:h-16"></div>
+        <div class="absolute -right-[10px] top-[22%] h-16 w-[3px] rounded-r-md bg-ink sm:-right-[11px] sm:h-[72px] sm:w-[4px] md:-right-[12px] md:h-20"></div>
+
+        <div
+          class="hero-phone__screen relative w-full overflow-hidden rounded-[1.15rem] bg-black sm:rounded-[1.35rem] md:rounded-[1.55rem] lg:rounded-[1.75rem]"
+          style="aspect-ratio: 592 / 1280;"
+        >
+          <video
+            controls
+            preload="metadata"
+            playsinline
+            webkit-playsinline
+            class="hero-phone__video absolute inset-0 block h-full w-full object-cover object-top"
+            aria-label={isCN ? "手机端 Agent 工作演示" : "Mobile agent workflow demo"}
+          >
+            <source src="/assets/videos/grix-work-debug-phone.mp4" type="video/mp4" />
+            {isCN ? "您的浏览器不支持视频播放。" : "Your browser does not support the video tag."}
+          </video>
+          <div class="pointer-events-none absolute left-1/2 top-2 z-10 h-5 w-14 -translate-x-1/2 rounded-full bg-ink sm:top-3 sm:h-6 sm:w-20"></div>
         </div>
-        <div class="hero-organization__goal">
-          <span class="hero-organization__label">{organizationCopy.goal}</span>
-          <strong>{organizationCopy.goalText}</strong>
-          <span class="hero-organization__status">{organizationCopy.active}</span>
-        </div>
-        <div class="hero-organization__connector" aria-hidden="true"></div>
-        <div class="hero-organization__manager">
-          <span class="hero-organization__avatar hero-organization__avatar--manager">✦</span>
-          <span><strong>{organizationCopy.manager}</strong><small>{organizationCopy.managerDetail}</small></span>
-          <span class="hero-organization__check">✓</span>
-        </div>
-        <div class="hero-organization__roles">
-          <div><span class="hero-organization__avatar">⌘</span><strong>{organizationCopy.dev}</strong><small>{organizationCopy.working}</small></div>
-          <div><span class="hero-organization__avatar">◌</span><strong>{organizationCopy.reviewer}</strong><small>{organizationCopy.reviewing}</small></div>
-          <div><span class="hero-organization__avatar">✓</span><strong>{organizationCopy.qa}</strong><small>{organizationCopy.testing}</small></div>
-        </div>
-        <div class="hero-organization__footer"><span>◎</span> {organizationCopy.footer}</div>
+
+        {/* Covers any iOS video bleed into the bezel; sits above the video layer. */}
+        <div class="hero-phone__bezel pointer-events-none absolute inset-0 z-20 rounded-[inherit]" aria-hidden="true"></div>
       </div>
-    )}
+    </div>
   </div>
 </section>
+
+<style>
+  .hero-phone__screen {
+    /* clip-path + isolation: more reliable than overflow alone for iOS video */
+    -webkit-clip-path: inset(0 round 1.15rem);
+    clip-path: inset(0 round 1.15rem);
+    isolation: isolate;
+    -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
+    mask-image: radial-gradient(#fff, #000);
+    transform: translateZ(0);
+  }
+
+  @media (min-width: 640px) {
+    .hero-phone__screen {
+      -webkit-clip-path: inset(0 round 1.35rem);
+      clip-path: inset(0 round 1.35rem);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-phone__screen {
+      -webkit-clip-path: inset(0 round 1.55rem);
+      clip-path: inset(0 round 1.55rem);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-phone__screen {
+      -webkit-clip-path: inset(0 round 1.75rem);
+      clip-path: inset(0 round 1.75rem);
+    }
+  }
+
+  /* Inset ring matches padding bezel (8 / 9 / 10px) and paints above <video>. */
+  .hero-phone__bezel {
+    box-shadow: inset 0 0 0 8px var(--ink);
+  }
+
+  @media (min-width: 640px) {
+    .hero-phone__bezel {
+      box-shadow: inset 0 0 0 9px var(--ink);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-phone__bezel {
+      box-shadow: inset 0 0 0 10px var(--ink);
+    }
+  }
+
+  .hero-phone__video {
+    /* Keep video in its own layer but below the bezel mask */
+    transform: translateZ(0);
+  }
+</style>
