@@ -41,9 +41,11 @@ const isEnglish = locale === "en";
       <div
         class="hero-phone relative w-full max-w-[220px] rounded-[1.75rem] bg-ink p-2 shadow-2xl sm:max-w-[240px] sm:rounded-[2rem] sm:p-[9px] md:max-w-[260px] md:rounded-[2.25rem] md:p-2.5 lg:max-w-[280px] lg:rounded-[2.5rem]"
       >
-        <div class="absolute -left-[10px] top-[18%] h-8 w-[3px] rounded-l-md bg-ink sm:-left-[11px] sm:h-9 sm:w-[4px] md:-left-[12px] md:h-10"></div>
-        <div class="absolute -left-[10px] top-[26%] h-14 w-[3px] rounded-l-md bg-ink sm:-left-[11px] sm:h-[60px] sm:w-[4px] md:-left-[12px] md:h-16"></div>
-        <div class="absolute -right-[10px] top-[22%] h-16 w-[3px] rounded-r-md bg-ink sm:-right-[11px] sm:h-[72px] sm:w-[4px] md:-right-[12px] md:h-20"></div>
+        {/* Side buttons: translate by own width so they stay flush to the shell
+            (fixed -left/-right larger than button width leaves a floating gap). */}
+        <div class="absolute left-0 top-[18%] h-8 w-[3px] -translate-x-full rounded-l-md bg-ink sm:h-9 sm:w-[4px] md:h-10"></div>
+        <div class="absolute left-0 top-[26%] h-14 w-[3px] -translate-x-full rounded-l-md bg-ink sm:h-[60px] sm:w-[4px] md:h-16"></div>
+        <div class="absolute right-0 top-[22%] h-16 w-[3px] translate-x-full rounded-r-md bg-ink sm:h-[72px] sm:w-[4px] md:h-20"></div>
 
         <div
           class="hero-phone__screen relative w-full overflow-hidden rounded-[1.15rem] bg-black sm:rounded-[1.35rem] md:rounded-[1.55rem] lg:rounded-[1.75rem]"
