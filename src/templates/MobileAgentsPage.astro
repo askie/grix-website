@@ -1,4 +1,5 @@
 ---
+import CTASection from "@/components/public/CTASection.astro";
 import type { LocaleCode } from "@/i18n/config";
 
 interface Props {
@@ -14,7 +15,7 @@ const copy = isCN
       title: "在手机上指挥 Claude 和 Codex 协作开发",
       description:
         "Grix 把 Claude、Codex 和你的其他 Agent 放进同一个移动协作空间。离开电脑后，你仍然可以查看进度、授权操作、回复阻塞，并邀请朋友或同事一起推进开发。",
-      primaryCta: "打开 Grix",
+      primaryCta: "开始使用",
       secondaryCta: "查看用户手册",
       secondaryHref: "/zh-CN/docs",
       promise: "移动端发起、监督和接管 Agent 工作",
@@ -59,16 +60,14 @@ const copy = isCN
         ["快速拉人评审", "把同事邀请进会话，请 Claude 解释变更影响并收集反馈。"],
         ["发布前巡检", "让 Agent 汇总代码、测试、文档和风险，你只处理需要判断的项。"],
         ["客户现场响应", "把问题转给 Agent 排查，同时和团队在同一会话里同步进展。"]
-      ],
-      ctaTitle: "把手机变成你的 Agent 指挥台",
-      ctaDesc: "用 Grix 控制 Claude、Codex 和你的协作团队，让开发工作在桌面端执行，在移动端被你掌握。"
+      ]
     }
   : {
       eyebrow: "Mobile agent control",
       title: "Run Claude and Codex from your phone",
       description:
         "Grix puts Claude, Codex, and your other agents into one mobile collaboration space. Away from your desk, you can still inspect progress, approve actions, unblock work, and invite friends or teammates to build with you.",
-      primaryCta: "Open Grix",
+      primaryCta: "Get started",
       secondaryCta: "Read the guide",
       secondaryHref: "/docs",
       promise: "Start, supervise, and take over agent work from mobile",
@@ -113,12 +112,9 @@ const copy = isCN
         ["Pull in a reviewer fast", "Invite a teammate and ask Claude to explain impact while collecting feedback."],
         ["Pre-release checks", "Have agents summarize code, tests, docs, and risk so you only handle judgment calls."],
         ["Respond on-site", "Send an issue to agents for diagnosis while keeping the team synced in one conversation."]
-      ],
-      ctaTitle: "Turn your phone into an agent command center",
-      ctaDesc: "Use Grix to control Claude, Codex, and your collaborators while development runs on the desktop and stays under your judgment."
+      ]
     };
 
-const appUrl = "https://grix.im";
 const titleLines = isCN ? ["在手机上指挥", "Claude 和 Codex", "协作开发"] : ["Run Claude and Codex", "from your phone"];
 ---
 
@@ -131,7 +127,7 @@ const titleLines = isCN ? ["在手机上指挥", "Claude 和 Codex", "协作开�
       </h1>
       <p class="mt-6 max-w-2xl text-[18px] leading-[1.62] text-ash">{copy.description}</p>
       <div class="mt-8 flex flex-wrap items-center gap-3">
-        <a href={appUrl} target="_blank" rel="noopener noreferrer" class="btn-ink">{copy.primaryCta}</a>
+        <a href="#download" class="btn-ink">{copy.primaryCta}</a>
         <a href={copy.secondaryHref} class="btn-text">{copy.secondaryCta}<span aria-hidden="true">-></span></a>
       </div>
       <p class="mt-5 text-[13px] font-medium text-ash">{copy.promise}</p>
@@ -262,24 +258,13 @@ const titleLines = isCN ? ["在手机上指挥", "Claude 和 Codex", "协作开�
   </div>
 </section>
 
-<section id="download" class="mobile-cta">
-  <div>
-    <span class="section-kicker">{isCN ? "开始使用" : "GET STARTED"}</span>
-    <h2 class="font-display">{copy.ctaTitle}</h2>
-    <p>{copy.ctaDesc}</p>
-    <a href={appUrl} target="_blank" rel="noopener noreferrer" class="btn-ink">{copy.primaryCta}</a>
-  </div>
-  <div class="mobile-qr" aria-label={isCN ? "Grix 下载二维码" : "Grix download QR codes"}>
-    <div>
-      <img src="/qr/ios.svg" alt="iOS QR code" />
-      <span>iOS</span>
-    </div>
-    <div>
-      <img src="/qr/android.svg" alt="Android QR code" />
-      <span>Android</span>
-    </div>
-  </div>
-</section>
+<CTASection
+  title=""
+  description=""
+  buttonText=""
+  href=""
+  locale={locale}
+/>
 
 <style>
   .mobile-hero {
@@ -510,8 +495,7 @@ const titleLines = isCN ? ["在手机上指挥", "Claude 和 Codex", "协作开�
   .mobile-feature-grid p,
   .mobile-collab p,
   .mobile-scenarios__grid p,
-  .mobile-workflow__steps p,
-  .mobile-cta p {
+  .mobile-workflow__steps p {
     margin-top: 0.45rem;
     color: var(--ash);
     font-size: 0.9rem;
@@ -521,8 +505,7 @@ const titleLines = isCN ? ["在手机上指挥", "Claude 和 Codex", "协作开�
   .mobile-section,
   .mobile-workflow,
   .mobile-collab,
-  .mobile-scenarios,
-  .mobile-cta {
+  .mobile-scenarios {
     padding: 1rem 0.25rem;
   }
 
@@ -532,8 +515,7 @@ const titleLines = isCN ? ["在手机上指挥", "Claude 和 Codex", "协作开�
   }
 
   .mobile-section__intro h2,
-  .mobile-collab h2,
-  .mobile-cta h2 {
+  .mobile-collab h2 {
     margin-top: 0.65rem;
     color: var(--ink);
     font-size: clamp(2.15rem, 5vw, 3.6rem);
@@ -541,8 +523,7 @@ const titleLines = isCN ? ["在手机上指挥", "Claude 和 Codex", "协作开�
   }
 
   .mobile-section__intro p,
-  .mobile-collab > div:first-child p,
-  .mobile-cta > div:first-child p {
+  .mobile-collab > div:first-child p {
     margin-top: 1rem;
     max-width: 42rem;
     color: var(--ash);
@@ -586,49 +567,6 @@ const titleLines = isCN ? ["在手机上指挥", "Claude 和 Codex", "协作开�
     gap: 1.5rem;
   }
 
-  .mobile-cta {
-    display: grid;
-    gap: 1.5rem;
-    align-items: center;
-    border: 1px solid rgba(42, 34, 20, 0.08);
-    border-radius: 1.5rem;
-    background: var(--card);
-    padding: 1.25rem;
-    box-shadow: 0 20px 45px -34px rgba(42, 34, 20, 0.65);
-  }
-
-  .mobile-cta .btn-ink {
-    margin-top: 1.1rem;
-  }
-
-  .mobile-qr {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
-  }
-
-  .mobile-qr > div {
-    display: grid;
-    justify-items: center;
-    gap: 0.55rem;
-    border: 1px solid var(--divider);
-    border-radius: 1rem;
-    background: #fff;
-    padding: 0.8rem;
-  }
-
-  .mobile-qr img {
-    width: 100%;
-    max-width: 8rem;
-    aspect-ratio: 1;
-  }
-
-  .mobile-qr span {
-    color: var(--ash);
-    font-size: 0.8rem;
-    font-weight: 700;
-  }
-
   @media (min-width: 768px) {
     .mobile-proof,
     .mobile-feature-grid,
@@ -669,10 +607,6 @@ const titleLines = isCN ? ["在手机上指挥", "Claude 和 Codex", "协作开�
       margin-top: 1rem;
     }
 
-    .mobile-cta {
-      grid-template-columns: 1.25fr 0.75fr;
-      padding: 1.8rem;
-    }
   }
 
   @media (max-width: 767px) {
