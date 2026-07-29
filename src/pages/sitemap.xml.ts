@@ -62,7 +62,11 @@ export const GET: APIRoute = async (context) => {
   // 1. Home Page
   addUrl("");
 
-  // 2. Database Pages (if any page status is published)
+  // 2. Static topic pages
+  addUrl("mobile-agents");
+  addUrl("multi-device");
+
+  // 3. Database Pages (if any page status is published)
   const dbSlugsSet = new Set<string>();
   for (const locale of locales) {
     const pages = await listServerPublishedPages(locale);
@@ -76,10 +80,10 @@ export const GET: APIRoute = async (context) => {
     addUrl(slug);
   });
 
-  // 3. Docs Main Page
+  // 4. Docs Main Page
   addUrl("docs");
 
-  // 4. Docs Sub-pages
+  // 5. Docs Sub-pages
   try {
     const docs = await getCollection("docs");
     const docSlugsSet = new Set<string>();

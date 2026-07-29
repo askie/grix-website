@@ -1,0 +1,14 @@
+---
+import PublicLayout from "@/layouts/PublicLayout.astro";
+import MobileAgentsPage from "@/templates/MobileAgentsPage.astro";
+import { defaultLocale } from "@/i18n/config";
+
+const title = "Grix Mobile Agent Control for Claude and Codex";
+const description =
+  "Use Grix to control Claude, Codex, and collaborative agent work from your phone. Invite teammates, approve decisions, and keep desktop agents moving.";
+const slug = "mobile-agents";
+---
+
+<PublicLayout title={title} description={description} locale={defaultLocale} slug={slug}>
+  <MobileAgentsPage locale={defaultLocale} />
+</PublicLayout>

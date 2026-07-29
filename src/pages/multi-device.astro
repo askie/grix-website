@@ -1,0 +1,14 @@
+---
+import PublicLayout from "@/layouts/PublicLayout.astro";
+import MultiDevicePage from "@/templates/MultiDevicePage.astro";
+import { defaultLocale } from "@/i18n/config";
+
+const title = "Grix Multi-device Agent Control and Live Sync";
+const description =
+  "Use Grix across iPhone, Android, macOS, Linux, and Windows. Manage Claude, Codex, and agents from multiple PCs in one synced mobile workspace.";
+const slug = "multi-device";
+---
+
+<PublicLayout title={title} description={description} locale={defaultLocale} slug={slug}>
+  <MultiDevicePage locale={defaultLocale} />
+</PublicLayout>

@@ -9,9 +9,17 @@ interface Props {
 }
 
 const { currentLocale, currentSlug = "" } = Astro.props;
+const mobileAgentsHref = toLocalizedPath(currentLocale, "mobile-agents");
+const multiDeviceHref = toLocalizedPath(currentLocale, "multi-device");
+const mobileShortcutHref = currentSlug === "multi-device" ? multiDeviceHref : mobileAgentsHref;
+const mobileShortcutLabel = currentSlug === "multi-device"
+  ? currentLocale === "zh-CN" ? "多端同步" : "Devices"
+  : currentLocale === "zh-CN" ? "移动办公" : "Mobile";
 const navItems = [
   { label: currentLocale === "zh-CN" ? "能力" : "Features", href: "#features" },
   { label: currentLocale === "zh-CN" ? "场景" : "Use Cases", href: "#use-cases" },
+  { label: currentLocale === "zh-CN" ? "移动办公" : "Mobile Control", href: mobileAgentsHref },
+  { label: currentLocale === "zh-CN" ? "多端同步" : "Multi-device", href: multiDeviceHref },
   { label: currentLocale === "zh-CN" ? "常见问题" : "FAQ", href: "#faq" },
   { label: currentLocale === "zh-CN" ? "用户手册" : "Docs", href: currentLocale === "zh-CN" ? "/zh-CN/docs" : "/docs" }
 ];
@@ -22,6 +30,9 @@ const navItems = [
     <a href={toLocalizedPath(currentLocale)} class="flex items-center gap-2.5 text-lg font-semibold tracking-tight text-ink">
       <img src="/assets/brand/app_logo.png" alt="Grix" width="30" height="30" class="h-7 w-7" />
       Grix
+    </a>
+    <a href={mobileShortcutHref} class="rounded-full bg-white px-3 py-1.5 text-[13px] font-medium text-ash ring-1 ring-black/5 md:hidden">
+      {mobileShortcutLabel}
     </a>
     <nav class="hidden gap-7 text-[15px] font-normal text-ash md:flex">
       {

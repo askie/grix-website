@@ -1,0 +1,38 @@
+---
+import PublicLayout from "@/layouts/PublicLayout.astro";
+import MultiDevicePage from "@/templates/MultiDevicePage.astro";
+import { defaultLocale, isSupportedLocale } from "@/i18n/config";
+
+const rawLocale = Astro.params.locale;
+const invalidLocale = !rawLocale || !isSupportedLocale(rawLocale);
+const locale = invalidLocale ? defaultLocale : rawLocale;
+const isCN = locale === "zh-CN";
+const slug = "multi-device";
+
+if (invalidLocale) {
+  Astro.response.status = 404;
+}
+---
+
+{
+  invalidLocale ? (
+    <PublicLayout title="Page not found" description="Requested page was not found." locale={locale} noindex>
+      <section class="rounded-panel border border-slate-200 bg-white p-8">
+        <h1 class="text-2xl font-semibold">Page not found</h1>
+      </section>
+    </PublicLayout>
+  ) : (
+    <PublicLayout
+      title={isCN ? "Grix 多端登录与实时同步：一部手机管理所有电脑上的 Agent" : "Grix Multi-device Agent Control and Live Sync"}
+      description={
+        isCN
+          ? "Grix 支持 iPhone、Android、macOS、Linux、Windows 多端登录和实时同步，可把多个电脑上的 Claude、Codex 等 Agent 集中到手机统一管理。"
+          : "Use Grix across iPhone, Android, macOS, Linux, and Windows. Manage Claude, Codex, and agents from multiple PCs in one synced mobile workspace."
+      }
+      locale={locale}
+      slug={slug}
+    >
+      <MultiDevicePage locale={locale} />
+    </PublicLayout>
+  )
+}
