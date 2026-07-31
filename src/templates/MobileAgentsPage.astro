@@ -1,6 +1,7 @@
 ---
 import CTASection from "@/components/public/CTASection.astro";
 import type { LocaleCode } from "@/i18n/config";
+import "@/styles/mobile-topic-responsive.css";
 
 interface Props {
   locale: LocaleCode;
@@ -173,7 +174,10 @@ const titleLines = isCN ? ["在手机上指挥", "Claude 和 Codex", "协作开�
       </div>
       <div class="mobile-console__dock">
         <video
+          class="mobile-console__video"
           controls
+          width="592"
+          height="1280"
           preload="metadata"
           playsinline
           webkit-playsinline

@@ -1,0 +1,153 @@
+@media (max-width: 767px) {
+  .mobile-hero,
+  .device-hero {
+    overflow-x: clip;
+  }
+
+  .mobile-hero > div,
+  .device-hero > div,
+  .mobile-hero__copy,
+  .device-hero__copy,
+  .mobile-console,
+  .device-network {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .mobile-hero h1,
+  .device-hero h1,
+  .mobile-section__intro h2,
+  .device-section__intro h2 {
+    overflow-wrap: anywhere;
+  }
+
+  /*
+   * The desktop composition intentionally layers the demo beside the phone.
+   * On a narrow viewport it must re-enter normal flow so the video cannot
+   * cover the proof and feature sections below.
+   */
+  .mobile-console {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    min-height: 0 !important;
+  }
+
+  .mobile-console__phone {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: min(100%, 22rem) !important;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+
+  .mobile-console__dock {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    z-index: auto !important;
+    display: block;
+    width: min(100%, 22rem) !important;
+    max-width: 100%;
+    height: auto !important;
+    margin: 0 auto !important;
+    overflow: hidden;
+  }
+
+  .mobile-console__video {
+    display: block;
+    width: 100% !important;
+    max-width: 100%;
+    height: auto !important;
+    max-height: 70svh;
+    object-fit: contain;
+  }
+
+  .mobile-proof,
+  .mobile-feature-grid,
+  .mobile-workflow__steps,
+  .device-proof,
+  .device-feature-grid,
+  .device-flow__steps,
+  .device-scenarios__grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .mobile-proof > *,
+  .mobile-feature-grid > *,
+  .mobile-workflow__steps > *,
+  .mobile-collab > *,
+  .device-proof > *,
+  .device-feature-grid > *,
+  .device-flow__steps > *,
+  .device-scenarios__grid > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .mobile-collab {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /*
+   * The multi-device hero uses a desktop network diagram with positioned
+   * satellites. Stack those nodes on phones instead of letting them collide.
+   */
+  .device-network {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0.875rem;
+    min-height: 0 !important;
+    padding-inline: 0.25rem;
+    overflow: visible !important;
+  }
+
+  .device-network__phone,
+  .device-network__platforms,
+  .device-network__agents {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100%;
+    margin: 0 !important;
+  }
+
+  .device-network__phone {
+    justify-self: stretch;
+  }
+
+  .device-network__platforms {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .device-network__agents {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0.625rem;
+  }
+
+  .device-network__agents article {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .device-network__agents article div {
+    min-width: 0;
+  }
+
+  .device-network__agents article strong,
+  .device-network__agents article span {
+    overflow-wrap: anywhere;
+  }
+}
