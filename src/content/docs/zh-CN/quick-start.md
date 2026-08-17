@@ -113,7 +113,7 @@ Windows 下 `grix-connector` 使用系统自带的任务计划程序，无需额
 | `cursor` | Cursor Agent | `agent` |
 | `opencode` | OpenCode | `opencode` |
 | `pi` | Pi | `pi` |
-| `openhuman` | OpenHuman | `openhuman-core` |
+| `deepseek` | DeepSeek | `dsh` |
 | `reasonix` | Reasonix | `reasonix` |
 
 > ⚠️ 连接 Agent 前需要确保本地已安装对应的 CLI 工具。grix-connector 会根据 `client_type` 自动查找并启动对应的 CLI。

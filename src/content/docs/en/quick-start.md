@@ -113,7 +113,7 @@ Change `client_type` to match the agent you want to connect (see table below). Y
 | `cursor` | Cursor Agent | `agent` |
 | `opencode` | OpenCode | `opencode` |
 | `pi` | Pi | `pi` |
-| `openhuman` | OpenHuman | `openhuman-core` |
+| `deepseek` | DeepSeek | `dsh` |
 | `reasonix` | Reasonix | `reasonix` |
 
 > ⚠️ Make sure the corresponding CLI tool is installed locally before connecting an agent. grix-connector will automatically find and launch the CLI based on `client_type`.
