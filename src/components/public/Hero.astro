@@ -5,11 +5,14 @@ interface Props {
   heading: string;
   description: string;
   locale: LocaleCode;
+  eyebrow?: string;
+  ctaText?: string;
+  supportingText?: string;
 }
 
-const { heading, description, locale } = Astro.props;
+const { heading, description, locale, eyebrow: eyebrowOverride, ctaText, supportingText } = Astro.props;
 const isCN = locale === "zh-CN";
-const eyebrow = isCN ? "人类 + AI 智能体 · 同一会话" : "Humans + AI agents · one conversation";
+const eyebrow = eyebrowOverride ?? (isCN ? "人类 + AI 智能体 · 同一会话" : "Humans + AI agents · one conversation");
 const isEnglish = locale === "en";
 ---
 
@@ -26,11 +29,17 @@ const isEnglish = locale === "en";
     <p class="mt-5 max-w-2xl text-[18px] leading-[1.55] text-ash">{description}</p>
     <div class="mt-9 flex flex-wrap items-center gap-3">
       <a href="#download" class="btn-ink">
-        {isCN ? "开始使用" : "Get started"}
+        {ctaText ?? (isCN ? "开始使用" : "Get started")}
       </a>
     </div>
-    {isEnglish && <p class="mt-5 text-[13px] text-ash">One eligible Codex or Claude plan is enough to start.</p>}
-    {isCN && <p class="mt-5 text-[13px] text-ash">一份符合条件的 Codex 或 Claude 订阅即可开始。</p>}
+    {supportingText ? (
+      <p class="mt-5 text-[13px] text-ash">{supportingText}</p>
+    ) : (
+      <>
+        {isEnglish && <p class="mt-5 text-[13px] text-ash">One eligible Codex or Claude plan is enough to start.</p>}
+        {isCN && <p class="mt-5 text-[13px] text-ash">一份符合条件的 Codex 或 Claude 订阅即可开始。</p>}
+      </>
+    )}
     </div>
     <div class="flex items-center justify-center">
       {/*

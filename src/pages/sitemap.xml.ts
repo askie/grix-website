@@ -63,6 +63,7 @@ export const GET: APIRoute = async (context) => {
   addUrl("");
 
   // 2. Static topic pages
+  addUrl("agent-organization");
   addUrl("mobile-agents");
   addUrl("multi-device");
 

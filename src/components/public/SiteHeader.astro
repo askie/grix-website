@@ -9,6 +9,7 @@ interface Props {
 }
 
 const { currentLocale, currentSlug = "" } = Astro.props;
+const agentOrganizationHref = toLocalizedPath(currentLocale, "agent-organization");
 const mobileAgentsHref = toLocalizedPath(currentLocale, "mobile-agents");
 const multiDeviceHref = toLocalizedPath(currentLocale, "multi-device");
 const mobileShortcutHref = currentSlug === "multi-device" ? multiDeviceHref : mobileAgentsHref;
@@ -18,6 +19,7 @@ const mobileShortcutLabel = currentSlug === "multi-device"
 const navItems = [
   { label: currentLocale === "zh-CN" ? "能力" : "Features", href: "#features" },
   { label: currentLocale === "zh-CN" ? "场景" : "Use Cases", href: "#use-cases" },
+  { label: currentLocale === "zh-CN" ? "Agent 团队" : "Agent Teams", href: agentOrganizationHref },
   { label: currentLocale === "zh-CN" ? "移动办公" : "Mobile Control", href: mobileAgentsHref },
   { label: currentLocale === "zh-CN" ? "多端同步" : "Multi-device", href: multiDeviceHref },
   { label: currentLocale === "zh-CN" ? "常见问题" : "FAQ", href: "#faq" },
@@ -31,10 +33,10 @@ const navItems = [
       <img src="/assets/brand/app_logo.png" alt="Grix" width="30" height="30" class="h-7 w-7" />
       Grix
     </a>
-    <a href={mobileShortcutHref} class="rounded-full bg-white px-3 py-1.5 text-[13px] font-medium text-ash ring-1 ring-black/5 md:hidden">
+    <a href={mobileShortcutHref} class="rounded-full bg-white px-3 py-1.5 text-[13px] font-medium text-ash ring-1 ring-black/5 lg:hidden">
       {mobileShortcutLabel}
     </a>
-    <nav class="hidden gap-7 text-[15px] font-normal text-ash md:flex">
+    <nav class="hidden gap-4 text-[15px] font-normal text-ash lg:flex xl:gap-7">
       {
         navItems.map((item) => (
           <a href={item.href} class="transition-colors hover:text-ink">

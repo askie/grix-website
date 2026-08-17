@@ -1,46 +1,20 @@
 ---
 import PublicLayout from "@/layouts/PublicLayout.astro";
-import HomePage from "@/templates/HomePage.astro";
+import ProductHomePage from "@/templates/ProductHomePage.astro";
 import { defaultLocale, isSupportedLocale } from "@/i18n/config";
-import { getPublishedPageBySlug } from "@/lib/content-mapper/repository";
-import { loadServerPublishedPage } from "@/lib/server/content-loader";
-import type { PageLocaleContent } from "@/lib/content-mapper/types";
 
 const rawLocale = Astro.params.locale;
 const invalidLocale = !rawLocale || !isSupportedLocale(rawLocale);
 const locale = invalidLocale ? defaultLocale : rawLocale;
+const isCN = locale === "zh-CN";
 
-let page: PageLocaleContent | null = null;
-
-if (!invalidLocale) {
-  const serverPage = await loadServerPublishedPage(locale, "");
-  if (serverPage) {
-    page = {
-      locale,
-      title: serverPage.title,
-      description: serverPage.description,
-      seoTitle: serverPage.seoTitle,
-      seoDescription: serverPage.seoDescription,
-      ctaPrimaryText: serverPage.ctaPrimaryText,
-      ctaSecondaryText: serverPage.ctaSecondaryText,
-      sections: serverPage.sections
-    };
-  } else {
-    page = getPublishedPageBySlug(locale, "");
-  }
-}
-
-if (invalidLocale || !page) {
+if (invalidLocale) {
   Astro.response.status = 404;
 }
 ---
 
 {
-  page ? (
-    <PublicLayout title={page.seoTitle} description={page.seoDescription} locale={locale}>
-      <HomePage locale={locale} page={page} />
-    </PublicLayout>
-  ) : (
+  invalidLocale ? (
     <PublicLayout
       title={locale === "zh-CN" ? "页面不存在" : "Page not found"}
       description={locale === "zh-CN" ? "请求页面不存在。" : "Requested page was not found."}
@@ -50,6 +24,18 @@ if (invalidLocale || !page) {
       <section class="rounded-panel border border-slate-200 bg-white p-8">
         <h1 class="text-2xl font-semibold">{locale === "zh-CN" ? "页面不存在" : "Page not found"}</h1>
       </section>
+    </PublicLayout>
+  ) : (
+    <PublicLayout
+      title={isCN ? "Grix — 移动端与桌面端的 DeepSeek Harness" : "Grix — DeepSeek Harness for Mobile and Desktop"}
+      description={
+        isCN
+          ? "像联系同事一样使用 DeepSeek Harness 和其他代码 Agent。桌面端开始工作，手机上继续对话，消息、文件、进度和授权确认都保留在同一个上下文中。"
+          : "Talk to DeepSeek Harness and other coding agents like colleagues. Start on desktop, continue from your phone, and keep messages, files, progress, and approvals in one shared thread."
+      }
+      locale={locale}
+    >
+      <ProductHomePage locale={locale} />
     </PublicLayout>
   )
 }

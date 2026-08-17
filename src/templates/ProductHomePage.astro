@@ -1,0 +1,181 @@
+---
+import AgentLogoWall from "@/components/public/AgentLogoWall.astro";
+import CTASection from "@/components/public/CTASection.astro";
+import DemoVideo from "@/components/public/DemoVideo.astro";
+import FAQSection from "@/components/public/FAQSection.astro";
+import FeatureGrid from "@/components/public/FeatureGrid.astro";
+import Hero from "@/components/public/Hero.astro";
+import UseCases from "@/components/public/UseCases.astro";
+import type { LocaleCode } from "@/i18n/config";
+
+interface Props {
+  locale: LocaleCode;
+}
+
+const { locale } = Astro.props;
+const isCN = locale === "zh-CN";
+
+const copy = isCN
+  ? {
+      hero: {
+        eyebrow: "DeepSeek Harness · 移动端与桌面端",
+        heading: "像与人沟通一样，与 Agent 自然对话。",
+        description:
+          "Grix 把 DeepSeek Harness、Codex、Claude、Kimi 等 Agent 变成联系人。桌面端开始工作，手机上继续对话，消息、文件、进度和授权确认始终保留在同一个上下文中。",
+        cta: "下载 Grix",
+        supporting: "支持 iOS、Android、Windows、macOS、Linux 和 Web。"
+      },
+      proof: [
+        ["桌面端开始。", "在手机上继续，不必守在电脑前。"],
+        ["同一个会话。", "消息、文件、进度与授权确认都在这里。"],
+        ["始终由你掌控。", "随时补充要求、暂停任务或直接接管。"]
+      ],
+      agents: {
+        heading: "把 Agent 加为联系人",
+        description:
+          "先从 DeepSeek Harness 开始，也可接入 Codex、Claude、Kimi、Qwen 等 Agent。私聊、拉群、@ 它并像跟进同事一样查看进度。"
+      },
+      workflow: {
+        kicker: "移动端与桌面端工作流",
+        title: "工作继续，设备可以切换。",
+        description:
+          "Agent 带着对话上下文持续执行，并主动汇报或提问。你可以离开桌面，在手机上继续跟进。",
+        steps: [
+          ["01", "添加 Agent", "把 DeepSeek Harness 或你常用的 Agent 加为联系人。"],
+          ["02", "交代事情", "发消息、拉进项目群或 @ 它分配工作。"],
+          ["03", "随时跟进", "跨设备查看进度、补充要求，必要时直接接管。"]
+        ]
+      },
+      features: {
+        title: "像联系同事一样使用 Agent",
+        description: "所有协作围绕会话展开，保持上下文连续、过程透明、控制权清晰。",
+        items: [
+          { icon: "🤖", title: "私聊交代工作", desc: "直接给 Agent 发消息，开始新任务或继续之前的工作。" },
+          { icon: "👤", title: "人与 Agent 同群", desc: "共享消息、文件和业务上下文，让所有参与者看到同一份信息。" },
+          { icon: "⚡", title: "@ Agent 执行", desc: "在群里点名分配任务，并持续查看执行进度。" },
+          { icon: "📱", title: "跨设备继续", desc: "从桌面切换到手机，工作和上下文不会中断。" },
+          { icon: "🔧", title: "自由切换 Agent", desc: "更换模型或 Agent，沿着已有会话继续推进。" },
+          { icon: "📞", title: "接入语音", desc: "连接语音模型，让 Agent 接听咨询、主动通话或转交给人。" }
+        ]
+      },
+      useCases: {
+        title: "适合个人、团队与服务场景",
+        description: "从个人开发到多人协作，Grix 让 Agent 成为可沟通、可跟进、可接管的工作伙伴。",
+        items: [
+          { icon: "👤", title: "个人工作", desc: "让不同 Agent 负责开发、测试、文档、发布或助理工作，在手机上统一协调。" },
+          { icon: "🏢", title: "团队协作", desc: "让产品、研发、测试、运维和 Agent 在同一个群里共享需求、分工与关键确认。" },
+          { icon: "📞", title: "客服与语音", desc: "由 Agent 处理常见问题、整理信息，再携带完整上下文转交负责人。" }
+        ]
+      },
+      faq: {
+        title: "常见问题",
+        items: [
+          { q: "Grix 是什么？", a: "Grix 是面向 DeepSeek Harness 和其他代码 Agent 的移动端与桌面端协作软件，让你像联系同事一样与 Agent 对话和协作。" },
+          { q: "支持哪些平台？", a: "支持 iOS、Android、Windows、macOS、Linux 和 Web。" },
+          { q: "支持哪些 Agent？", a: "当前支持 DeepSeek Harness、Claude、Codex、Kimi、Qwen、Cursor、Copilot、OpenCode 等 15 种 Agent，并提供 ACP 通用桥。" },
+          { q: "任务执行中可以人工接管吗？", a: "可以。你可以随时补充要求、暂停任务、调整分工、转交工作或直接接管。" },
+          { q: "对话和协作过程是否可控？", a: "Agent 的对话和进展对主人可见；访问范围、角色上下文、职责与权限都可以隔离和授权。" }
+        ]
+      }
+    }
+  : {
+      hero: {
+        eyebrow: "DeepSeek Harness · mobile and desktop",
+        heading: "Talk to agents like people.",
+        description:
+          "Grix turns DeepSeek Harness, Codex, Claude, Kimi, and other agents into contacts. Start work on your desktop, continue from your phone, and keep messages, files, progress, and approvals in one shared thread.",
+        cta: "Download Grix",
+        supporting: "Available on iOS, Android, Windows, macOS, Linux, and the Web."
+      },
+      proof: [
+        ["Start on desktop.", "Continue from your phone without staying at your desk."],
+        ["One shared thread.", "Messages, files, progress, and approvals stay together."],
+        ["You stay in control.", "Add instructions, pause the task, or take over at any time."]
+      ],
+      agents: {
+        heading: "Add agents as contacts",
+        description:
+          "Start with DeepSeek Harness, then add Codex, Claude, Kimi, Qwen, and more. Message them, invite them to groups, @mention them, and follow progress like you would with a colleague."
+      },
+      workflow: {
+        kicker: "MOBILE AND DESKTOP WORKFLOW",
+        title: "The work continues when you switch devices.",
+        description:
+          "Agents keep working with the context of your conversation and proactively report progress or ask questions. Leave your desk and keep following the work from your phone.",
+        steps: [
+          ["01", "Add an agent", "Add DeepSeek Harness or another agent you already use as a contact."],
+          ["02", "Assign the work", "Send a message, invite it to a project group, or @mention it with a task."],
+          ["03", "Follow from anywhere", "Check progress across devices, add instructions, and take over when needed."]
+        ]
+      },
+      features: {
+        title: "Work with agents like colleagues",
+        description: "Collaboration stays in the conversation, with continuous context, visible progress, and clear human control.",
+        items: [
+          { icon: "🤖", title: "Assign work in chat", desc: "Message an agent privately to start a task or continue existing work." },
+          { icon: "👤", title: "People and agents together", desc: "Share messages, files, and business context in the same group." },
+          { icon: "⚡", title: "@mention an agent", desc: "Give an agent work in a group and follow its progress as it runs." },
+          { icon: "📱", title: "Continue across devices", desc: "Move from desktop to phone without losing the work or its context." },
+          { icon: "🔧", title: "Switch agents freely", desc: "Change models or agents while keeping the existing conversation context." },
+          { icon: "📞", title: "Connect voice", desc: "Let agents answer inquiries, place calls, or hand a conversation to a person." }
+        ]
+      },
+      useCases: {
+        title: "For personal work, teams, and service",
+        description: "From solo development to cross-functional work, Grix makes agents easy to reach, follow, and take over.",
+        items: [
+          { icon: "👤", title: "Personal", desc: "Assign agents to development, testing, documentation, releases, or assistant work, then coordinate them from your phone." },
+          { icon: "🏢", title: "Teams", desc: "Keep product, engineering, QA, operations, and agents in one group with the same requirements and decisions." },
+          { icon: "📞", title: "Customer support and voice", desc: "Let agents handle common questions, collect information, and hand the full context to the right person." }
+        ]
+      },
+      faq: {
+        title: "Frequently asked questions",
+        items: [
+          { q: "What is Grix?", a: "Grix is a mobile and desktop collaboration app for DeepSeek Harness and other coding agents. It lets you talk to agents and work with them like colleagues." },
+          { q: "Which platforms are supported?", a: "Grix is available on iOS, Android, Windows, macOS, Linux, and the Web." },
+          { q: "Which agents can I use?", a: "Grix currently supports 15 agents, including DeepSeek Harness, Claude, Codex, Kimi, Qwen, Cursor, Copilot, and OpenCode, plus a general ACP bridge." },
+          { q: "Can I take over while an agent is working?", a: "Yes. You can add instructions, pause work, change responsibilities, reassign it, or take direct control at any time." },
+          { q: "Can I control access and collaboration?", a: "Yes. Agent conversations and progress remain visible to the owner, while access scopes, role context, responsibilities, and permissions can be isolated and authorized." }
+        ]
+      }
+    };
+---
+
+<Hero
+  heading={copy.hero.heading}
+  description={copy.hero.description}
+  locale={locale}
+  eyebrow={copy.hero.eyebrow}
+  ctaText={copy.hero.cta}
+  supportingText={copy.hero.supporting}
+/>
+
+<DemoVideo locale={locale} />
+
+<CTASection title="" description="" buttonText="" href="" locale={locale} />
+
+<section class="proof-strip" aria-label={isCN ? "Grix 产品价值" : "Grix product value"}>
+  {copy.proof.map(([title, description]) => <div><strong>{title}</strong><span>{description}</span></div>)}
+</section>
+
+<AgentLogoWall heading={copy.agents.heading} description={copy.agents.description} />
+
+<section class="story-grid">
+  <div class="story-grid__intro">
+    <span class="section-kicker">{copy.workflow.kicker}</span>
+    <h2 class="font-display text-[2.25rem] leading-[1.08] text-ink md:text-5xl">{copy.workflow.title}</h2>
+    <p>{copy.workflow.description}</p>
+  </div>
+  <div class="story-grid__steps">
+    {copy.workflow.steps.map(([number, title, description]) => (
+      <div><span>{number}</span><div><strong>{title}</strong><p>{description}</p></div></div>
+    ))}
+  </div>
+</section>
+
+<FeatureGrid title={copy.features.title} description={copy.features.description} items={copy.features.items} />
+
+<UseCases title={copy.useCases.title} description={copy.useCases.description} items={copy.useCases.items} />
+
+<FAQSection title={copy.faq.title} items={copy.faq.items} />
