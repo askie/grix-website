@@ -7,12 +7,12 @@ This repository contains a minimal, production-oriented code skeleton for a Clou
 <table>
 <tr>
 <td align="center">
-<a href="https://testflight.apple.com/join/D8SRWBam"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Ftestflight.apple.com%2Fjoin%2FD8SRWBam" alt="iOS TestFlight QR" width="150" /></a><br/>
-<i>iOS (TestFlight)</i>
+<a href="https://apps.apple.com/app/grix-ai/id6761908445"><img src="public/qr/ios.svg" alt="iOS App Store QR" width="150" /></a><br/>
+<i>iOS (<a href="https://apps.apple.com/app/grix-ai/id6761908445">App Store</a>)</i>
 </td>
 <td align="center">
-<a href="https://github.com/askie/grix/releases/latest/download/Grix-Android.apk"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fgithub.com%2Faskie%2Fgrix%2Freleases%2Flatest%2Fdownload%2FGrix-Android.apk" alt="Android APK QR" width="150" /></a><br/>
-<i>Android APK</i>
+<a href="https://play.google.com/store/apps/details?id=pub.dhf.grix"><img src="public/qr/android.svg" alt="Android Google Play QR" width="150" /></a><br/>
+<i>Android (<a href="https://play.google.com/store/apps/details?id=pub.dhf.grix">Google Play</a> · <a href="https://github.com/askie/grix/releases/latest/download/Grix-Android.apk">APK</a>)</i>
 </td>
 </tr>
 </table>

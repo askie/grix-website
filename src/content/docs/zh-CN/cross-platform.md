@@ -13,7 +13,7 @@ Grix 基于 Flutter 实现 7 平台全覆盖，针对各平台深度适配。
 | 平台 | 特色能力 | 下载 |
 |------|---------|------|
 | iOS | 推送、相机扫码、Apple 登录、CallKit | [App Store](https://apps.apple.com/app/grix-ai/id6761908445) |
-| Android | 推送、相机扫码、Google 登录 | [APK 下载](https://release.dhf.pub/latest/Grix-Android.apk) |
+| Android | 推送、相机扫码、Google 登录 | [Google Play](https://play.google.com/store/apps/details?id=pub.dhf.grix) · [APK 下载](https://release.dhf.pub/latest/Grix-Android.apk) |
 | macOS | 系统托盘、Agent 工具栏、文件拖拽 | [macOS 下载](https://release.dhf.pub/latest/Grix-macOS.dmg) |
 | Windows | 系统托盘、Agent 工具栏、开机自启 | [Windows 下载](https://release.dhf.pub/latest/Grix-Windows.zip) |
 | Linux | 系统托盘、Agent 工具栏 | [Linux 下载](https://release.dhf.pub/latest/Grix-Linux-x64.tar.gz) |

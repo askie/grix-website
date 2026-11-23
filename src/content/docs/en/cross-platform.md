@@ -13,7 +13,7 @@ For quick installation and setup instructions after downloading, please refer to
 | Platform | Key Capabilities | Download |
 |----------|-----------------|----------|
 | iOS | Push notifications, camera QR scanning, Apple Sign-In, CallKit | [App Store](https://apps.apple.com/app/grix-ai/id6761908445) |
-| Android | Push notifications, camera QR scanning, Google Sign-In | [APK Download](https://github.com/askie/grix/releases/latest/download/Grix-Android.apk) |
+| Android | Push notifications, camera QR scanning, Google Sign-In | [Google Play](https://play.google.com/store/apps/details?id=pub.dhf.grix) · [APK Download](https://github.com/askie/grix/releases/latest/download/Grix-Android.apk) |
 | macOS | System tray, agent toolbar, file drag-and-drop | [macOS Download](https://github.com/askie/grix/releases/latest/download/Grix-macOS.dmg) |
 | Windows | System tray, agent toolbar, auto-start on boot | [Windows Download](https://github.com/askie/grix/releases/latest/download/Grix-Windows.zip) |
 | Linux | System tray, agent toolbar | [Linux Download](https://github.com/askie/grix/releases/latest/download/Grix-Linux-x64.tar.gz) |

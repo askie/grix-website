@@ -20,17 +20,27 @@ const ghBase = "https://github.com/askie/grix/releases/latest/download";
 const ossBase = "https://release.dhf.pub/latest";
 const dlBase = useChinaDownloads ? ossBase : ghBase;
 
+const iosAppStoreUrl = "https://apps.apple.com/app/grix-ai/id6761908445";
+const androidPlayUrl = "https://play.google.com/store/apps/details?id=pub.dhf.grix";
+const androidApkUrl = `${dlBase}/Grix-Android.apk`;
+
 const platforms = [
   {
     name: "iOS",
     label: "iOS (App Store)",
-    href: "https://apps.apple.com/app/grix-ai/id6761908445",
+    href: iosAppStoreUrl,
     icon: "apple",
   },
   {
     name: "Android",
-    label: "Android",
-    href: `${dlBase}/Grix-Android.apk`,
+    label: "Android (Google Play)",
+    href: androidPlayUrl,
+    icon: "android",
+  },
+  {
+    name: "AndroidAPK",
+    label: "Android (APK)",
+    href: androidApkUrl,
     icon: "android",
   },
   {
@@ -59,8 +69,6 @@ const platforms = [
   },
 ];
 
-const iosAppStoreUrl = "https://apps.apple.com/app/grix-ai/id6761908445";
-const androidApkUrl = `${dlBase}/Grix-Android.apk`;
 const iosQrUrl = "/qr/ios.svg";
 const androidQrUrl = "/qr/android.svg";
 ---
@@ -87,8 +95,8 @@ const androidQrUrl = "/qr/android.svg";
         </span>
       </div>
       <div class="flex min-w-0 flex-col items-center gap-2 rounded-3xl bg-white p-4 shadow-card">
-        <a href={androidApkUrl} target="_blank" rel="noopener noreferrer" class="block w-full max-w-[140px]">
-          <img src={androidQrUrl} alt="Android QR Code" class="aspect-square h-auto w-full object-contain" />
+        <a href={androidPlayUrl} target="_blank" rel="noopener noreferrer" class="block w-full max-w-[140px]">
+          <img src={androidQrUrl} alt="Google Play QR Code" class="aspect-square h-auto w-full object-contain" />
         </a>
         <span class="text-[12px] text-graphite">
           {isCN ? "扫码下载 Android" : "Scan for Android"}
